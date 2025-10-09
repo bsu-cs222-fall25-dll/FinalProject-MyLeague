@@ -5,7 +5,7 @@ build/
 !**/src/test/**/build/
 
 ### API KEY ###
-Config.java
+src/main/java/Config.java
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
