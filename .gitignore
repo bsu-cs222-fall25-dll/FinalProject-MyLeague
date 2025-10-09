@@ -5,7 +5,7 @@ build/
 !**/src/test/**/build/
 
 ### API KEY ###
-src/main/java/Config.java
+src/main/java/edu.bsu.cs222.Config.java
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
