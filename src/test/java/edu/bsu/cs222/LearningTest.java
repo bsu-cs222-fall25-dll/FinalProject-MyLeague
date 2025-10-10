@@ -1,8 +1,8 @@
 package edu.bsu.cs222;
 
-import com.jayway.jsonpath.JsonPath;
 import io.github.cdimascio.dotenv.Dotenv;
-import net.minidev.json.JSONArray;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ public class LearningTest {
     @Test
     void testNumberOfPlayers() throws IOException {
         String jsonData = readSampleFileAsString();
-        Assertions.assertEquals(11, getPlayersFromJson(jsonData).size());
+        Assertions.assertEquals(11, getPlayersFromJson(jsonData).length());
     }
 
     private String readSampleFileAsString() throws NullPointerException, IOException {
@@ -44,11 +44,12 @@ public class LearningTest {
     }
 
     private int getStatusCodeFromJson(String jsonData) {
-        JSONArray jsonArray = JsonPath.read(jsonData, "$..statusCode");
-        return (int) jsonArray.getFirst();
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return jsonObject.getInt("statusCode");
     }
 
     private JSONArray getPlayersFromJson(String jsonData){
-        return JsonPath.read(jsonData, "$..body[*]");
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return jsonObject.getJSONArray("body");
     }
 }
