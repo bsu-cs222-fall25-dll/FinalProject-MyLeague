@@ -31,6 +31,12 @@ public class LearningTest {
         Assertions.assertEquals(200, getStatusCodeFromJson(jsonData));
     }
 
+    @Test
+    void testNumberOfPlayers() throws IOException {
+        String jsonData = readSampleFileAsString();
+        Assertions.assertEquals(11, getPlayersFromJson(jsonData).size());
+    }
+
     private String readSampleFileAsString() throws NullPointerException, IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("testPlayerList.json");
@@ -40,5 +46,9 @@ public class LearningTest {
     private int getStatusCodeFromJson(String jsonData) {
         JSONArray jsonArray = JsonPath.read(jsonData, "$..statusCode");
         return (int) jsonArray.getFirst();
+    }
+
+    private JSONArray getPlayersFromJson(String jsonData){
+        return JsonPath.read(jsonData, "$..body[*]");
     }
 }
