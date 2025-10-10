@@ -1,13 +1,13 @@
 package edu.bsu.cs222;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class PlayerRetriever {
-    private static final String API_KEY = Config.API_KEY;
+    private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     public void getPlayers() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
