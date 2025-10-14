@@ -10,7 +10,7 @@ import java.net.http.*;
 import java.util.ArrayList;
 
 public class PlayerRetriever {
-    ArrayList<Player> playerArrayList = new ArrayList<Player>();
+    ArrayList<Player> playerArrayList = new ArrayList<>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     private String getPlayers() throws InterruptedException {
