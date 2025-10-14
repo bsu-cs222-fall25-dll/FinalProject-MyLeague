@@ -7,8 +7,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.*;
+import java.util.ArrayList;
 
 public class PlayerRetriever {
+    ArrayList<Player> playerArrayList = new ArrayList<Player>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     private String getPlayers() throws InterruptedException {
@@ -31,7 +33,24 @@ public class PlayerRetriever {
         JSONObject jsonObject = new JSONObject(getPlayers());
         JSONArray players = jsonObject.getJSONArray("body");
         for (int i = 0; i < players.length(); ++i){
-
+            JSONObject player = players.getJSONObject(i);
+            String espnName = player.getString("espnName");
+            String pos = player.getString("pos");
+            String team = player.getString("team");
+            int jerseyNum = player.getInt("jerseyNum");
+            int height = player.getInt("height");
+            int weight = player.getInt("weight");
+            int age = player.getInt("age");
+            String bDay = player.getString("bDay");
+            String espnHeadshot = player.getString("espnHeadshot");
+            JSONObject injury = player.getJSONObject("injury");
+            String school = player.getString("school");
+            String playerID = player.getString("playerID");
+            String teamID = player.getString("teamID");
+            int exp = player.getInt("exp");
+            Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
+                    espnHeadshot, injury, school, playerID, teamID, exp);
+            playerArrayList.add(newPlayer);
         }
     }
 }
