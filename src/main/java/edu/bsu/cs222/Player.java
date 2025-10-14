@@ -18,7 +18,6 @@ public class Player {
     private String experience;
     private String bDay;
     //Above are stats shown from player list, below are stats which require a deeper API call.
-    private int score;
     private int receivingYd;
     private int receivingTD;
     private int receptions;
@@ -29,7 +28,6 @@ public class Player {
     private int passTD;
     private int passAtt;
     private int completions;
-    private int completionPct;
     private String matchup;
 
     public Player(String name, String position, String team, String jerseyNumber, String height,
@@ -54,4 +52,208 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public String getJerseyNumber() {
+        return jerseyNumber;
+    }
+
+    public void setJerseyNumber(String jerseyNumber) {
+        this.jerseyNumber = jerseyNumber;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public JSONObject getInjury() {
+        return injury;
+    }
+
+    public void setInjury(JSONObject injury) {
+        this.injury = injury;
+    }
+
+    public String getHeadshot() {
+        return headshot;
+    }
+
+    public void setHeadshot(String headshot) {
+        this.headshot = headshot;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getPlayerID() {
+        return playerID;
+    }
+
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
+    }
+
+    public String getTeamID() {
+        return teamID;
+    }
+
+    public void setTeamID(String teamID) {
+        this.teamID = teamID;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getbDay() {
+        return bDay;
+    }
+
+    public void setbDay(String bDay) {
+        this.bDay = bDay;
+    }
+
+    public int getReceivingTD() {
+        return receivingTD;
+    }
+
+    public void setReceivingTD(int receivingTD) {
+        this.receivingTD = receivingTD;
+    }
+
+    public int getReceivingYd() {
+        return receivingYd;
+    }
+
+    public void setReceivingYd(int receivingYd) {
+        this.receivingYd = receivingYd;
+    }
+
+    public int getReceptions() {
+        return receptions;
+    }
+
+    public void setReceptions(int receptions) {
+        this.receptions = receptions;
+    }
+
+    public int getRushYd() {
+        return rushYd;
+    }
+
+    public void setRushYd(int rushYd) {
+        this.rushYd = rushYd;
+    }
+
+    public int getRushTD() {
+        return rushTD;
+    }
+
+    public void setRushTD(int rushTD) {
+        this.rushTD = rushTD;
+    }
+
+    public int getRushAtt() {
+        return rushAtt;
+    }
+
+    public void setRushAtt(int rushAtt) {
+        this.rushAtt = rushAtt;
+    }
+
+    public int getPassYd() {
+        return passYd;
+    }
+
+    public void setPassYd(int passYd) {
+        this.passYd = passYd;
+    }
+
+    public int getPassTD() {
+        return passTD;
+    }
+
+    public void setPassTD(int passTD) {
+        this.passTD = passTD;
+    }
+
+    public int getPassAtt() {
+        return passAtt;
+    }
+
+    public void setPassAtt(int passAtt) {
+        this.passAtt = passAtt;
+    }
+
+    public int getCompletions() {
+        return completions;
+    }
+
+    public void setCompletions(int completions) {
+        this.completions = completions;
+    }
+
+    public String getMatchup() {
+        return matchup;
+    }
+
+    public void setMatchup(String matchup) {
+        this.matchup = matchup;
+    }
+    public double getCompletionPCT(){
+        return ((double)this.completions/this.passAtt);
+    }
+    public double getScore(){
+        return (((this.rushYd+this.receivingYd)*0.1)+((this.rushTD+this.receivingTD)*7)+this.receptions+
+                this.passTD*4+this.passYd*0.4);
+    }
+
 }
