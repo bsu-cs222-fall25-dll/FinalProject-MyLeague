@@ -41,7 +41,7 @@ public class PlayerRetriever {
 
     public String getPlayersFromJson() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("src/main/resources/PlayerList.json");
+                .getResourceAsStream("PlayerList.json");
         return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
     }
 
@@ -90,7 +90,7 @@ public class PlayerRetriever {
     }
 
     private void savePlayerListToJson() throws IOException {
-        JSONArray players = new JSONArray();
+        JSONArray playersJsonArray = new JSONArray();
 
         for (Player player: getPlayerArrayList()){
             JSONObject jsonObject = new JSONObject();
@@ -108,10 +108,13 @@ public class PlayerRetriever {
             jsonObject.put("playerID", player.getPlayerID());
             jsonObject.put("teamID", player.getTeamID());
             jsonObject.put("exp", player.getExperience());
-            players.put(jsonObject);
+            playersJsonArray.put(jsonObject);
         }
 
-        String jsonData = players.toString();
+        JSONObject playersJsonObject = new JSONObject();
+        playersJsonObject.put("body", playersJsonArray);
+
+        String jsonData = playersJsonObject.toString();
 
         try(FileWriter file = new FileWriter("src/main/resources/PlayerList.json")){
             file.write(jsonData);
