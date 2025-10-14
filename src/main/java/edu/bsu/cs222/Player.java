@@ -3,34 +3,34 @@ package edu.bsu.cs222;
 import org.json.JSONObject;
 
 public class Player {
-    public String name;
-    public String position;
-    public String team;
-    public int jerseyNumber;
-    public int height;
-    public int weight;
-    public int age;
-    public String headshot;
-    public JSONObject injury;
-    public String school;
-    public String playerID;
-    public String teamID;
-    public int experience;
-    public String bDay;
+    private String name;
+    private String position;
+    private String team;
+    private int jerseyNumber;
+    private int height;
+    private int weight;
+    private int age;
+    private String headshot;
+    private JSONObject injury;
+    private String school;
+    private String playerID;
+    private String teamID;
+    private int experience;
+    private String bDay;
     //Above are stats shown from player list, below are stats which require a deeper API call.
-    public int score;
-    public int receivingYd;
-    public int receivingTD;
-    public int receptions;
-    public int rushYd;
-    public int rushTD;
-    public int rushAtt;
-    public int passYd;
-    public int passTD;
-    public int passAtt;
-    public int completions;
-    public int completionPct;
-    public String matchup;
+    private int score;
+    private int receivingYd;
+    private int receivingTD;
+    private int receptions;
+    private int rushYd;
+    private int rushTD;
+    private int rushAtt;
+    private int passYd;
+    private int passTD;
+    private int passAtt;
+    private int completions;
+    private int completionPct;
+    private String matchup;
 
     public Player(String name, String position, String team, int jerseyNumber, int height,
                   int weight, int age, String bDay, String headshot, JSONObject injury, String school,
