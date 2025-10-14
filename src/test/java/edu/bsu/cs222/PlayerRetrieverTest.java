@@ -6,21 +6,45 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerRetrieverTest {
 
     @Test
-    void firstPlayerNameInListIsJackCoco() throws IOException {
+    void testFirstPlayerNameInListIsJackCoco() throws IOException {
         PlayerRetriever retriever = new PlayerRetriever();
         retriever.createPlayerList(readSampleFileAsString());
         Assertions.assertEquals("Jack Coco", retriever.getPlayerArrayList().getFirst().getName());
     }
 
     @Test
-    void getPlayersDoesNotReturnNull() throws InterruptedException {
+    void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException {
         PlayerRetriever retriever = new PlayerRetriever();
-        Assertions.assertNotNull(retriever.getPlayers());
+        Assertions.assertNotNull(retriever.getPlayersFromApi());
+    }
+
+    @Test
+    void testGetPlayersFromJsonDoesNotReturnNullAfterSaving() throws IOException, InterruptedException {
+        PlayerRetriever retriever = new PlayerRetriever();
+        retriever.createAndSavePlayerListFromApi();
+        Assertions.assertNotNull(retriever.getPlayersFromJson());
+    }
+
+    @Test
+    void testGetPlayersFromJsonEqualsPlayerListAfterSaving() throws IOException, InterruptedException {
+        PlayerRetriever retriever = new PlayerRetriever();
+        retriever.createAndSavePlayerListFromApi();
+        ArrayList<Player> originalPlayerList = retriever.getPlayerArrayList();
+        retriever.createPlayerList(retriever.getPlayersFromJson());
+        Assertions.assertEquals(originalPlayerList.getFirst().getName(), retriever.getPlayerArrayList().getFirst().getName());
+    }
+
+    @Test
+    void testCreateAndSavePlayerListFromApiCreatesPlayerList() throws InterruptedException, IOException {
+        PlayerRetriever retriever = new PlayerRetriever();
+        retriever.createAndSavePlayerListFromApi();
+        Assertions.assertNotNull(retriever.getPlayerArrayList());
     }
 
     private String readSampleFileAsString() throws NullPointerException, IOException {
