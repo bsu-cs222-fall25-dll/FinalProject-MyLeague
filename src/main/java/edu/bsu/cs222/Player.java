@@ -48,6 +48,9 @@ public class Player {
         this.experience = experience;
         this.bDay = bDay;
     }
+    public Player(){
+
+    }
 
     public String getName() {
         return name;
@@ -249,11 +252,11 @@ public class Player {
         this.matchup = matchup;
     }
     public double getCompletionPCT(){
-        return ((double)this.completions/this.passAtt);
+        double compPCT = (double)this.completions / this.passAtt;
+        return  (Math.round(compPCT *1000) / 1000.0);
     }
     public double getScore(){
-        return (((this.rushYd+this.receivingYd)*0.1)+((this.rushTD+this.receivingTD)*7)+this.receptions+
-                this.passTD*4+this.passYd*0.4);
+        return ((this.rushYd+this.receivingYd) * 0.1 + (this.rushTD+this.receivingTD)*7 + this.passTD * 4 + this.passYd *0.04 + this.receptions);
     }
 
 }
