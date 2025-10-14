@@ -10,7 +10,7 @@ import java.net.http.*;
 import java.util.ArrayList;
 
 public class PlayerRetriever {
-    ArrayList<Player> playerArrayList = new ArrayList<>();
+    private ArrayList<Player> playerArrayList = new ArrayList<>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     private String getPlayers() throws InterruptedException {
@@ -29,8 +29,8 @@ public class PlayerRetriever {
         }
     }
 
-    public void createPlayerList() throws InterruptedException {
-        JSONObject jsonObject = new JSONObject(getPlayers());
+    public void createPlayerList(String jsonData) {
+        JSONObject jsonObject = new JSONObject(jsonData);
         JSONArray players = jsonObject.getJSONArray("body");
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
