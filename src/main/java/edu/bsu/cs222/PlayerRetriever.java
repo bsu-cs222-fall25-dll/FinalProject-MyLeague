@@ -13,7 +13,7 @@ public class PlayerRetriever {
     private ArrayList<Player> playerArrayList = new ArrayList<>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
-    private String getPlayers() throws InterruptedException {
+    public String getPlayers() throws InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLPlayerList"))
                 .header("x-rapidapi-key", API_KEY)
