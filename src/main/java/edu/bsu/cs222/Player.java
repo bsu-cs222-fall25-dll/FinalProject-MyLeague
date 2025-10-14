@@ -28,6 +28,8 @@ public class Player {
     private int passTD;
     private int passAtt;
     private int completions;
+    private int fumbles;
+    private int interceptions;
     private String matchup;
 
     public Player(String name, String position, String team, String jerseyNumber, String height,
@@ -256,7 +258,23 @@ public class Player {
         return  (Math.round(compPCT *1000) / 1000.0);
     }
     public double getScore(){
-        return ((this.rushYd+this.receivingYd) * 0.1 + (this.rushTD+this.receivingTD)*7 + this.passTD * 4 + this.passYd *0.04 + this.receptions);
+        return ((this.rushYd+this.receivingYd) * 0.1 + (this.rushTD+this.receivingTD)*7
+                + this.passTD * 4 + this.passYd *0.04 + this.receptions - this.interceptions*2 - this.fumbles*2);
     }
 
+    public int getInterceptions() {
+        return interceptions;
+    }
+
+    public void setInterceptions(int interceptions) {
+        this.interceptions = interceptions;
+    }
+
+    public int getFumbles() {
+        return fumbles;
+    }
+
+    public void setFumbles(int fumbles) {
+        this.fumbles = fumbles;
+    }
 }

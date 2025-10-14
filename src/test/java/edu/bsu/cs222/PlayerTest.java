@@ -17,7 +17,9 @@ public class PlayerTest {
         Burrow.setReceivingYd(30);//3 points
         Burrow.setReceivingTD(0);
         Burrow.setRushTD(1);//7 points
-        Assertions.assertEquals(37, Burrow.getScore());
+        Burrow.setFumbles(1);//-2 points
+        Burrow.setInterceptions(1);//-2 points
+        Assertions.assertEquals(33, Burrow.getScore());
     }
     @Test
     void getCompletionPCTTest(){
