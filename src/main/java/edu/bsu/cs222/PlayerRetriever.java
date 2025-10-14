@@ -53,4 +53,8 @@ public class PlayerRetriever {
             playerArrayList.add(newPlayer);
         }
     }
+
+    public ArrayList<Player> getPlayerArrayList() {
+        return playerArrayList;
+    }
 }
