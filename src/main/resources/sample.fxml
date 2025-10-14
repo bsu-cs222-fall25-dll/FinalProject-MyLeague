@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+
+<GridPane
+        prefHeight="400.0"
+        prefWidth="600.0"
+        xmlns="http://javafx.com/javafx/22"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="edu.bsu.cs222.SampleController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox prefHeight="408.0" prefWidth="100.0" />
+      <ScrollPane prefHeight="400.0" prefWidth="502.0" GridPane.columnIndex="1">
+         <content>
+            <Button mnemonicParsing="false" text="Click Me!" />
+         </content>
+      </ScrollPane>
+   </children>
+</GridPane>
