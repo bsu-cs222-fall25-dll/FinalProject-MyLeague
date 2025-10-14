@@ -37,17 +37,17 @@ public class PlayerRetriever {
             String espnName = player.getString("espnName");
             String pos = player.getString("pos");
             String team = player.getString("team");
-            int jerseyNum = player.getInt("jerseyNum");
-            int height = player.getInt("height");
-            int weight = player.getInt("weight");
-            int age = player.getInt("age");
+            String jerseyNum = player.getString("jerseyNum");
+            String height = player.getString("height");
+            String weight = player.getString("weight");
+            String age = player.getString("age");
             String bDay = player.getString("bDay");
             String espnHeadshot = player.getString("espnHeadshot");
             JSONObject injury = player.getJSONObject("injury");
             String school = player.getString("school");
             String playerID = player.getString("playerID");
             String teamID = player.getString("teamID");
-            int exp = player.getInt("exp");
+            String exp = player.getString("exp");
             Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
                     espnHeadshot, injury, school, playerID, teamID, exp);
             playerArrayList.add(newPlayer);
