@@ -2,14 +2,11 @@ package edu.bsu.cs222.gui;
 
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.gui.controllers.PlayerCellController;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 public class PlayerCell extends ListCell<Player> {

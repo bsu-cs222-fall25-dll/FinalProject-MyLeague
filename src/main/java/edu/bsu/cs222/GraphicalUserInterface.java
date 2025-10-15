@@ -3,7 +3,6 @@ package edu.bsu.cs222;
 import edu.bsu.cs222.gui.controllers.PlayersViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
