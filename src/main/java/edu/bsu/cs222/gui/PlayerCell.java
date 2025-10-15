@@ -14,31 +14,10 @@ import java.util.Objects;
 
 public class PlayerCell extends ListCell<Player> {
     private PlayerCellController controller;
-    private boolean loaded = false;
     private Node view;
-
-
-    private void ensureLoaded(){
-        if(loaded) {return;}
-        try {
-            URL fxml = getClass().getResource("/PlayerCell.fxml");
-            if (fxml == null){
-                throw new IllegalStateException("No '/PlayerCell.fxml' found");
-            }
-            FXMLLoader loader = new FXMLLoader(fxml);
-            view = loader.load();
-            controller = loader.getController();
-            if (controller == null){
-                throw new IllegalStateException("Controller is null");
-            }
-            loaded = true;
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load /PLayerCell.fxml", e);
-        }
-    }
+    private FXMLLoader loader;
 
     public PlayerCell() {
-        loaded = false;
     }
 
     @Override
@@ -48,10 +27,23 @@ public class PlayerCell extends ListCell<Player> {
         if (empty || player == null) {
             setText(null);
             setGraphic(null);
-        } else {
-            ensureLoaded();
-            controller.setData(player.getName(), player.getPosition(), player.getHeadshot());
-            setGraphic(view);
+            return;
         }
+
+        if (loader == null){
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayerCell.fxml")));
+
+            try {
+                view = loader.load();
+                controller = loader.getController();
+            } catch (IOException e) {
+                setText("Failed to load cell");
+                setGraphic(null);
+                return;
+            }
+        }
+
+        controller.setData(player);
+        setGraphic(view);
     }
 }
