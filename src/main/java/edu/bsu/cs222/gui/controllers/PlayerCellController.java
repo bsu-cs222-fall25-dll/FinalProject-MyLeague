@@ -21,7 +21,7 @@ public class PlayerCellController {
         nameLbl.setText(name == null ? "" : name);
         statsLbl.setText(stats == null ? "" : stats);
 
-        if (imageURL.equals("not found")){
+        if (imageURL.equals("not found") || imageURL.isBlank()){
             avatar.setImage(DEFAULT);
             return;
         }

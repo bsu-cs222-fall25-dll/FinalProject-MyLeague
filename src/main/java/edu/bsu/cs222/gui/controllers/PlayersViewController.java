@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlayersViewController {
     @FXML private TextField searchField;
@@ -29,9 +29,21 @@ public class PlayersViewController {
         listView.setItems(filteredList);
 
         searchField.textProperty().addListener((obsV, oldValue, newValue) -> {
-            String query = (newValue == null) ? "" : newValue.trim().toLowerCase();
-            filteredList.setPredicate(p -> query.isEmpty() ||
-                    (p.getName() != null && p.getName().toLowerCase().contains(query)));
+            ArrayList<String> queries = (newValue == null || newValue.isBlank()) ?  new ArrayList<>(): new ArrayList<>(Arrays.asList(newValue.toLowerCase().split("\\s+")));
+            filteredList.setPredicate(p -> queries.isEmpty() || runSearch(queries, p));
         });
+    }
+
+    private boolean runSearch(ArrayList<String> queries, Player player){
+        if (player == null) {return false;}
+        boolean match = true;
+        for (String query : queries){
+            if (!player.getName().toLowerCase().contains(query)
+                    && !player.getPosition().toLowerCase().contains(query)) {
+                match = false;
+                break;
+            }
+        }
+        return match;
     }
 }
