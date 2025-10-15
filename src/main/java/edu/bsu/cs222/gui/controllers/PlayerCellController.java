@@ -11,7 +11,7 @@ import java.util.Objects;
 public class PlayerCellController {
     @FXML private ImageView headshot;
     @FXML private Label nameLbl;
-    @FXML private Label statsLbl;
+    @FXML private Label positionLbl;
 
     private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayerCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
@@ -27,7 +27,7 @@ public class PlayerCellController {
 
     public void setData(Player player){
         nameLbl.setText(player.getName() == null ? "" : player.getName());
-        statsLbl.setText(player.getPosition() == null ? "" : player.getPosition());
+        positionLbl.setText(player.getPosition() == null ? "" : player.getPosition());
 
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
 
