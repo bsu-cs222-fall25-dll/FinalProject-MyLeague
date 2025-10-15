@@ -1,5 +1,6 @@
 package edu.bsu.cs222;
 
+import edu.bsu.cs222.gui.controllers.PlayersViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,10 +15,24 @@ public class GraphicalUserInterface extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
-        primaryStage.setTitle("MyLeague");
-        primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.show();
+    public void start(Stage stage) throws IOException, InterruptedException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
+        Scene scene = new Scene(loader.load(), 600, 400);
+
+        PlayersViewController controller = loader.getController();
+        PlayerRetriever retriever = new PlayerRetriever();
+
+        try{
+            retriever.createPlayerList(retriever.getPlayersFromJson());
+        }
+        catch (IOException e) {
+            retriever.createAndSavePlayerListFromApi();
+        }
+
+        controller.setPlayers(retriever.getPlayerArrayList());
+
+        stage.setTitle("MyLeague");
+        stage.setScene(scene);
+        stage.show();
     }
 }
