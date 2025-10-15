@@ -27,5 +27,11 @@ public class PlayersViewController {
         ObservableList<Player> observableList = FXCollections.observableList(players);
         filteredList = new FilteredList<>(observableList, p -> true);
         listView.setItems(filteredList);
+
+        searchField.textProperty().addListener((obsV, oldValue, newValue) -> {
+            String query = (newValue == null) ? "" : newValue.trim().toLowerCase();
+            filteredList.setPredicate(p -> query.isEmpty() ||
+                    (p.getName() != null && p.getName().toLowerCase().contains(query)));
+        });
     }
 }
