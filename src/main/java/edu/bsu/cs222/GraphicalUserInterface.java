@@ -22,12 +22,7 @@ public class GraphicalUserInterface extends Application {
         PlayersViewController controller = loader.getController();
         PlayerRetriever retriever = new PlayerRetriever();
 
-        try{
-            retriever.createPlayerList(retriever.getPlayersFromJson());
-        }
-        catch (IOException e) {
-            retriever.createAndSavePlayerListFromApi();
-        }
+        retriever.getPlayersFromJsonOrApi();
 
         controller.setPlayers(retriever.getPlayerArrayList());
 

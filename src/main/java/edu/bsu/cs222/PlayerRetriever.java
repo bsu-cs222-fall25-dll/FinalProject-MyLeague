@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class PlayerRetriever {
     public void createAndSavePlayerListFromApi() throws InterruptedException, IOException {
         createPlayerList(getPlayersFromApi());
         savePlayerListToJson();
+    }
+
+    public void getPlayersFromJsonOrApi() throws IOException, InterruptedException {
+        URL jsonFile = getClass().getResource("PlayerList.json");
+        if (jsonFile == null){
+            createAndSavePlayerListFromApi();
+        }
+        else {
+            getPlayersFromJson();
+        }
     }
 
     public String getPlayersFromApi() throws InterruptedException {
@@ -72,7 +83,7 @@ public class PlayerRetriever {
             try {
                 espnHeadshot = player.getString("espnHeadshot");
             } catch (JSONException e){
-                bDay = "not found";
+                espnHeadshot = "not found";
             }
             JSONObject injury = player.getJSONObject("injury");
             String school = player.getString("school");
