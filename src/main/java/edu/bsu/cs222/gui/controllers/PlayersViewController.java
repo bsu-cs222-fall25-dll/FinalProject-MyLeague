@@ -2,6 +2,7 @@ package edu.bsu.cs222.gui.controllers;
 
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.gui.PlayerCell;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,7 +18,6 @@ public class PlayersViewController {
     @FXML private ListView<Player> listView;
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
-    private FilteredList<Player> filteredList;
 
     @FXML
     public void initialize() {
@@ -26,33 +26,45 @@ public class PlayersViewController {
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
-
-        positionFilter.valueProperty().addListener((obs, oldVal, newVal) ->
-                filteredList.setPredicate(player -> {
-                    if ("All".equals(newVal)) {return true;}
-                    if("None".equals(newVal)) {return player.getPosition().isBlank();}
-                    return player.getPosition().equalsIgnoreCase(newVal);
-                }));
-
-        teamFilter.valueProperty().addListener((obs, oldVal, newVal) ->
-                filteredList.setPredicate(player -> {
-                    if ("All".equals(newVal)) {return true;}
-                    if("None".equals(newVal)) {return player.getTeam().isBlank();}
-                    return player.getTeam().equalsIgnoreCase(newVal);
-                }));
     }
 
     public void setPlayers(ArrayList<Player> players) {
         ObservableList<Player> observableList = FXCollections.observableList(players);
-        filteredList = new FilteredList<>(observableList, p -> true);
+        FilteredList<Player> filteredList = new FilteredList<>(observableList, p -> true);
         listView.setItems(filteredList);
 
         setPositionsAndTeams(players);
 
-        searchField.textProperty().addListener((obsV, oldValue, newValue) -> {
-            ArrayList<String> queries = (newValue == null || newValue.isBlank()) ?  new ArrayList<>(): new ArrayList<>(Arrays.asList(newValue.toLowerCase().split("\\s+")));
-            filteredList.setPredicate(p -> queries.isEmpty() || runSearch(queries, p));
-        });
+        filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> (Player player) -> {
+            String searchText = searchField.getText();
+            ArrayList<String> queries = (searchText == null || searchText.isBlank()) ? new ArrayList<>(): new ArrayList<>(Arrays.asList(searchText.toLowerCase().split("\\s+")));
+            if (!runSearch(queries, player)) {return false;}
+
+            String position = positionFilter.getValue();
+            if (!position.isBlank()){
+                if(!position.equals("All")){
+                    if (position.equals("None")){
+                        if (!player.getPosition().isBlank()) {return false;}
+                    }
+                    if (!position.equals(player.getPosition())) {return false;}
+                }
+            }
+
+            String team = teamFilter.getValue();
+            if (!team.isBlank()){
+                if(!team.equals("All")){
+                    if (team.equals("None")){
+                        if (!player.getTeam().isBlank()) {return false;}
+                    }
+                    if (!team.equals(player.getTeam())) {return false;}
+                }
+            }
+            return true;
+        },
+                searchField.textProperty(),
+                teamFilter.valueProperty(),
+                positionFilter.valueProperty()
+                ));
     }
 
     private boolean runSearch(ArrayList<String> queries, Player player){
