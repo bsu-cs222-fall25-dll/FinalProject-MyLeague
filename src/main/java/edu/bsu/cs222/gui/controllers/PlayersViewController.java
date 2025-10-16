@@ -43,10 +43,8 @@ public class PlayersViewController {
             String position = positionFilter.getValue();
             if (!position.isBlank()){
                 if(!position.equals("All")){
-                    if (position.equals("None")){
-                        if (!player.getPosition().isBlank()) {return false;}
-                    }
-                    if (!position.equals(player.getPosition())) {return false;}
+                    //if (!position.equals(player.getPosition())) {return false;}
+                    if (!player.getPosition().isBlank()) {return false;}
                 }
             }
 
@@ -80,37 +78,20 @@ public class PlayersViewController {
     }
 
     public void setPositionsAndTeams(ArrayList<Player> players) {
-        Set<String> positions = new TreeSet<>();
         Set<String> teams = new TreeSet<>();
-        boolean blankPosition = false;
-        boolean blankTeam = false;
 
         for (Player player : players){
-            String position = player.getPosition();
             String team = player.getTeam();
-
-            if (position.isBlank()){
-                blankPosition = true;
-            }
-            else{
-                positions.add(position);
-            }
-
-            if (team.isBlank()){
-                blankTeam = true;
-            }
-            else{
-                teams.add(team);
-            }
+            teams.add(team);
         }
 
         positionFilter.getItems().add("All");
         teamFilter.getItems().add("All");
+        //Move all FB to RB position later on
+        //Possibly move Taysom Hill to TE
+        Set<String> positions = new TreeSet<>(List.of("QB", "TE","PK", "RB", "WR", "FB"));
 
         positionFilter.getItems().addAll(positions);
         teamFilter.getItems().addAll(teams);
-
-        if (blankPosition) {positionFilter.getItems().add("None");}
-        if (blankTeam) {teamFilter.getItems().add("None");}
     }
 }
