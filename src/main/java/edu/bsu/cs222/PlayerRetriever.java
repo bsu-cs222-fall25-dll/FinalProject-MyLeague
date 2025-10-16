@@ -30,7 +30,7 @@ public class PlayerRetriever {
             createAndSavePlayerListFromApi();
         }
         else {
-            getPlayersFromJson();
+            createPlayerList(getPlayersFromJson());
         }
     }
 
