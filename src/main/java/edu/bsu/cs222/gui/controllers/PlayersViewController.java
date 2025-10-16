@@ -43,8 +43,7 @@ public class PlayersViewController {
             String position = positionFilter.getValue();
             if (!position.isBlank()){
                 if(!position.equals("All")){
-                    //if (!position.equals(player.getPosition())) {return false;}
-                    if (!player.getPosition().isBlank()) {return false;}
+                    if (!player.getPosition().equals(position)) {return false;}
                 }
             }
 
@@ -89,7 +88,7 @@ public class PlayersViewController {
         teamFilter.getItems().add("All");
         //Move all FB to RB position later on
         //Possibly move Taysom Hill to TE
-        Set<String> positions = new TreeSet<>(List.of("QB", "TE","PK", "RB", "WR", "FB"));
+        Set<String> positions = new TreeSet<>(List.of("QB", "TE","K", "RB", "WR"));
 
         positionFilter.getItems().addAll(positions);
         teamFilter.getItems().addAll(teams);

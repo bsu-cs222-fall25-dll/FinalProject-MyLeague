@@ -61,38 +61,47 @@ public class PlayerRetriever {
         JSONArray players = jsonObject.getJSONArray("body");
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
-            String espnName = player.getString("espnName");
             String pos = player.getString("pos");
-            String team = player.getString("team");
-            String jerseyNum = player.getString("jerseyNum");
-            String height = player.getString("height");
-            String weight = player.getString("weight");
-            String age = "";
-            try {
-                age = player.getString("age");
-            } catch (JSONException e){
-                age = "not found";
+            if (Objects.equals(pos, "FB")){
+                pos = "RB";
             }
-            String bDay = "";
-            try {
-                bDay = player.getString("bDay");
-            } catch (JSONException e){
-                bDay = "not found";
+            else if(Objects.equals(pos, "PK")){
+                pos = "K";
             }
-            String espnHeadshot = "";
-            try {
-                espnHeadshot = player.getString("espnHeadshot");
-            } catch (JSONException e){
-                espnHeadshot = "not found";
+            if (Objects.equals(pos, "RB") || Objects.equals(pos, "QB")
+                    || Objects.equals(pos, "WR") || Objects.equals(pos, "TE") || Objects.equals(pos, "K")) {
+                String espnName = player.getString("espnName");
+                String team = player.getString("team");
+                String jerseyNum = player.getString("jerseyNum");
+                String height = player.getString("height");
+                String weight = player.getString("weight");
+                String age = "";
+                try {
+                    age = player.getString("age");
+                } catch (JSONException e) {
+                    age = "not found";
+                }
+                String bDay = "";
+                try {
+                    bDay = player.getString("bDay");
+                } catch (JSONException e) {
+                    bDay = "not found";
+                }
+                String espnHeadshot = "";
+                try {
+                    espnHeadshot = player.getString("espnHeadshot");
+                } catch (JSONException e) {
+                    espnHeadshot = "not found";
+                }
+                JSONObject injury = player.getJSONObject("injury");
+                String school = player.getString("school");
+                String playerID = player.getString("playerID");
+                String teamID = player.getString("teamID");
+                String exp = player.getString("exp");
+                Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
+                        espnHeadshot, injury, school, playerID, teamID, exp);
+                playerArrayList.add(newPlayer);
             }
-            JSONObject injury = player.getJSONObject("injury");
-            String school = player.getString("school");
-            String playerID = player.getString("playerID");
-            String teamID = player.getString("teamID");
-            String exp = player.getString("exp");
-            Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
-                    espnHeadshot, injury, school, playerID, teamID, exp);
-            playerArrayList.add(newPlayer);
         }
     }
 

@@ -2,6 +2,8 @@ package edu.bsu.cs222;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public class Player {
     private String name;
     private String position;
