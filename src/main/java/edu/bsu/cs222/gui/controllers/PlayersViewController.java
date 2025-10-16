@@ -10,8 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class PlayersViewController {
     @FXML private TextField searchField;
@@ -19,16 +18,11 @@ public class PlayersViewController {
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
     private FilteredList<Player> filteredList;
-    private final String[] positionArray = new String[] {"All", "QB"};
-    private final String[] teamArray = new String[] {"All", "ARI"};
 
     @FXML
     public void initialize() {
         listView.setFixedCellSize(70);
         listView.setCellFactory(lv -> new PlayerCell());
-
-        positionFilter.getItems().addAll(positionArray);
-        teamFilter.getItems().addAll(teamArray);
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
@@ -36,12 +30,14 @@ public class PlayersViewController {
         positionFilter.valueProperty().addListener((obs, oldVal, newVal) ->
                 filteredList.setPredicate(player -> {
                     if ("All".equals(newVal)) {return true;}
+                    if("None".equals(newVal)) {return player.getPosition().isBlank();}
                     return player.getPosition().equalsIgnoreCase(newVal);
                 }));
 
         teamFilter.valueProperty().addListener((obs, oldVal, newVal) ->
                 filteredList.setPredicate(player -> {
                     if ("All".equals(newVal)) {return true;}
+                    if("None".equals(newVal)) {return player.getTeam().isBlank();}
                     return player.getTeam().equalsIgnoreCase(newVal);
                 }));
     }
@@ -50,6 +46,8 @@ public class PlayersViewController {
         ObservableList<Player> observableList = FXCollections.observableList(players);
         filteredList = new FilteredList<>(observableList, p -> true);
         listView.setItems(filteredList);
+
+        setPositionsAndTeams(players);
 
         searchField.textProperty().addListener((obsV, oldValue, newValue) -> {
             ArrayList<String> queries = (newValue == null || newValue.isBlank()) ?  new ArrayList<>(): new ArrayList<>(Arrays.asList(newValue.toLowerCase().split("\\s+")));
@@ -67,5 +65,40 @@ public class PlayersViewController {
             }
         }
         return match;
+    }
+
+    public void setPositionsAndTeams(ArrayList<Player> players) {
+        Set<String> positions = new TreeSet<>();
+        Set<String> teams = new TreeSet<>();
+        boolean blankPosition = false;
+        boolean blankTeam = false;
+
+        for (Player player : players){
+            String position = player.getPosition();
+            String team = player.getTeam();
+
+            if (position.isBlank()){
+                blankPosition = true;
+            }
+            else{
+                positions.add(position);
+            }
+
+            if (team.isBlank()){
+                blankTeam = true;
+            }
+            else{
+                teams.add(team);
+            }
+        }
+
+        positionFilter.getItems().add("All");
+        teamFilter.getItems().add("All");
+
+        positionFilter.getItems().addAll(positions);
+        teamFilter.getItems().addAll(teams);
+
+        if (blankPosition) {positionFilter.getItems().add("None");}
+        if (blankTeam) {teamFilter.getItems().add("None");}
     }
 }
