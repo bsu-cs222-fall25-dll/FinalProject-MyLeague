@@ -78,17 +78,21 @@ public class PlayersViewController {
 
     public void setPositionsAndTeams(ArrayList<Player> players) {
         Set<String> teams = new TreeSet<>();
+        Set<String> positions = new TreeSet<>();
+
 
         for (Player player : players){
             String team = player.getTeam();
             teams.add(team);
         }
 
+        for (Player player : players){
+            String position = player.getPosition();
+            positions.add(position);
+        }
+
         positionFilter.getItems().add("All");
         teamFilter.getItems().add("All");
-        //Move all FB to RB position later on
-        //Possibly move Taysom Hill to TE
-        Set<String> positions = new TreeSet<>(List.of("QB", "TE","K", "RB", "WR"));
 
         positionFilter.getItems().addAll(positions);
         teamFilter.getItems().addAll(teams);

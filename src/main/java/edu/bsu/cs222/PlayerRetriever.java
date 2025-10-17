@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerRetriever {
-    private ArrayList<Player> playerArrayList = new ArrayList<>();
+    private final ArrayList<Player> playerArrayList = new ArrayList<>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     public void createAndSavePlayerListFromApi() throws InterruptedException, IOException {
@@ -62,44 +62,58 @@ public class PlayerRetriever {
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
             String pos = player.getString("pos");
-            if (Objects.equals(pos, "FB")){
+            String espnName = player.getString("espnName");
+
+            if (pos.equals("FB")){
                 pos = "RB";
             }
-            else if(Objects.equals(pos, "PK")){
+
+            if (pos.equals("PK")){
                 pos = "K";
             }
-            if (Objects.equals(pos, "RB") || Objects.equals(pos, "QB")
-                    || Objects.equals(pos, "WR") || Objects.equals(pos, "TE") || Objects.equals(pos, "K")) {
-                String espnName = player.getString("espnName");
+
+            if (espnName.equals("Taysom Hill")){
+                pos = "TE";
+            }
+
+
+            if (pos.equals("RB") || pos.equals("QB")
+                    || pos.equals("WR") || pos.equals("TE") || pos.equals("K")) {
                 String team = player.getString("team");
                 String jerseyNum = player.getString("jerseyNum");
                 String height = player.getString("height");
                 String weight = player.getString("weight");
-                String age = "";
+                String school = player.getString("school");
+                String playerID = player.getString("playerID");
+                String teamID = player.getString("teamID");
+                String exp = player.getString("exp");
+                JSONObject injury = player.getJSONObject("injury");
+
+                String age;
+
                 try {
                     age = player.getString("age");
                 } catch (JSONException e) {
                     age = "not found";
                 }
-                String bDay = "";
+
+                String bDay;
                 try {
                     bDay = player.getString("bDay");
                 } catch (JSONException e) {
                     bDay = "not found";
                 }
-                String espnHeadshot = "";
+
+                String espnHeadshot;
                 try {
                     espnHeadshot = player.getString("espnHeadshot");
                 } catch (JSONException e) {
                     espnHeadshot = "not found";
                 }
-                JSONObject injury = player.getJSONObject("injury");
-                String school = player.getString("school");
-                String playerID = player.getString("playerID");
-                String teamID = player.getString("teamID");
-                String exp = player.getString("exp");
+
                 Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
                         espnHeadshot, injury, school, playerID, teamID, exp);
+
                 playerArrayList.add(newPlayer);
             }
         }
