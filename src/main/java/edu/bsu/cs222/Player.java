@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Player {
     private String name;
+    private String shortName;
     private String position;
     private String team;
     private String jerseyNumber;
@@ -51,10 +52,11 @@ public class Player {
         this.teamID = teamID;
         this.experience = experience;
         this.bDay = bDay;
-    }
-    public Player(){
 
+        this.shortName = name.charAt(0) + ". " + name.split(" ")[1];
     }
+
+    public Player(){}
 
     public String getName() {
         return name;
@@ -278,5 +280,9 @@ public class Player {
 
     public void setFumbles(int fumbles) {
         this.fumbles = fumbles;
+    }
+
+    public String getShortName() {
+        return shortName;
     }
 }
