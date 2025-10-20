@@ -26,7 +26,8 @@ public class PlayerCellController {
     }
 
     public void setData(Player player){
-        nameLbl.setText(player.getName() == null ? "" : player.getName());
+        int MAX_CHARACTERS = 15;
+        nameLbl.setText(player.getName() == null ? "" : player.getName().length() <= MAX_CHARACTERS ? player.getName() : player.getShortName());
         positionLbl.setText(player.getPosition() == null ? "" : player.getPosition());
 
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
