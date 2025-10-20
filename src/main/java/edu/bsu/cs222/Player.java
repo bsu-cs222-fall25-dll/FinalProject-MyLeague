@@ -56,6 +56,11 @@ public class Player {
         this.shortName = name.charAt(0) + ". " + name.split(" ")[1];
     }
 
+    public Player(String name){
+        this.name = name;
+        this.shortName = name.charAt(0) + ". " + name.split(" ")[1];
+    }
+
     public Player(){}
 
     public String getName() {

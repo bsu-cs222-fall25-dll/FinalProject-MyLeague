@@ -43,4 +43,10 @@ public class PlayerTest {
         Assertions.assertEquals(0.676, Burrow.getCompletionPCT());
     }
 
+    @Test
+    void testShortNameConstructing(){
+        Player chris = new Player("Chris Burke");
+        Assertions.assertEquals("C. Burke", chris.getShortName());
+
+    }
 }
