@@ -15,7 +15,7 @@ public class GraphicalUserInterface extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/sample.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayersView.fxml")));
         Scene scene = new Scene(loader.load(), 600, 400);
 
         PlayersViewController controller = loader.getController();
