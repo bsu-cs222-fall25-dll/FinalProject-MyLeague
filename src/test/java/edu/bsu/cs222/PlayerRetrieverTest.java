@@ -12,10 +12,10 @@ import java.util.Objects;
 public class PlayerRetrieverTest {
 
     @Test
-    void testFirstPlayerNameInListIsJackCoco() throws IOException {
+    void testFirstPlayerNameInListIsTysonWilliams() throws IOException {
         PlayerRetriever retriever = new PlayerRetriever();
         retriever.createPlayerList(readSampleFileAsString());
-        Assertions.assertEquals("Jack Coco", retriever.getPlayerArrayList().getFirst().getName());
+        Assertions.assertEquals("Ty'Son Williams", retriever.getPlayerArrayList().getFirst().getName());
     }
 
     @Test
