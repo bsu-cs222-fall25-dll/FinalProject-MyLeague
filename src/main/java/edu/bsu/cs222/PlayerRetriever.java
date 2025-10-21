@@ -87,6 +87,9 @@ public class PlayerRetriever {
                 String playerID = player.getString("playerID");
                 String teamID = player.getString("teamID");
                 String exp = player.getString("exp");
+                if (exp.equals("R")){
+                    exp = "0";
+                }
                 JSONObject injury = player.getJSONObject("injury");
 
                 String age;
