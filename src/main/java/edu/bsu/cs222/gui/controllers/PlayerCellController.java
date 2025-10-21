@@ -11,7 +11,8 @@ import java.util.Objects;
 public class PlayerCellController {
     @FXML private ImageView headshot;
     @FXML private Label nameLbl;
-    @FXML private Label positionLbl;
+    @FXML private Label detailsLbl;
+    @FXML private Label statsLbl;
 
     private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayerCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
@@ -26,9 +27,17 @@ public class PlayerCellController {
     }
 
     public void setData(Player player){
-        int MAX_CHARACTERS = 15;
-        nameLbl.setText(player.getName() == null ? "" : player.getName().length() <= MAX_CHARACTERS ? player.getName() : player.getShortName());
-        positionLbl.setText(player.getPosition() == null ? "" : player.getPosition());
+        String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
+        String playerPosition = (player.getPosition() == null ? "NA" : player.getPosition());
+        String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
+        String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
+        String playerHeight = (player.getHeight() == null ? "NA" : player.getHeight());
+        String playerWeight = (player.getWeight() == null ? "NA" : player.getWeight());
+        String playerSchool = (player.getSchool() == null ? "NA" : player.getSchool());
+
+        nameLbl.setText(String.format("%s #%s", player.getName(), playerNumber));
+        detailsLbl.setText(String.format("%s | %s | %s", playerTeam, playerPosition, playerSchool));
+        statsLbl.setText(String.format("Exp: %syr | %s %slbs", playerExp, playerHeight, playerWeight));
 
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
 
