@@ -35,6 +35,44 @@ public class Player {
     private int interceptions;
     private String matchup;
 
+    public int getExtraPointsMade() {
+        return extraPointsMade;
+    }
+
+    public void setExtraPointsMade(int extraPointsMade) {
+        this.extraPointsMade = extraPointsMade;
+    }
+
+    public int getFieldGoalsMade() {
+        return fieldGoalsMade;
+    }
+
+    public void setFieldGoalsMade(int fieldGoalsMade) {
+        this.fieldGoalsMade = fieldGoalsMade;
+    }
+
+    public int getFieldGoalAttempts() {
+        return fieldGoalAttempts;
+    }
+
+    public void setFieldGoalAttempts(int fieldGoalAttempts) {
+        this.fieldGoalAttempts = fieldGoalAttempts;
+    }
+
+    public int getExtraPointAttempts() {
+        return extraPointAttempts;
+    }
+
+    public void setExtraPointAttempts(int extraPointAttempts) {
+        this.extraPointAttempts = extraPointAttempts;
+    }
+
+    private int fieldGoalsMade;
+    private int fieldGoalAttempts;
+    private int extraPointsMade;
+    private int extraPointAttempts;
+
+
     public Player(String name, String position, String team, String jerseyNumber, String height,
                   String weight, String age, String bDay, String headshot, JSONObject injury, String school,
                   String playerID, String teamID, String experience) {
@@ -268,7 +306,8 @@ public class Player {
     }
     public double getScore(){
         return ((this.rushYd+this.receivingYd) * 0.1 + (this.rushTD+this.receivingTD)*7
-                + this.passTD * 4 + this.passYd *0.04 + this.receptions - this.interceptions*2 - this.fumbles*2);
+                + this.passTD * 4 + this.passYd *0.04 + this.receptions - this.interceptions*2 - this.fumbles*2
+        - this.extraPointAttempts + this.extraPointsMade*2 - this.fieldGoalAttempts + this.fieldGoalsMade*4);
     }
 
     public int getInterceptions() {
