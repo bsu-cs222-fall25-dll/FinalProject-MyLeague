@@ -42,5 +42,14 @@ public class PlayerTest {
         Burrow.setPassAtt(37);
         Assertions.assertEquals(0.676, Burrow.getCompletionPCT());
     }
+    @Test
+    void testKickerPoints(){
+        Player YoungHoe_Koo = new Player();
+        YoungHoe_Koo.setExtraPointAttempts(3);
+        YoungHoe_Koo.setExtraPointsMade(2);
+        YoungHoe_Koo.setFieldGoalAttempts(4);
+        YoungHoe_Koo.setFieldGoalsMade(3);
+        Assertions.assertEquals(9, YoungHoe_Koo.getScore());
+    }
 
 }
