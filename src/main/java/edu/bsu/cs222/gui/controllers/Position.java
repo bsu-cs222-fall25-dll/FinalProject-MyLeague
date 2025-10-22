@@ -6,5 +6,5 @@ public enum Position {
     WR,
     K,
     TE,
-    Flex
+    FLEX
 }

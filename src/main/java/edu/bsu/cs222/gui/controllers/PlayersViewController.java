@@ -1,16 +1,20 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.GraphicalUserInterface;
 import edu.bsu.cs222.Player;
+import edu.bsu.cs222.PlayerRetriever;
 import edu.bsu.cs222.gui.PlayerCell;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PlayersViewController {
@@ -20,12 +24,16 @@ public class PlayersViewController {
     @FXML private ComboBox<String> positionFilter;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, InterruptedException {
         listView.setFixedCellSize(70);
         listView.setCellFactory(lv -> new PlayerCell());
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
+
+        PlayerRetriever retriever = new PlayerRetriever();
+        retriever.getPlayersFromJsonOrApi();
+        setPlayers(retriever.getPlayerArrayList());
     }
 
     public void setPlayers(ArrayList<Player> players) {
@@ -87,11 +95,15 @@ public class PlayersViewController {
         teamFilter.getItems().add("All");
 
         for (Position position: Position.values()){
-            if(position != Position.Flex){
+            if(position != Position.FLEX){
                 positionFilter.getItems().add(position.toString());
             }
         }
 
         teamFilter.getItems().addAll(teams);
+    }
+
+    public void openTeamView(ActionEvent actionEvent) throws IOException {
+        GraphicalUserInterface.setRoot("/TeamView.fxml");
     }
 }

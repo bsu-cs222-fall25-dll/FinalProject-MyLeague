@@ -12,32 +12,32 @@ public class DraftTest {
 
     @Test
     void testDraftReturnsTitle(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         Assertions.assertEquals("Default" , draft.getTitle());
     }
 
     @Test
     void testDraftReturnsPositions(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
-        Assertions.assertEquals(new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)), draft.getTeamPositions());
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
+        Assertions.assertEquals(new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)), draft.getTeamPositions());
     }
 
     @Test
     void testGetTeamNamesReturnsEmpty(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         Assertions.assertTrue(draft.getTeamNames().isEmpty());
     }
 
     @Test
     void testGetTeamNamesReturnsAddedTeam(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         draft.addTeam("Test");
         Assertions.assertEquals("Test", draft.getTeamNames().getFirst());
     }
 
     @Test
     void testGetTeamNamesReturnsAddedTeams(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         draft.addTeam("Test0");
         draft.addTeam("Test1");
         Assertions.assertEquals(new ArrayList<>(List.of("Test0", "Test1")), draft.getTeamNames());
@@ -45,20 +45,20 @@ public class DraftTest {
 
     @Test
     void testGetTeamByNameReturnsTeam(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         draft.addTeam("Test");
         Assertions.assertEquals("Test", draft.getTeamByName("Test").getName());
     }
 
     @Test
     void testGetTeamByNameReturnsNull(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         Assertions.assertNull(draft.getTeamByName("Test"));
     }
 
     @Test
     void testGetTeamByNameReflectsAddedPlayer(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         draft.addTeam("Test");
         Player player = new Player("Chris Burke");
         draft.getTeamByName("Test").addPlayer(player, QB);
@@ -67,15 +67,15 @@ public class DraftTest {
 
     @Test
     void testGetFreePositionsReturnsFreePositions(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, FLEX)));
         draft.addTeam("Test");
         draft.getTeamByName("Test").addPlayer(new Player("Chris Burke"), QB);
-        Assertions.assertEquals(Flex, draft.getTeamByName("Test").getFreePositions().getFirst());
+        Assertions.assertEquals(FLEX, draft.getTeamByName("Test").getFreePositions().getFirst());
     }
 
     @Test
     void testPlayerIsRemoved(){
-        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, Flex)));
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, FLEX)));
         draft.addTeam("Test");
         Player player = new Player("Chris Burke");
         draft.getTeamByName("Test").addPlayer(player, QB);

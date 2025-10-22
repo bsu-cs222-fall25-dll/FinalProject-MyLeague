@@ -21,6 +21,7 @@ public class Draft {
     }
 
     public  ArrayList<Position> getTeamPositions() {
+        Collections.sort(teamPositions);
         return teamPositions;
     }
 
