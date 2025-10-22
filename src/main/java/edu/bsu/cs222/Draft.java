@@ -22,11 +22,24 @@ public class Draft {
         return teamPositions;
     }
 
+    public Team getTeamByName(String name){
+        for(Team team: teams){
+            if(team.getName().equals(name)){
+                return team;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<String> getTeamNames(){
         ArrayList<String> teamNames = new ArrayList<>();
         for (Team team: teams){
             teamNames.add(team.getName());
         }
         return teamNames;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
