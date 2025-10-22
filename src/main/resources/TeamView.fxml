@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
+    <columnConstraints>
+        <ColumnConstraints maxWidth="103.6" minWidth="98.0" prefWidth="103.6" />
+        <ColumnConstraints maxWidth="17.0" minWidth="0.0" prefWidth="0.0" />
+        <ColumnConstraints maxWidth="375.0" minWidth="0.0" prefWidth="363.0" />
+        <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+        <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="37.8000244140625" minHeight="10.0" prefHeight="37.8000244140625" />
+        <RowConstraints maxHeight="384.1999816894531" minHeight="362.5999755859375" prefHeight="362.5999755859375" />
+    </rowConstraints>
+    <VBox prefHeight="408.0" prefWidth="100.0" GridPane.rowIndex="1" />
+    <ListView id="listView" fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+    <TextField fx:id="searchField" promptText="Search player name" GridPane.columnIndex="2" />
+    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+        <GridPane.margin>
+            <Insets />
+        </GridPane.margin>
+    </ComboBox>
+</GridPane>
