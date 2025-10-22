@@ -87,7 +87,9 @@ public class PlayersViewController {
         teamFilter.getItems().add("All");
 
         for (Position position: Position.values()){
-            positionFilter.getItems().add(position.toString());
+            if(position != Position.Flex){
+                positionFilter.getItems().add(position.toString());
+            }
         }
 
         teamFilter.getItems().addAll(teams);

@@ -5,5 +5,6 @@ public enum Position {
     QB,
     WR,
     K,
-    TE
+    TE,
+    Flex
 }
