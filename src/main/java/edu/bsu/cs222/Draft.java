@@ -3,19 +3,21 @@ package edu.bsu.cs222;
 import edu.bsu.cs222.gui.controllers.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class Draft {
-    private ArrayList<Team> teams = new ArrayList<>();
-    private ArrayList<Position> teamPositions;
-    private String title;
+    private final ArrayList<Team> teams = new ArrayList<>();
+    private final ArrayList<Position> teamPositions;
+    private final String title;
 
     public Draft(String title, ArrayList<Position> teamPositons){
         this.title = title;
         this.teamPositions = teamPositons;
     }
 
-    public void addTeam(Team team){
-        teams.add(team);
+    public void addTeam(String teamName){
+        teams.add(new Team(teamName, teamPositions));
     }
 
     public  ArrayList<Position> getTeamPositions() {
@@ -41,5 +43,39 @@ public class Draft {
 
     public String getTitle() {
         return title;
+    }
+
+    public static class Team {
+        private final String teamName;
+        private final HashMap<Player, Position> playerMap = new HashMap<>();
+        private final ArrayList<Position> freePositions;
+
+        private Team(String teamName, ArrayList<Position> positions) {
+            this.teamName = teamName;
+            freePositions = positions;
+        }
+
+        public void addPlayer(Player player, Position position){
+            playerMap.put(player, position);
+            freePositions.remove(position);
+        }
+
+        public ArrayList<Position> getFreePositions(){
+            Collections.sort(freePositions);
+            return freePositions;
+        }
+
+        public void removePlayer(Player player){
+            freePositions.add(playerMap.get(player));
+            playerMap.remove(player);
+        }
+
+        public String getName(){
+            return teamName;
+        }
+
+        public ArrayList<Player> getPlayers(){
+            return new ArrayList<>(playerMap.keySet());
+        }
     }
 }
