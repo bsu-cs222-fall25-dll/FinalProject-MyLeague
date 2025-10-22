@@ -1,5 +1,6 @@
 package edu.bsu.cs222;
 
+import edu.bsu.cs222.gui.controllers.Position;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 public class Player {
     private String name;
     private String shortName;
-    private String position;
+    private Position position;
     private String team;
     private String jerseyNumber;
     private String height;
@@ -73,7 +74,7 @@ public class Player {
     private int extraPointAttempts;
 
 
-    public Player(String name, String position, String team, String jerseyNumber, String height,
+    public Player(String name, Position position, String team, String jerseyNumber, String height,
                   String weight, String age, String bDay, String headshot, JSONObject injury, String school,
                   String playerID, String teamID, String experience) {
         this.name = name;
@@ -109,11 +110,11 @@ public class Player {
         this.name = name;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 

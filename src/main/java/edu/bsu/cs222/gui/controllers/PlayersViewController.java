@@ -40,10 +40,10 @@ public class PlayersViewController {
             ArrayList<String> queries = (searchText == null || searchText.isBlank()) ? new ArrayList<>(): new ArrayList<>(Arrays.asList(searchText.toLowerCase().split("\\s+")));
             if (!runSearch(queries, player)) {return false;}
 
-            String position = positionFilter.getValue();
-            if (!position.isBlank()){
-                if(!position.equals("All")){
-                    if (!player.getPosition().equals(position)) {return false;}
+            String positionString = positionFilter.getValue();
+            if (!positionString.isBlank()){
+                if(!positionString.equals("All")){
+                    if (player.getPosition() != Position.valueOf(positionString)) {return false;}
                 }
             }
 
@@ -78,23 +78,18 @@ public class PlayersViewController {
 
     public void setPositionsAndTeams(ArrayList<Player> players) {
         Set<String> teams = new TreeSet<>();
-        Set<String> positions = new TreeSet<>();
-
-
         for (Player player : players){
             String team = player.getTeam();
             teams.add(team);
         }
 
-        for (Player player : players){
-            String position = player.getPosition();
-            positions.add(position);
-        }
-
         positionFilter.getItems().add("All");
         teamFilter.getItems().add("All");
 
-        positionFilter.getItems().addAll(positions);
+        for (Position position: Position.values()){
+            positionFilter.getItems().add(position.toString());
+        }
+
         teamFilter.getItems().addAll(teams);
     }
 }

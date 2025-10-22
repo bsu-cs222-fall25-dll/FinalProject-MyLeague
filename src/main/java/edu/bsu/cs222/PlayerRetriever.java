@@ -1,5 +1,6 @@
 package edu.bsu.cs222;
 
+import edu.bsu.cs222.gui.controllers.Position;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,24 +62,31 @@ public class PlayerRetriever {
         JSONArray players = jsonObject.getJSONArray("body");
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
-            String pos = player.getString("pos");
+            String posString = player.getString("pos");
             String espnName = player.getString("espnName");
 
-            if (pos.equals("FB")){
-                pos = "RB";
+            if (posString.equals("FB")){
+                posString = "RB";
             }
 
-            if (pos.equals("PK")){
-                pos = "K";
+            if (posString.equals("PK")){
+                posString = "K";
             }
 
             if (espnName.equals("Taysom Hill")){
-                pos = "TE";
+                posString = "TE";
             }
 
+            Position posObject = null;
 
-            if (pos.equals("RB") || pos.equals("QB")
-                    || pos.equals("WR") || pos.equals("TE") || pos.equals("K")) {
+            for (Position position : Position.values()){
+                if (posString.equals(position.toString())){
+                    posObject = position;
+                    break;
+                }
+            }
+
+            if (posObject != null) {
                 String team = player.getString("team");
                 String jerseyNum = player.getString("jerseyNum");
                 String height = player.getString("height");
@@ -111,7 +119,7 @@ public class PlayerRetriever {
                     espnHeadshot = "not found";
                 }
 
-                Player newPlayer = new Player(espnName, pos, team, jerseyNum, height, weight, age, bDay,
+                Player newPlayer = new Player(espnName, posObject, team, jerseyNum, height, weight, age, bDay,
                         espnHeadshot, injury, school, playerID, teamID, exp);
 
                 playerArrayList.add(newPlayer);

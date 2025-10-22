@@ -28,7 +28,7 @@ public class PlayerCellController {
 
     public void setData(Player player){
         String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
-        String playerPosition = (player.getPosition() == null ? "NA" : player.getPosition());
+        String playerPosition = (player.getPosition() == null ? "NA" : player.getPosition().toString());
         String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
         String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
         String playerHeight = (player.getHeight() == null ? "NA" : player.getHeight());
