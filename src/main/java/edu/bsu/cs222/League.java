@@ -46,7 +46,7 @@ public class League {
         return name;
     }
 
-    public class Team {
+    public static class Team {
         private final String teamName;
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;

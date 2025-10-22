@@ -21,7 +21,7 @@ public class GraphicalUserInterface extends Application {
     private static final ArrayList<League> leagueList = new ArrayList<>();
 
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
+    public void start(Stage stage) throws IOException {
         leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
         FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayersView.fxml")));
         scene = new Scene(playersViewLoader.load(), 600, 400);

@@ -9,7 +9,6 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,9 +36,11 @@ public class PlayersViewController {
     @FXML private ComboBox<String> positionFilter;
 
     private League currentLeague = GraphicalUserInterface.getLeagueList().getFirst();
-    private String leagueString = "Default";
+    private String leagueString = GraphicalUserInterface.getLeagueList().getFirst().getName();
     private String previousLeagueString = "Default";
-    private boolean ignoreSelection = false;
+    private String previousTeamString = "None";
+
+//TODO: Fix new modal opening after league/team creation
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -47,8 +49,7 @@ public class PlayersViewController {
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
-        leagueSelector.setValue("Default");
-        teamSelector.setValue("No Teams");
+        leagueSelector.setValue(leagueString);
 
         PlayerRetriever retriever = new PlayerRetriever();
         retriever.getPlayersFromJsonOrApi();
@@ -91,19 +92,14 @@ public class PlayersViewController {
 
         setLeagueItems();
 
-        teamSelector.getItems().add("Create");
+        setTeamItems(GraphicalUserInterface.getLeagueList().getFirst());
+        teamSelector.setValue(teamSelector.getItems().getFirst());
 
         leagueSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (ignoreSelection) {return;}
-
             leagueString = leagueSelector.getValue();
-            if (!Objects.equals(leagueString, "Create")){
-                previousLeagueString = leagueString;
-            }
 
             if (Objects.equals(leagueString, "Create")) {
                 try {
-                    ignoreSelection = true;
                     teamSelector.getSelectionModel().clearSelection();
                     setDisable(true);
                     leagueCreator();
@@ -111,24 +107,15 @@ public class PlayersViewController {
                     throw new RuntimeException(e);
                 }
             } else {
+                previousLeagueString = leagueString;
                 for (League league : GraphicalUserInterface.getLeagueList()) {
                     if (league.toString().equals(leagueString)) {
                         if (currentLeague != league) {
                             currentLeague = league;
-                            teamSelector.getItems().removeAll();
+                            setTeamItems(league);
+                            teamSelector.setValue(teamSelector.getItems().getFirst());
                         }
                     }
-                }
-            }
-
-            if (currentLeague != null) {
-                if(currentLeague.getTeamNames().isEmpty()){
-                    teamSelector.getItems().add("None");
-                    teamSelector.getItems().add("Create");
-                }
-                else {
-                    teamSelector.getItems().addAll(currentLeague.getTeamNames());
-                    teamSelector.getItems().add("Create");
                 }
             }
         });
@@ -136,9 +123,20 @@ public class PlayersViewController {
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
             String teamName = teamSelector.getValue();
 
-            if (teamName.equals("Create")) {
-                leagueSelector.setValue(" ");
-                setDisable(true);
+            if (Objects.equals(teamName, "Create")) {
+                try {
+                    setDisable(true);
+                    for(League league: GraphicalUserInterface.getLeagueList()){
+                        if (league.getName().equals(leagueSelector.getValue())){
+                            teamCreator(league);
+                            return;
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                previousTeamString = teamName;
             }
         });
     }
@@ -174,7 +172,7 @@ public class PlayersViewController {
         teamFilter.getItems().addAll(teams);
     }
 
-    public void openTeamView(ActionEvent actionEvent) throws IOException {
+    public void openTeamView() throws IOException {
         GraphicalUserInterface.setRoot("/TeamView.fxml");
     }
 
@@ -201,16 +199,11 @@ public class PlayersViewController {
         Button createButton = (Button) root.lookup("#createButton");
         TextField nameField = (TextField) root.lookup("#nameField");
 
-        createButton.setOnAction(e ->{
-            if (!nameField.getText().isBlank()){
-                League league = new League(nameField.getText(), new ArrayList<>(List.of(QB, RB, TE, K, FLEX)));
-                GraphicalUserInterface.addLeague(league);
-                setLeagueItems();
-                leagueSelector.setValue(league.getName());
-                teamSelector.setValue("None");
-                setDisable(false);
-                creator.close();
-                ignoreSelection = false;
+        createButton.setOnAction(e -> createLeague(nameField.getText(), creator));
+
+        createButton.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                createLeague(nameField.getText(), creator);
             }
         });
 
@@ -224,6 +217,36 @@ public class PlayersViewController {
         creator.show();
     }
 
+    private void teamCreator(League league) throws IOException {
+        Stage creator = new Stage();
+        creator.initModality(Modality.APPLICATION_MODAL);
+        creator.setTitle("Team Creator");
+
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/TeamCreatorModal.fxml")));
+        Parent root = loader.load();
+
+        creator.setScene(new Scene(root));
+
+        Button cancelButton = (Button) root.lookup("#cancelButton");
+        Button createButton = (Button) root.lookup("#createButton");
+        TextField nameField = (TextField) root.lookup("#nameField");
+
+        createButton.setOnAction(e -> createTeam(nameField.getText(), creator, league));
+
+        createButton.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                createTeam(nameField.getText(), creator, league);
+            }
+        });
+
+        cancelButton.setOnAction(e ->{
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.show();
+    }
     private void setLeagueItems(){
         ArrayList<String> leagueItemList = new ArrayList<>();
         for (League league: GraphicalUserInterface.getLeagueList()){
@@ -231,5 +254,39 @@ public class PlayersViewController {
         }
         leagueItemList.add("Create");
         leagueSelector.setItems(FXCollections.observableList(leagueItemList));
+    }
+
+    private void setTeamItems(League league){
+        ArrayList<String> teamItemList = new ArrayList<>();
+        if(league.getTeamNames().isEmpty()){
+            teamItemList.add("None");
+        }
+        else {
+            teamItemList.addAll(league.getTeamNames());
+        }
+        teamItemList.add("Create");
+        teamSelector.setItems(FXCollections.observableList(teamItemList));
+    }
+
+    private void createLeague(String text, Stage stage){
+        if (!text.isBlank()){
+            League league = new League(text, new ArrayList<>(List.of(QB, RB, TE, K, FLEX)));
+            GraphicalUserInterface.addLeague(league);
+            setLeagueItems();
+            leagueSelector.setValue(text);
+            teamSelector.setValue("None");
+            setDisable(false);
+            stage.close();
+        }
+    }
+
+    private void createTeam(String text, Stage stage, League league){
+        if (!text.isBlank()){
+            league.addTeam(text);
+            setTeamItems(league);
+            teamSelector.setValue(text);
+            setDisable(false);
+            stage.close();
+        }
     }
 }
