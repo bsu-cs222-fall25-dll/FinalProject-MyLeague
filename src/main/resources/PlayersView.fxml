@@ -17,9 +17,18 @@
         <RowConstraints maxHeight="37.8000244140625" minHeight="10.0" prefHeight="37.8000244140625" />
         <RowConstraints maxHeight="384.1999816894531" minHeight="362.5999755859375" prefHeight="362.5999755859375" />
     </rowConstraints>
-    <VBox prefHeight="408.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <VBox prefHeight="408.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button fx:id="teamViewButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
+        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin></ComboBox>
+        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin></ComboBox>
+    </VBox>
     <ListView id="listView" fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-   <Button fx:id="teamViewButton" mnemonicParsing="false" text="MyTeam" GridPane.columnIndex="1" onAction="#openTeamView"/>
     <TextField fx:id="searchField" promptText="Search player name" GridPane.columnIndex="3" />
     <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER">
         <GridPane.margin>

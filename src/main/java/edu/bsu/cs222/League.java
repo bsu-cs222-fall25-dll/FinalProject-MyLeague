@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class League {
     private final ArrayList<Team> teams = new ArrayList<>();
     private final ArrayList<Position> teamPositions;
-    private final String title;
+    private final String name;
 
-    public League(String title, ArrayList<Position> teamPositons){
-        this.title = title;
+    public League(String name, ArrayList<Position> teamPositons){
+        this.name = name;
         this.teamPositions = teamPositons;
     }
 
@@ -42,11 +42,11 @@ public class League {
         return teamNames;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public static class Team {
+    public class Team {
         private final String teamName;
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;

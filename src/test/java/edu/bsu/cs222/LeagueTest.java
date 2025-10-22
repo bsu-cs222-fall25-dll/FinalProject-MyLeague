@@ -13,7 +13,7 @@ public class LeagueTest {
     @Test
     void testDraftReturnsTitle(){
         League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
-        Assertions.assertEquals("Default" , league.getTitle());
+        Assertions.assertEquals("Default" , league.getName());
     }
 
     @Test

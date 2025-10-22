@@ -18,10 +18,11 @@ public class GraphicalUserInterface extends Application {
     }
 
     private static Scene scene;
+    private static final ArrayList<League> leagueList = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        League defaultLeague = new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)));
+        leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
         FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayersView.fxml")));
         scene = new Scene(playersViewLoader.load(), 600, 400);
 
@@ -33,5 +34,13 @@ public class GraphicalUserInterface extends Application {
     public static void setRoot(String fxmlFile) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(GraphicalUserInterface.class.getResource(fxmlFile)));
         scene.setRoot(root);
+    }
+
+    public static ArrayList<League> getLeagueList(){
+        return leagueList;
+    }
+
+    public static void addLeague(League league){
+        leagueList.add(league);
     }
 }
