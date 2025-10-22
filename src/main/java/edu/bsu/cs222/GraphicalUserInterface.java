@@ -21,7 +21,7 @@ public class GraphicalUserInterface extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
-        Draft defaultDraft = new Draft("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)));
+        League defaultLeague = new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)));
         FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayersView.fxml")));
         scene = new Scene(playersViewLoader.load(), 600, 400);
 

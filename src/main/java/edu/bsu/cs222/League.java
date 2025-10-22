@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class Draft {
+public class League {
     private final ArrayList<Team> teams = new ArrayList<>();
     private final ArrayList<Position> teamPositions;
     private final String title;
 
-    public Draft(String title, ArrayList<Position> teamPositons){
+    public League(String title, ArrayList<Position> teamPositons){
         this.title = title;
         this.teamPositions = teamPositons;
     }

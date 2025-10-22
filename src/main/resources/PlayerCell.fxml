@@ -15,4 +15,5 @@
         <Label fx:id="detailsLbl" text="Label" />
         <Label fx:id="statsLbl" text="Label" />
     </VBox>
+   <Button mnemonicParsing="false" text="Button" />
 </HBox>
