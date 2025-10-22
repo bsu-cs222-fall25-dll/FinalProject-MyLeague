@@ -64,4 +64,22 @@ public class DraftTest {
         draft.getTeamByName("Test").addPlayer(player, QB);
         Assertions.assertEquals(player, draft.getTeamByName("Test").getPlayers().getFirst());
     }
+
+    @Test
+    void testGetFreePositionsReturnsFreePositions(){
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, Flex)));
+        draft.addTeam("Test");
+        draft.getTeamByName("Test").addPlayer(new Player("Chris Burke"), QB);
+        Assertions.assertEquals(Flex, draft.getTeamByName("Test").getFreePositions().getFirst());
+    }
+
+    @Test
+    void testPlayerIsRemoved(){
+        Draft draft = new Draft("Default", new ArrayList<>(List.of(QB, Flex)));
+        draft.addTeam("Test");
+        Player player = new Player("Chris Burke");
+        draft.getTeamByName("Test").addPlayer(player, QB);
+        draft.getTeamByName("Test").removePlayer(player);
+        Assertions.assertTrue(draft.getTeamByName("Test").getPlayers().isEmpty());
+    }
 }
