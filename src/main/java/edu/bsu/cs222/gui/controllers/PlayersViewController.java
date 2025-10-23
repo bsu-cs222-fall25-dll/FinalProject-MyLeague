@@ -35,12 +35,8 @@ public class PlayersViewController {
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
 
-    private League currentLeague = GraphicalUserInterface.getLeagueList().getFirst();
-    private String leagueString = GraphicalUserInterface.getLeagueList().getFirst().getName();
     private String previousLeagueString = "Default";
     private String previousTeamString = "None";
-
-//TODO: Fix new modal opening after league/team creation
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -49,7 +45,7 @@ public class PlayersViewController {
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
-        leagueSelector.setValue(leagueString);
+        leagueSelector.setValue("Default");
 
         PlayerRetriever retriever = new PlayerRetriever();
         retriever.getPlayersFromJsonOrApi();
@@ -96,9 +92,7 @@ public class PlayersViewController {
         teamSelector.setValue(teamSelector.getItems().getFirst());
 
         leagueSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
-            leagueString = leagueSelector.getValue();
-
-            if (Objects.equals(leagueString, "Create")) {
+            if (Objects.equals(newVal, "Create")) {
                 try {
                     teamSelector.getSelectionModel().clearSelection();
                     setDisable(true);
@@ -107,36 +101,27 @@ public class PlayersViewController {
                     throw new RuntimeException(e);
                 }
             } else {
-                previousLeagueString = leagueString;
-                for (League league : GraphicalUserInterface.getLeagueList()) {
-                    if (league.toString().equals(leagueString)) {
-                        if (currentLeague != league) {
-                            currentLeague = league;
-                            setTeamItems(league);
-                            teamSelector.setValue(teamSelector.getItems().getFirst());
-                        }
-                    }
+                if (!Objects.equals(oldVal, "Create")) {previousLeagueString = oldVal;}
+                setTeamItems(Objects.requireNonNull(getLeagueByName(newVal)));
+                if (Objects.requireNonNull(getLeagueByName(newVal)).getTeamNames().isEmpty()){
+                    teamSelector.setValue("None");
+                }
+                else {
+                    teamSelector.setValue(teamSelector.getItems().getFirst());
                 }
             }
         });
 
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
-            String teamName = teamSelector.getValue();
-
-            if (Objects.equals(teamName, "Create")) {
+            if (Objects.equals(newVal, "Create")) {
                 try {
                     setDisable(true);
-                    for(League league: GraphicalUserInterface.getLeagueList()){
-                        if (league.getName().equals(leagueSelector.getValue())){
-                            teamCreator(league);
-                            return;
-                        }
-                    }
+                    teamCreator(getLeagueByName(leagueSelector.getValue()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                previousTeamString = teamName;
+                if (Objects.equals("Create", oldVal)) {previousTeamString = oldVal;}
             }
         });
     }
@@ -204,17 +189,26 @@ public class PlayersViewController {
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
                 createLeague(nameField.getText(), creator);
+                event.consume();
             }
         });
 
         cancelButton.setOnAction(e ->{
             leagueSelector.setValue(previousLeagueString);
-            teamSelector.setValue("None");
+            teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
         });
 
-        creator.show();
+        creator.setOnCloseRequest(event ->{
+            System.out.println(previousLeagueString);
+            leagueSelector.setValue(previousLeagueString);
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.showAndWait();
     }
 
     private void teamCreator(League league) throws IOException {
@@ -233,9 +227,10 @@ public class PlayersViewController {
 
         createButton.setOnAction(e -> createTeam(nameField.getText(), creator, league));
 
-        createButton.getScene().setOnKeyPressed(event -> {
+        creator.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
                 createTeam(nameField.getText(), creator, league);
+                event.consume();
             }
         });
 
@@ -245,7 +240,13 @@ public class PlayersViewController {
             creator.close();
         });
 
-        creator.show();
+        creator.setOnCloseRequest(event ->{
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.showAndWait();
     }
     private void setLeagueItems(){
         ArrayList<String> leagueItemList = new ArrayList<>();
@@ -274,7 +275,8 @@ public class PlayersViewController {
             GraphicalUserInterface.addLeague(league);
             setLeagueItems();
             leagueSelector.setValue(text);
-            teamSelector.setValue("None");
+            setTeamItems(league);
+            teamSelector.setValue(league.getTeamNames().isEmpty() ? "None" : league.getTeamNames().getFirst());
             setDisable(false);
             stage.close();
         }
@@ -288,5 +290,14 @@ public class PlayersViewController {
             setDisable(false);
             stage.close();
         }
+    }
+
+    private League getLeagueByName(String leagueName){
+        for (League league: GraphicalUserInterface.getLeagueList()){
+            if (leagueName.equals(league.getName())){
+                return league;
+            }
+        }
+        return null;
     }
 }
