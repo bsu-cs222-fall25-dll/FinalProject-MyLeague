@@ -41,11 +41,7 @@ public class PlayersViewController {
     @FXML
     public void initialize() throws IOException, InterruptedException {
         listView.setFixedCellSize(70);
-        listView.setCellFactory(lv -> {
-            PlayerCell cell = new PlayerCell();
-            cell.setParentController(this);
-            return cell;
-        });
+        listView.setCellFactory(lv -> new PlayerCell(this));
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
@@ -164,7 +160,7 @@ public class PlayersViewController {
         GraphicalUserInterface.setRoot("/TeamView.fxml");
     }
 
-    private void setDisable(boolean disable){
+    public void setDisable(boolean disable){
         leagueSelector.setDisable(disable);
         teamSelector.setDisable(disable);
         positionFilter.setDisable(disable);

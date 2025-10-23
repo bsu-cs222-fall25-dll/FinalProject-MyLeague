@@ -75,8 +75,8 @@ public class League {
             return teamName;
         }
 
-        public ArrayList<Player> getPlayers(){
-            return new ArrayList<>(playerMap.keySet());
+        public HashMap<Player, Position> getPlayerMap(){
+            return playerMap;
         }
     }
 }

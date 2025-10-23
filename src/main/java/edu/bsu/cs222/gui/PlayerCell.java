@@ -14,10 +14,9 @@ public class PlayerCell extends ListCell<Player> {
     private PlayerCellController controller;
     private Node view;
     private FXMLLoader loader;
-    private PlayersViewController parent;
+    private final PlayersViewController parent;
 
-    public PlayerCell() {
-    }
+    public PlayerCell(PlayersViewController parent) {this.parent = parent;}
 
     @Override
     protected void updateItem(Player player, boolean empty) {
@@ -45,9 +44,5 @@ public class PlayerCell extends ListCell<Player> {
 
         controller.setData(player);
         setGraphic(view);
-    }
-
-    public void setParentController(PlayersViewController parent) {
-        this.parent = parent;
     }
 }

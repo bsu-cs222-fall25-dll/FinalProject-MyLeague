@@ -1,10 +1,10 @@
 package edu.bsu.cs222.gui.controllers;
 
 public enum Position {
-    RB,
     QB,
+    RB,
     WR,
-    K,
     TE,
+    K,
     FLEX
 }
