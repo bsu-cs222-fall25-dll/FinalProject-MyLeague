@@ -41,8 +41,11 @@ public class PlayersViewController {
     @FXML
     public void initialize() throws IOException, InterruptedException {
         listView.setFixedCellSize(70);
-        listView.setCellFactory(lv -> new PlayerCell());
-
+        listView.setCellFactory(lv -> {
+            PlayerCell cell = new PlayerCell();
+            cell.setParentController(this);
+            return cell;
+        });
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
@@ -297,6 +300,13 @@ public class PlayersViewController {
             if (leagueName.equals(league.getName())){
                 return league;
             }
+        }
+        return null;
+    }
+
+    public League.Team getCurrentTeam(){
+        if (!Objects.equals(teamSelector.getValue(), "None")){
+            return Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamSelector.getValue());
         }
         return null;
     }

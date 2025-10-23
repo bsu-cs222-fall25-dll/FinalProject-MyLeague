@@ -2,6 +2,7 @@ package edu.bsu.cs222.gui;
 
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.gui.controllers.PlayerCellController;
+import edu.bsu.cs222.gui.controllers.PlayersViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
@@ -13,6 +14,7 @@ public class PlayerCell extends ListCell<Player> {
     private PlayerCellController controller;
     private Node view;
     private FXMLLoader loader;
+    private PlayersViewController parent;
 
     public PlayerCell() {
     }
@@ -33,6 +35,7 @@ public class PlayerCell extends ListCell<Player> {
             try {
                 view = loader.load();
                 controller = loader.getController();
+                controller.setParentController(parent);
             } catch (IOException e) {
                 setText("Failed to load cell");
                 setGraphic(null);
@@ -42,5 +45,9 @@ public class PlayerCell extends ListCell<Player> {
 
         controller.setData(player);
         setGraphic(view);
+    }
+
+    public void setParentController(PlayersViewController parent) {
+        this.parent = parent;
     }
 }

@@ -1,5 +1,6 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ public class PlayerCellController {
     @FXML private Label nameLbl;
     @FXML private Label detailsLbl;
     @FXML private Label statsLbl;
+    private PlayersViewController parent;
 
     private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayerCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
@@ -66,5 +68,14 @@ public class PlayerCellController {
         if (!headshotImage.isBackgroundLoading() && imageUrl.equals(lastUrl)){
             headshot.setImage(headshotImage);
         }
+    }
+
+    public void addPlayer() {
+        League.Team team = parent.getCurrentTeam();
+
+    }
+
+    public void setParentController(PlayersViewController parent) {
+        this.parent = parent;
     }
 }
