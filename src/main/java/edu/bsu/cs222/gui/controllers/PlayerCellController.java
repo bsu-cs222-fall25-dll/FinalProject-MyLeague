@@ -20,6 +20,7 @@ import java.util.Objects;
 import static edu.bsu.cs222.gui.controllers.Position.*;
 
 public class PlayerCellController {
+    @FXML private Button addPlayerButton;
     @FXML private ImageView headshot;
     @FXML private Label nameLbl;
     @FXML private Label detailsLbl;
@@ -80,9 +81,16 @@ public class PlayerCellController {
         if (!headshotImage.isBackgroundLoading() && imageUrl.equals(lastUrl)){
             headshot.setImage(headshotImage);
         }
+
+        League.Team currentTeam = parent.getCurrentTeam();
+
+        if (currentTeam != null ) {
+            addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getName()));
+        }
     }
 
     public void playerAdder() throws IOException {
+        //TODO: Error modal if team none
         parent.setDisable(true);
         League.Team team = parent.getCurrentTeam();
         Stage creator = new Stage();
@@ -139,14 +147,7 @@ public class PlayerCellController {
         parent.getCurrentTeam().addPlayer(currentPlayer, position);
         parent.setDisable(false);
         HashMap<Player, Position> map = parent.getCurrentTeam().getPlayerMap();
-        for (Player key: map.keySet()){
-            System.out.println(key.getName() +" " + map.get(key));
-        }
-        System.out.println();
-        for (Position position0: parent.getCurrentTeam().getFreePositions()){
-            System.out.println(position0);
-        }
-        System.out.println();
         stage.close();
+        addPlayerButton.setDisable(true);
     }
 }

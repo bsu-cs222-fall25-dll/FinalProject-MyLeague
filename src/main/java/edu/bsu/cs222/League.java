@@ -50,6 +50,7 @@ public class League {
         private final String teamName;
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;
+        private final ArrayList<String> playerNameList = new ArrayList<>();
 
         private Team(String teamName, ArrayList<Position> positions) {
             this.teamName = teamName;
@@ -59,6 +60,7 @@ public class League {
         public void addPlayer(Player player, Position position){
             playerMap.put(player, position);
             freePositions.remove(position);
+            playerNameList.add(player.getName());
         }
 
         public ArrayList<Position> getFreePositions(){
@@ -69,6 +71,7 @@ public class League {
         public void removePlayer(Player player){
             freePositions.add(playerMap.get(player));
             playerMap.remove(player);
+            playerNameList.remove(player.getName());
         }
 
         public String getName(){
@@ -77,6 +80,10 @@ public class League {
 
         public HashMap<Player, Position> getPlayerMap(){
             return playerMap;
+        }
+
+        public ArrayList<String> getPlayerNameList(){
+            return playerNameList;
         }
     }
 }
