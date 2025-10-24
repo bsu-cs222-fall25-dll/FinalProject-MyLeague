@@ -54,7 +54,7 @@ public class League {
 
         private Team(String teamName, ArrayList<Position> positions) {
             this.teamName = teamName;
-            freePositions = positions;
+            this.freePositions = new ArrayList<>(positions);
         }
 
         public void addPlayer(Player player, Position position){
