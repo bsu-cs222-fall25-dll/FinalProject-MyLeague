@@ -73,7 +73,8 @@ public class TeamViewCellController {
     }
 
     public void removePlayer() {
-
+        parent.getCurrentTeam().removePlayer(currentPlayer);
+        parent.removePlayerFromList(currentPlayer);
     }
 
     public void setParentController(TeamViewController parent) {

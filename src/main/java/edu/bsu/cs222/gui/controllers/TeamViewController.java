@@ -91,6 +91,10 @@ public class TeamViewController {
         }
     }
 
+    public void removePlayerFromList(Player player){
+        playerList.remove(player);
+    }
+
     private boolean runSearch(ArrayList<String> queries, Player player) {
         if (player == null) {return false;}
         boolean match = true;
