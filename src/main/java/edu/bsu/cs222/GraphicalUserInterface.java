@@ -23,12 +23,16 @@ public class GraphicalUserInterface extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
-        FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayersView.fxml")));
+        FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayersView.fxml")));
         scene = new Scene(playersViewLoader.load(), 600, 400);
 
         stage.setTitle("MyLeague");
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(event -> {
+            stage.close();
+        });
     }
 
     public static void setRoot(String fxmlFile) throws IOException {
