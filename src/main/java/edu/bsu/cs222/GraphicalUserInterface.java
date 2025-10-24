@@ -30,9 +30,7 @@ public class GraphicalUserInterface extends Application {
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(event -> {
-            stage.close();
-        });
+        stage.setOnCloseRequest(event -> stage.close());
     }
 
     public static void setRoot(String fxmlFile) throws IOException {

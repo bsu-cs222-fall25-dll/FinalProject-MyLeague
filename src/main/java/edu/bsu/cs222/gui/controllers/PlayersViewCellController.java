@@ -12,14 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import javafx.beans.value.ChangeListener;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Objects;
-
 import static edu.bsu.cs222.gui.controllers.Position.*;
 
-public class PlayerCellController {
+public class PlayersViewCellController {
     @FXML private Button addPlayerButton;
     @FXML private ImageView headshot;
     @FXML private Label nameLbl;
@@ -28,7 +26,7 @@ public class PlayerCellController {
     private PlayersViewController parent;
     private Player currentPlayer;
 
-    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayerCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
+    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
     private String lastUrl;
 
@@ -97,7 +95,7 @@ public class PlayerCellController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("Player Adder");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/PlayerAdderModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -141,13 +139,23 @@ public class PlayerCellController {
 
     public void setParentController(PlayersViewController parent) {
         this.parent = parent;
+
+        ChangeListener<League.Team> teamListener = (obs, oldVal, newVal) -> updateAddButton(newVal);
+        parent.currentTeamProperty().addListener(teamListener);
     }
 
     private void addPlayer(Position position, Stage stage){
         parent.getCurrentTeam().addPlayer(currentPlayer, position);
         parent.setDisable(false);
-        HashMap<Player, Position> map = parent.getCurrentTeam().getPlayerMap();
         stage.close();
         addPlayerButton.setDisable(true);
+    }
+
+    private void updateAddButton(League.Team team){
+        if (team == null) {
+            addPlayerButton.setDisable(true);
+            return;
+        }
+        addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getName()));
     }
 }

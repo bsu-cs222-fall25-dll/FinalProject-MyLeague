@@ -330,4 +330,18 @@ public class Player {
     public String getShortName() {
         return shortName;
     }
+
+    @Override
+    public boolean equals(Object object){
+        if (this == object) {return true;}
+        if (object == null || getClass() != object.getClass()) {return false;}
+
+        Player player = (Player) object;
+        return Objects.equals(this.playerID, player.playerID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerID);
+    }
 }

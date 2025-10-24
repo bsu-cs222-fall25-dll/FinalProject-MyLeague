@@ -15,5 +15,6 @@
         <Label fx:id="detailsLbl" text="Label" />
         <Label fx:id="statsLbl" text="Label" />
     </VBox>
-   <Button fx:id="removePlayerButton" mnemonicParsing="false" text="Remove" onAction="#removePlayer"/>
+   <Button mnemonicParsing="false" onAction="#removePlayer" text="Remove" />
+   <Label fx:id="positionLbl" text="Label" />
 </HBox>

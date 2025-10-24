@@ -4,8 +4,10 @@ import edu.bsu.cs222.GraphicalUserInterface;
 import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.PlayerRetriever;
-import edu.bsu.cs222.gui.PlayerCell;
+import edu.bsu.cs222.gui.PlayersViewCell;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -35,13 +37,26 @@ public class PlayersViewController {
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
 
+    private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
+
+    public ReadOnlyObjectProperty<League.Team> currentTeamProperty() {
+        return currentTeam.getReadOnlyProperty();
+    }
+
+    public League.Team getCurrentTeam() {
+        if (teamSelector.getValue().equals("None")){
+            return null;
+        }
+        return Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamSelector.getValue());
+    }
+
     private String previousLeagueString = "Default";
     private String previousTeamString = "None";
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
         listView.setFixedCellSize(70);
-        listView.setCellFactory(lv -> new PlayerCell(this));
+        listView.setCellFactory(lv -> new PlayersViewCell(this));
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
@@ -120,7 +135,8 @@ public class PlayersViewController {
                     throw new RuntimeException(e);
                 }
             } else {
-                if (Objects.equals("Create", oldVal)) {previousTeamString = oldVal;}
+                if (!Objects.equals("Create", oldVal)) {previousTeamString = oldVal;}
+                currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
             }
         });
     }
@@ -157,7 +173,7 @@ public class PlayersViewController {
     }
 
     public void openTeamView() throws IOException {
-        GraphicalUserInterface.setRoot("/TeamView.fxml");
+        GraphicalUserInterface.setRoot("/FXML_Files/TeamView.fxml");
     }
 
     public void setDisable(boolean disable){
@@ -174,7 +190,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/LeagueCreatorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/LeagueCreatorModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -215,7 +231,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("Team Creator");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/TeamCreatorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/TeamCreatorModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -296,13 +312,6 @@ public class PlayersViewController {
             if (leagueName.equals(league.getName())){
                 return league;
             }
-        }
-        return null;
-    }
-
-    public League.Team getCurrentTeam(){
-        if (!Objects.equals(teamSelector.getValue(), "None")){
-            return Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamSelector.getValue());
         }
         return null;
     }
