@@ -28,13 +28,13 @@ public class PlayerStatsModalController {
     }
 
     @FXML
-    private void setSeasonStatView(ActionEvent event){
+    private void setSeasonStatView(){
         currentStatView = "Season";
         tabLbl.setText(currentStatView);
     }
 
     @FXML
-    private void setWeeklyStatView(ActionEvent event){
+    private void setWeeklyStatView(){
         currentStatView = "Weekly";
         tabLbl.setText(currentStatView);
     }
