@@ -88,51 +88,66 @@ public class PlayersViewCellController {
     }
 
     public void playerAdder() throws IOException {
-        //TODO: Error modal if team none
         parent.setDisable(true);
         League.Team team = parent.getCurrentTeam();
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
-        creator.setTitle("Player Adder");
+        FXMLLoader loader;
+        Parent root;
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
-        Parent root = loader.load();
+        if (team == null){
+            creator.setTitle("Error");
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/ErrorModal.fxml")));
+            root = loader.load();
+            creator.setScene(new Scene(root));
 
-        creator.setScene(new Scene(root));
+            Label errorLbl = (Label) root.lookup("#errorLbl");
+            errorLbl.setText("Please select a team, before attempting to add a player");
+        }
+        else {
+            creator.setTitle("Player Adder");
 
-        Button cancelButton = (Button) root.lookup("#cancelButton");
-        Button qbButton = (Button) root.lookup("#qbButton");
-        Button rbButton = (Button) root.lookup("#rbButton");
-        Button wrButton = (Button) root.lookup("#wrButton");
-        Button teButton = (Button) root.lookup("#teButton");
-        Button kButton = (Button) root.lookup("#kButton");
-        Button flexButton = (Button) root.lookup("#flexButton");
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
+            root = loader.load();
 
-        for (Position position: team.getFreePositions()){
-            if (position == QB){ qbButton.setDisable(false);}
-            if (position == RB){ rbButton.setDisable(false);}
-            if (position == WR){ wrButton.setDisable(false);}
-            if (position == TE){ teButton.setDisable(false);}
-            if (position == K){ kButton.setDisable(false);}
-            if (position == FLEX){ flexButton.setDisable(false);}
+            creator.setScene(new Scene(root));
+
+            Button qbButton = (Button) root.lookup("#qbButton");
+            Button rbButton = (Button) root.lookup("#rbButton");
+            Button wrButton = (Button) root.lookup("#wrButton");
+            Button teButton = (Button) root.lookup("#teButton");
+            Button kButton = (Button) root.lookup("#kButton");
+            Button flexButton = (Button) root.lookup("#flexButton");
+
+            for (Position position: team.getFreePositions()){
+                if (position == QB){ qbButton.setDisable(false);}
+                if (position == RB){ rbButton.setDisable(false);}
+                if (position == WR){ wrButton.setDisable(false);}
+                if (position == TE){ teButton.setDisable(false);}
+                if (position == K){ kButton.setDisable(false);}
+                if (position == FLEX){ flexButton.setDisable(false);}
+            }
+
+            qbButton.setOnAction(e -> addPlayer(QB, creator));
+            rbButton.setOnAction(e -> addPlayer(RB, creator));
+            wrButton.setOnAction(e -> addPlayer(WR, creator));
+            teButton.setOnAction(e -> addPlayer(TE, creator));
+            kButton.setOnAction(e -> addPlayer(K, creator));
+            flexButton.setOnAction(e -> addPlayer(FLEX, creator));
         }
 
-        cancelButton.setOnAction(e ->{
-            parent.setDisable(false);
-            creator.close();
-        });
 
         creator.setOnCloseRequest(event ->{
             parent.setDisable(false);
             creator.close();
         });
 
-        qbButton.setOnAction(e -> addPlayer(QB, creator));
-        rbButton.setOnAction(e -> addPlayer(RB, creator));
-        wrButton.setOnAction(e -> addPlayer(WR, creator));
-        teButton.setOnAction(e -> addPlayer(TE, creator));
-        kButton.setOnAction(e -> addPlayer(K, creator));
-        flexButton.setOnAction(e -> addPlayer(FLEX, creator));
+        Button closeButton = (Button) root.lookup("#closeButton");
+
+        closeButton.setOnAction(e -> {
+            parent.setDisable(false);
+            creator.close();
+        });
 
         creator.showAndWait();
     }

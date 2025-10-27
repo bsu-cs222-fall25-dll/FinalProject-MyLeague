@@ -135,7 +135,7 @@ public class PlayersViewController {
                     throw new RuntimeException(e);
                 }
             } else {
-                if (!Objects.equals("Create", oldVal)) {previousTeamString = oldVal;}
+                if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {previousTeamString = oldVal;}
                 currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
             }
         });

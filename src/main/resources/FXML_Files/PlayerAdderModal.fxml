@@ -17,7 +17,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <Button fx:id="flexButton" mnemonicParsing="false" text="Flex" GridPane.columnIndex="5" GridPane.rowIndex="1" disable="true"/>
-    <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="5" />
+    <Button fx:id="closeButton" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="5" />
    <Button fx:id="qbButton" mnemonicParsing="false" text="QB" GridPane.rowIndex="1" disable="true"/>
    <Button fx:id="rbButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="RB" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true" />
    <Button fx:id="wrButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="WR" GridPane.columnIndex="2" GridPane.rowIndex="1" disable="true"/>
