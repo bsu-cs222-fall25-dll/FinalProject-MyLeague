@@ -1,6 +1,5 @@
 package edu.bsu.cs222;
 
-import edu.bsu.cs222.gui.controllers.Position;
 import org.json.JSONObject;
 
 import java.util.Objects;

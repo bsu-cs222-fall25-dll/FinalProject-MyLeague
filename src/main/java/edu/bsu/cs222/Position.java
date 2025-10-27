@@ -1,4 +1,4 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222;
 
 public enum Position {
     QB,

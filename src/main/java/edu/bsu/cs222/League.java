@@ -1,7 +1,5 @@
 package edu.bsu.cs222;
 
-import edu.bsu.cs222.gui.controllers.Position;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

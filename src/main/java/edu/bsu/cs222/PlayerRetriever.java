@@ -1,6 +1,5 @@
 package edu.bsu.cs222;
 
-import edu.bsu.cs222.gui.controllers.Position;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONArray;
 import org.json.JSONException;

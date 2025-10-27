@@ -2,6 +2,7 @@ package edu.bsu.cs222.gui.controllers;
 
 import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
+import edu.bsu.cs222.Position;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener;
 import java.io.IOException;
 import java.util.Objects;
-import static edu.bsu.cs222.gui.controllers.Position.*;
+import static edu.bsu.cs222.Position.*;
 
 public class PlayersViewCellController {
     @FXML private Button addPlayerButton;

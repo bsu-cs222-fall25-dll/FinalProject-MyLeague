@@ -3,6 +3,7 @@ package edu.bsu.cs222.gui.controllers;
 import edu.bsu.cs222.GraphicalUserInterface;
 import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
+import edu.bsu.cs222.Position;
 import edu.bsu.cs222.gui.TeamViewCell;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;

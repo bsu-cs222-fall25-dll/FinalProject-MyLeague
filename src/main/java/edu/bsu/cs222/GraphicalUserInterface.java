@@ -10,13 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static edu.bsu.cs222.gui.controllers.Position.*;
+import static edu.bsu.cs222.Position.*;
 
 public class GraphicalUserInterface extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     private static Scene scene;
     private static final ArrayList<League> leagueList = new ArrayList<>();
 
