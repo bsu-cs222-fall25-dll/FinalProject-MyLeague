@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="400.0" spacing="12.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewCellController">
+<HBox onMouseClicked="#viewPlayerStats" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="400.0" spacing="12.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewCellController">
     <opaqueInsets>
         <Insets top="8.0" />
     </opaqueInsets>
