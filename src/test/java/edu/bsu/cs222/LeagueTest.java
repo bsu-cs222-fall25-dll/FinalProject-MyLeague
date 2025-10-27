@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.bsu.cs222.gui.controllers.Position.*;
+import static edu.bsu.cs222.Position.*;
 
 public class LeagueTest {
 
@@ -62,7 +62,7 @@ public class LeagueTest {
         league.addTeam("Test");
         Player player = new Player("Chris Burke");
         league.getTeamByName("Test").addPlayer(player, QB);
-        Assertions.assertEquals(player, league.getTeamByName("Test").getPlayers().getFirst());
+        Assertions.assertEquals(QB, league.getTeamByName("Test").getPlayerMap().get(player));
     }
 
     @Test
@@ -80,6 +80,6 @@ public class LeagueTest {
         Player player = new Player("Chris Burke");
         league.getTeamByName("Test").addPlayer(player, QB);
         league.getTeamByName("Test").removePlayer(player);
-        Assertions.assertTrue(league.getTeamByName("Test").getPlayers().isEmpty());
+        Assertions.assertTrue(league.getTeamByName("Test").getPlayerMap().isEmpty());
     }
 }
