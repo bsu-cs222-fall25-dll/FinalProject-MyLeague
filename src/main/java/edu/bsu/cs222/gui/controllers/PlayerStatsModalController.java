@@ -1,15 +1,18 @@
 package edu.bsu.cs222.gui.controllers;
 
 import edu.bsu.cs222.Player;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 
-import java.awt.*;
-
 public class PlayerStatsModalController {
+    public Button cancelButton;
+    public Button seasonStatsBtn;
+    public Button weeklyStatsBtn;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
-
+    String currentStatView = "Season";
     private Player player;
 
     public void setPlayer(Player player){
@@ -20,8 +23,19 @@ public class PlayerStatsModalController {
     private void viewPlayerStats(){
         if(player != null){
             playerLabel.setText(player.getName());
-            tabLbl.setText("Season");
+            tabLbl.setText(currentStatView);
         }
     }
 
+    @FXML
+    private void setSeasonStatView(ActionEvent event){
+        currentStatView = "Season";
+        tabLbl.setText(currentStatView);
+    }
+
+    @FXML
+    private void setWeeklyStatView(ActionEvent event){
+        currentStatView = "Weekly";
+        tabLbl.setText(currentStatView);
+    }
 }

@@ -2,25 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <Label fx:id="playerLabel" text="Label" />
-    <Label fx:id="tabLbl" text="Label" />
-    <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" GridPane.rowIndex="1" />
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
 
-</GridPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
+    <ToolBar layoutX="6.0" prefHeight="40.0" prefWidth="139.0">
+        <Button onAction="#setSeasonStatView" fx:id="seasonStatsBtn" mnemonicParsing="false" text="Season"/>
+        <Button onAction="#setWeeklyStatView" fx:id="weeklyStatsBtn" mnemonicParsing="false" text="Weekly"/>
+    </ToolBar>
+    <Button fx:id="cancelButton" layoutX="457.0" layoutY="325.0" mnemonicParsing="false" prefHeight="53.0"
+            prefWidth="120.0" text="Close"/>
+    <Label fx:id="playerLabel" layoutX="23.0" layoutY="60.0" text="Label">
+        <font>
+          <Font size="20.0"/>
+        </font>
+    </Label>
+    <Label fx:id="tabLbl" layoutX="154.0" layoutY="20.0" text="Label"/>
+</AnchorPane>
