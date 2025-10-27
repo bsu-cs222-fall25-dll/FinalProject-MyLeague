@@ -1,0 +1,10 @@
+MyLeague
+Chris Burke, Evan Wilson, Jack Kerth, and Oladayo Ayorinde
+
+This is a Fantasy Football Draft program in beta. It allows one to view offensive players in the current NFL season and their stats. It allows one to create different leagues and teams, as well as add players to their team. It also has the ability to view players by team, team score, and remove players in a seperate page.
+
+Build Instructions:
+After downloading the program locate the .env.example file at the root of the program. Replace YOUR_API_KEY so the secondline of the files takes to form of "API_KEY = #####", where is ##### is your personal RapidAPI key from rapidapi.com. Rename the .env.example to ".env". Then locate the GraphicalUserInterface.java file and run it in your preferred IDE.
+
+Program Instructions:
+After running the program, you'll be take to the Players page where you can view currently playing offensive players. At the top is search bar where you can search by name, and to the right are dropdown boxes to filter my position and team respectivley. To the left is a dropdown labeled "Default," this is the league selector dropdown, on startup a Default league is created for you. If you wish to create a new league select "Create" from the dropdown and a model will show up. In the modal you can enter the name of your league, and then add the league to the list. Below said dropdown is one labeled "None," this the team selector dropdown. To create a team take the same actions as would to create a league. While you have a team selected you can press the "Add" button on a player row. This will open a modal where you can press the corresponding to your desired player position. Above the league selector is a button labeled "MyTeam" clicking this will take you to the team view page. This page works the same way as the player view page, except you can't create new leagues or teams, and the each player's position is replaced with the position selected when adding them to a team. Also, the "Add" is replaced with a "Remove" button which will remove the player from the selected team.
