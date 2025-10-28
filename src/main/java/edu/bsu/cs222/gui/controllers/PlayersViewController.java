@@ -124,16 +124,20 @@ public class PlayersViewController {
         });
 
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (Objects.equals(newVal, "Create")) {
-                try {
-                    setDisable(true);
-                    teamCreator(getLeagueByName(leagueSelector.getValue()));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            if (newVal != null && !newVal.equals("None")) {
+                if (Objects.equals(newVal, "Create")) {
+                    try {
+                        setDisable(true);
+                        teamCreator(getLeagueByName(leagueSelector.getValue()));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {
+                        previousTeamString = oldVal;
+                    }
+                    currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
                 }
-            } else {
-                if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {previousTeamString = oldVal;}
-                currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
             }
         });
     }
@@ -187,7 +191,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/LeagueCreatorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Files/LeagueCreatorModal.fxml"));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
