@@ -13,50 +13,61 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerRetrieverTest {
-
     @Test
     void testFirstPlayerNameInListIsTysonWilliams() throws IOException {
-        PlayerRetriever retriever = new PlayerRetriever();
-        retriever.createPlayerList(readSampleFileAsString());
-        Assertions.assertEquals("Ty'Son Williams", retriever.getPlayerArrayList().getFirst().getName());
+        PlayerRetriever.createPlayerList(readSampleFileAsString());
+        Assertions.assertEquals("Ty'Son Williams", PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
     @Test
     void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException {
-        PlayerRetriever retriever = new PlayerRetriever();
-        Assertions.assertNotNull(retriever.getPlayersFromApi());
+        Assertions.assertNotNull(PlayerRetriever.getPlayersFromApi());
     }
 
     @Test
     void testGetPlayersFromJsonDoesNotReturnNullAfterSaving() throws IOException, InterruptedException {
-        PlayerRetriever retriever = new PlayerRetriever();
-        retriever.createAndSavePlayerListFromApi();
-        Assertions.assertNotNull(retriever.getPlayersFromJson());
+        PlayerRetriever.createAndSavePlayerListFromApi();
+        Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
     }
 
     @Test
     void testGetPlayersFromJsonOrAPIDoesNotReturnNullAfterDeletingJson() throws IOException, InterruptedException {
-        if (new File("src/main/resources/PlayerList.json").delete()){
-            PlayerRetriever retriever = new PlayerRetriever();
-            retriever.getPlayersFromJsonOrApi();
-            Assertions.assertNotNull(retriever.getPlayersFromJson());
+        File file = new File("src/main/resources/PlayerList.json");
+        if (file.exists()) {
+            if (!file.delete()){
+                Assertions.fail();
+            }
         }
+        PlayerRetriever.getPlayersFromJsonOrApi();
+        Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
+
+    }
+
+    @Test
+    void testGetPlayersFromJsonOrAPIReturnsFalseIfJsonPresent() throws IOException, InterruptedException {
+        File file = new File("src/main/resources/PlayerList.json");
+        if (file.exists()){
+            if (!file.delete()){
+                Assertions.fail();
+            }
+        }
+        PlayerRetriever.createAndSavePlayerListFromApi();
+        Assertions.assertFalse(PlayerRetriever.getPlayersFromJsonOrApi());
+
     }
 
     @Test
     void testGetPlayersFromJsonEqualsPlayerListAfterSaving() throws IOException, InterruptedException {
-        PlayerRetriever retriever = new PlayerRetriever();
-        retriever.createAndSavePlayerListFromApi();
-        ArrayList<Player> originalPlayerList = retriever.getPlayerArrayList();
-        retriever.createPlayerList(retriever.getPlayersFromJson());
-        Assertions.assertEquals(originalPlayerList.getFirst().getName(), retriever.getPlayerArrayList().getFirst().getName());
+        PlayerRetriever.createAndSavePlayerListFromApi();
+        ArrayList<Player> originalPlayerList = PlayerRetriever.getPlayerArrayList();
+        PlayerRetriever.createPlayerList(PlayerRetriever.getPlayersFromJson());
+        Assertions.assertEquals(originalPlayerList.getFirst().getName(), PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
     @Test
     void testCreateAndSavePlayerListFromApiCreatesPlayerList() throws InterruptedException, IOException {
-        PlayerRetriever retriever = new PlayerRetriever();
-        retriever.createAndSavePlayerListFromApi();
-        Assertions.assertNotNull(retriever.getPlayerArrayList());
+        PlayerRetriever.createAndSavePlayerListFromApi();
+        Assertions.assertNotNull(PlayerRetriever.getPlayerArrayList());
     }
 
     private String readSampleFileAsString() throws NullPointerException, IOException {

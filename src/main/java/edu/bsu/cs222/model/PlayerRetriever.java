@@ -5,11 +5,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class PlayerRetriever {
     public static boolean createAndSavePlayerListFromApi() throws InterruptedException, IOException {
         String response = getPlayersFromApi();
         if (response.equals("Network Error")){
+            //Can't be tested
             return true;
         }
         else {
@@ -32,8 +33,8 @@ public class PlayerRetriever {
     }
 
     public static boolean getPlayersFromJsonOrApi() throws IOException, InterruptedException {
-        URL jsonFile = PlayerRetriever.class.getResource("PlayerList.json");
-        if (jsonFile == null){
+        File jsonFile = new File("src/main/resources/PlayerList.json");
+        if (jsonFile.exists()){
             return createAndSavePlayerListFromApi();
         }
         else {
@@ -54,7 +55,7 @@ public class PlayerRetriever {
             return response.body();
         }
         catch (IOException e){
-            //Can't truly be tested
+            //Can't be tested
             return "Network Error";
         }
     }
