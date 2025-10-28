@@ -26,14 +26,12 @@ public class Player {
     private int receptions;
     private int rushYd;
     private int rushTD;
-    private int rushAtt;
     private int passYd;
     private int passTD;
     private int passAtt;
     private int completions;
     private int fumbles;
     private int interceptions;
-    private String matchup;
 
     public void setExtraPointsMade(int extraPointsMade) {
         this.extraPointsMade = extraPointsMade;
