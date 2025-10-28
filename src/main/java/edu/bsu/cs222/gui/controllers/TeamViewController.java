@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -19,6 +20,7 @@ import java.util.*;
 
 public class TeamViewController {
 
+    @FXML private Button scoreButton;
     @FXML private ComboBox<String> leagueSelector;
     @FXML private ComboBox<String> teamSelector;
     @FXML private ListView<Player> listView;
@@ -143,5 +145,9 @@ public class TeamViewController {
     public League.Team getCurrentTeam() {
         String teamString = teamSelector.getValue();
         return (teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
+    }
+
+    public void calculateTeamScore() {
+        scoreButton.setText("10pts");
     }
 }

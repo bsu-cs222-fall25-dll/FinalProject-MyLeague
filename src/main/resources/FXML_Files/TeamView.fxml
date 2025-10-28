@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
+<GridPane alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints maxWidth="103.6" minWidth="98.0" prefWidth="103.6" />
@@ -17,15 +17,18 @@
         <RowConstraints maxHeight="37.8000244140625" minHeight="10.0" prefHeight="37.8000244140625" />
         <RowConstraints maxHeight="384.1999816894531" minHeight="362.5999755859375" prefHeight="362.5999755859375" />
     </rowConstraints>
-    <VBox prefHeight="408.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openPlayersView" text="Players" />
+    <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openPlayersView" text="Players">
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin></Button>
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
          <VBox.margin>
-            <Insets left="5.0" />
+            <Insets top="5.0" />
          </VBox.margin></ComboBox>
         <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
          <VBox.margin>
-            <Insets left="5.0" />
+            <Insets top="5.0" />
          </VBox.margin></ComboBox>
     </VBox>
     <ListView id="listView" fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
@@ -35,4 +38,5 @@
           <Insets />
         </GridPane.margin>
     </ComboBox>
+   <Button fx:id="scoreButton" mnemonicParsing="false" onAction="#calculateTeamScore" prefWidth="65.0" text="Calculate" GridPane.columnIndex="5" />
 </GridPane>
