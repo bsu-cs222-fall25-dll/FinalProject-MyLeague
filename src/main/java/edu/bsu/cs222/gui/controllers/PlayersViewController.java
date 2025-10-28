@@ -123,6 +123,9 @@ public class PlayersViewController {
         });
 
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {
+                previousTeamString = oldVal;
+            }
             if (newVal != null && !newVal.equals("None")) {
                 if (Objects.equals(newVal, "Create")) {
                     try {
@@ -132,9 +135,6 @@ public class PlayersViewController {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {
-                        previousTeamString = oldVal;
-                    }
                     currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
                 }
             }
@@ -285,7 +285,7 @@ public class PlayersViewController {
 
     private void createLeague(String text, Stage stage){
         if (!text.isBlank()){
-            League league = new League(text, new ArrayList<>(List.of(QB, RB, TE, K, FLEX)));
+            League league = new League(text, new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)));
             GraphicalUserInterface.addLeague(league);
             setLeagueItems();
             leagueSelector.setValue(text);
