@@ -55,16 +55,14 @@ public class PlayersViewController {
     private String previousTeamString = "None";
 
     @FXML
-    public void initialize() throws IOException, InterruptedException {
+    public void initialize() {
         listView.setFixedCellSize(70);
         listView.setCellFactory(lv -> new PlayersViewCell(this));
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
 
-        PlayerRetriever retriever = new PlayerRetriever();
-        retriever.getPlayersFromJsonOrApi();
-        managePlayersView(retriever.getPlayerArrayList());
+        managePlayersView(PlayerRetriever.getPlayerArrayList());
     }
 
     public void managePlayersView(ArrayList<Player> players) {

@@ -16,25 +16,33 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerRetriever {
-    private final ArrayList<Player> playerArrayList = new ArrayList<>();
+    private static final ArrayList<Player> playerArrayList = new ArrayList<>();
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
-    public void createAndSavePlayerListFromApi() throws InterruptedException, IOException {
-        createPlayerList(getPlayersFromApi());
-        savePlayerListToJson();
+    public static boolean createAndSavePlayerListFromApi() throws InterruptedException, IOException {
+        String response = getPlayersFromApi();
+        if (response.equals("Network Error")){
+            return true;
+        }
+        else {
+            createPlayerList(response);
+            savePlayerListToJson();
+            return false;
+        }
     }
 
-    public void getPlayersFromJsonOrApi() throws IOException, InterruptedException {
-        URL jsonFile = getClass().getResource("PlayerList.json");
+    public static boolean getPlayersFromJsonOrApi() throws IOException, InterruptedException {
+        URL jsonFile = PlayerRetriever.class.getResource("PlayerList.json");
         if (jsonFile == null){
-            createAndSavePlayerListFromApi();
+            return createAndSavePlayerListFromApi();
         }
         else {
             createPlayerList(getPlayersFromJson());
+            return false;
         }
     }
 
-    public String getPlayersFromApi() throws InterruptedException {
+    public static String getPlayersFromApi() throws InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLPlayerList"))
                 .header("x-rapidapi-key", API_KEY)
@@ -46,19 +54,18 @@ public class PlayerRetriever {
             return response.body();
         }
         catch (IOException e){
-            //TODO: Throw error if exception
             //Can't truly be tested
-            return "";
+            return "Network Error";
         }
     }
 
-    public String getPlayersFromJson() throws IOException {
+    public static String getPlayersFromJson() throws IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("PlayerList.json");
         return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
     }
 
-    public void createPlayerList(String jsonData) {
+    public static void createPlayerList(String jsonData) {
         JSONObject jsonObject = new JSONObject(jsonData);
         JSONArray players = jsonObject.getJSONArray("body");
         for (int i = 0; i < players.length(); ++i){
@@ -131,11 +138,11 @@ public class PlayerRetriever {
         }
     }
 
-    public ArrayList<Player> getPlayerArrayList() {
+    public static ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
     }
 
-    private void savePlayerListToJson() throws IOException {
+    private static void savePlayerListToJson() throws IOException {
         JSONArray playersJsonArray = new JSONArray();
 
         for (Player player: getPlayerArrayList()){

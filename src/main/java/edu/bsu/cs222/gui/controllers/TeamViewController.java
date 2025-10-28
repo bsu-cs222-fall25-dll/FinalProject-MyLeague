@@ -162,10 +162,10 @@ public class TeamViewController {
     public void calculateTeamScore() throws IOException {
         League.Team team = getCurrentTeam();
         if (team == null){
-            ErrorModal.throwErrorModal(new Stage(), "Select a team", new Object());
+            ErrorModal.throwErrorModal(new Stage(), "Select a team", null);
         }
         else if (team.getPlayerMap().isEmpty()){
-            ErrorModal.throwErrorModal(new Stage(), "Add players to team", new Object());
+            ErrorModal.throwErrorModal(new Stage(), "Add players to team", null);
         }
         else{
             int score = 10;

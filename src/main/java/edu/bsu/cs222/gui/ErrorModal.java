@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class ErrorModal {
     public static void throwErrorModal(Stage stage, String errorMessage, Object parent) throws IOException {
-        boolean disable = parent.getClass() == PlayersViewController.class;
+        boolean playersView = parent != null && parent.getClass() == PlayersViewController.class;
 
         stage.setTitle("Error");
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ErrorModal.class.getResource("/FXML_Files/ErrorModal.fxml")));
@@ -25,14 +25,14 @@ public class ErrorModal {
 
         stage.setOnCloseRequest(event ->{
             stage.close();
-            if (disable) {((PlayersViewController) parent).setDisable(false);}
+            if (playersView) {((PlayersViewController) parent).setDisable(false);}
         });
 
         Button closeButton = (Button) root.lookup("#closeButton");
 
         closeButton.setOnAction(e -> {
             stage.close();
-            if (disable) {
+            if (playersView) {
                 ((PlayersViewController) parent).setDisable(false);
             }
         });

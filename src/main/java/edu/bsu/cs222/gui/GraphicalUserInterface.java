@@ -1,6 +1,7 @@
 package edu.bsu.cs222.gui;
 
 import edu.bsu.cs222.model.League;
+import edu.bsu.cs222.model.PlayerRetriever;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,16 +19,22 @@ public class GraphicalUserInterface extends Application {
     private static final ArrayList<League> leagueList = new ArrayList<>();
 
     @Override
-    public void start(Stage stage) throws IOException {
-        leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
-        FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayersView.fxml")));
-        scene = new Scene(playersViewLoader.load(), 600, 400);
+    public void start(Stage stage) throws IOException, InterruptedException {
+        boolean networkError = PlayerRetriever.getPlayersFromJsonOrApi();
+        if (networkError){
+            ErrorModal.throwErrorModal(new Stage(), "Network Error", null);
+        }
+        else {
+            leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
+            FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayersView.fxml")));
+            scene = new Scene(playersViewLoader.load(), 600, 400);
 
-        stage.setTitle("MyLeague");
-        stage.setScene(scene);
-        stage.show();
+            stage.setTitle("MyLeague");
+            stage.setScene(scene);
+            stage.show();
 
-        stage.setOnCloseRequest(event -> stage.close());
+            stage.setOnCloseRequest(event -> stage.close());
+        }
     }
 
     public static void setRoot(String fxmlFile) throws IOException {
