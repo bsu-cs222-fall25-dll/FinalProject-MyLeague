@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -85,5 +86,31 @@ public class TeamViewCellController {
 
     public void setParentController(TeamViewController parent) {
         this.parent = parent;
+    }
+
+    public void viewPlayerStats() throws IOException {
+        Stage creator = new Stage();
+        creator.initModality(Modality.APPLICATION_MODAL);
+        creator.setTitle("View Player Stats");
+
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerStatsModal.fxml")));
+        Parent root = loader.load();
+
+        creator.setScene(new Scene(root));
+
+        PlayerStatsModalController controller = loader.getController();
+        controller.setPlayer(currentPlayer);
+
+        Button cancelButton = (Button) root.lookup("#cancelButton");
+
+        cancelButton.setOnAction(e -> {
+            creator.close();
+        });
+
+        creator.setOnCloseRequest(event -> {
+            creator.close();
+        });
+
+        creator.showAndWait();
     }
 }

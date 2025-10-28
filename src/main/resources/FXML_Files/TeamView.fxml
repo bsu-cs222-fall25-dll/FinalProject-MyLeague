@@ -10,7 +10,6 @@
 <GridPane style="-fx-background-color: #333;" prefHeight="400.0" prefWidth="600.0"
           xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
-
     <columnConstraints>
         <ColumnConstraints minWidth="100.0" prefWidth="100.0" />
         <ColumnConstraints prefWidth="20.0" />
@@ -18,13 +17,11 @@
         <ColumnConstraints prefWidth="70.0" />
         <ColumnConstraints prefWidth="70.0" />
     </columnConstraints>
-
     <rowConstraints>
         <RowConstraints prefHeight="70.0" />
         <RowConstraints prefHeight="40.0" />
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
-
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-padding: 0 0 0 10;">
         <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
             <image>
@@ -35,28 +32,22 @@
             </clip>
         </ImageView>
     </HBox>
-
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="0">
         <Label text="MyTeam" style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 4;" />
     </HBox>
-
     <TextField fx:id="searchField" promptText="Search player name"
                GridPane.columnIndex="2" GridPane.rowIndex="1"
                GridPane.halignment="LEFT" GridPane.valignment="CENTER"
                prefWidth="200.0" />
-
     <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="70.0"
               GridPane.columnIndex="3" GridPane.rowIndex="1"
               GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-
     <ComboBox fx:id="teamFilter" prefHeight="26.0" prefWidth="70.0"
               GridPane.columnIndex="4" GridPane.rowIndex="1"
               GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-
     <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0"
               GridPane.columnIndex="2" GridPane.columnSpan="3"
               GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-
     <VBox prefHeight="408.0" prefWidth="100.0"
           GridPane.columnIndex="0" GridPane.rowIndex="2"
           spacing="10.0" alignment="TOP_CENTER">

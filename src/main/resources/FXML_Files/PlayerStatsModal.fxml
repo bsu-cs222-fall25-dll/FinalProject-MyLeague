@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
-    <ToolBar layoutX="6.0" prefHeight="40.0" prefWidth="139.0">
-        <Button fx:id="seasonStatsBtn" mnemonicParsing="false" onAction="#setSeasonStatView" text="Season" />
-        <Button fx:id="weeklyStatsBtn" mnemonicParsing="false" onAction="#setWeeklyStatView" text="Weekly" />
-    </ToolBar>
-    <Button fx:id="cancelButton" layoutX="457.0" layoutY="325.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="120.0" text="Close" />
-    <Label fx:id="playerLabel" layoutX="23.0" layoutY="60.0" text="Label">
-        <font>
-          <Font size="20.0" />
-        </font>
-    </Label>
-    <Label fx:id="tabLbl" layoutX="154.0" layoutY="20.0" text="Label" />
-   <HBox layoutX="19.0" layoutY="118.0" prefHeight="171.0" prefWidth="558.0" style="-fx-background-color: lightgray;" />
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController" prefWidth="600" prefHeight="400" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <padding>
+                <Insets top="20" right="10" bottom="10" left="20"/>
+            </padding>
+            <Label fx:id="tabLbl" text="Stats" textFill="#e0e0e0"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label fx:id="playerLabel" text="Player Name" textFill="white">
+                <font>
+                    <Font size="20"/>
+                </font>
+            </Label>
+            <HBox spacing="10">
+                <Button fx:id="seasonStatsBtn" text="Season" onAction="#setSeasonStatView" prefWidth="80" prefHeight="30" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                <Button fx:id="weeklyStatsBtn" text="Weekly" onAction="#setWeeklyStatView" prefWidth="80" prefHeight="30" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"/>
+            </HBox>
+<!-- Insert this after it's created... It's just a template... fx:id="statsDisplay"-->
+            <HBox  spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" prefHeight="200" prefWidth="560"/>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets top="15" bottom="15"/>
+            </padding>
+            <Button fx:id="cancelButton" text="Close" prefWidth="120" prefHeight="40" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+
