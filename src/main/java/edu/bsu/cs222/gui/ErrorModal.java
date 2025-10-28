@@ -6,13 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class ErrorModal {
-    public static void throwErrorModal(Stage stage, String errorMessage, Object parent) throws IOException {
+    public static void throwErrorModal(String errorMessage, Object parent) throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
         boolean playersView = parent != null && parent.getClass() == PlayersViewController.class;
 
         stage.setTitle("Error");

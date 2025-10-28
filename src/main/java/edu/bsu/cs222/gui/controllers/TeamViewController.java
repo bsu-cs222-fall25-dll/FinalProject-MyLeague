@@ -13,7 +13,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.*;
@@ -162,10 +161,10 @@ public class TeamViewController {
     public void calculateTeamScore() throws IOException {
         League.Team team = getCurrentTeam();
         if (team == null){
-            ErrorModal.throwErrorModal(new Stage(), "Select a team", null);
+            ErrorModal.throwErrorModal("Select a team", null);
         }
         else if (team.getPlayerMap().isEmpty()){
-            ErrorModal.throwErrorModal(new Stage(), "Add players to team", null);
+            ErrorModal.throwErrorModal("Add players to team", null);
         }
         else{
             int score = 10;

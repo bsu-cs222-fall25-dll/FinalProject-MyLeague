@@ -97,7 +97,7 @@ public class PlayersViewCellController {
         creator.initModality(Modality.APPLICATION_MODAL);
 
         if (team == null){
-            ErrorModal.throwErrorModal(creator, "Please select a team, before attempting to add a player", parent);
+            ErrorModal.throwErrorModal("Please select a team, before attempting to add a player", parent);
         }
         else {
             creator.setTitle("Player Adder");
