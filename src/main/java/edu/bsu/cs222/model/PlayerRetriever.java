@@ -1,4 +1,4 @@
-package edu.bsu.cs222;
+package edu.bsu.cs222.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONArray;

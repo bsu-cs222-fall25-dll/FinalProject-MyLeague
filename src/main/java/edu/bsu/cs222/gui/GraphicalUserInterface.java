@@ -1,5 +1,6 @@
-package edu.bsu.cs222;
+package edu.bsu.cs222.gui;
 
+import edu.bsu.cs222.model.League;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static edu.bsu.cs222.Position.*;
+import static edu.bsu.cs222.model.Position.*;
 
 public class GraphicalUserInterface extends Application {
     private static Scene scene;

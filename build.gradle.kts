@@ -38,5 +38,5 @@ javafx {
     modules("javafx.controls", "javafx.fxml")
 }
 application {
-    mainClass.set("edu.bsu.cs222.GraphicalUserInterface")
+    mainClass.set("edu.bsu.cs222.gui.GraphicalUserInterface")
 }

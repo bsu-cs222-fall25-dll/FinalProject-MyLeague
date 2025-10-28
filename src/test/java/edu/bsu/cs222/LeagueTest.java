@@ -1,12 +1,14 @@
 package edu.bsu.cs222;
 
+import edu.bsu.cs222.model.League;
+import edu.bsu.cs222.model.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.bsu.cs222.Position.*;
+import static edu.bsu.cs222.model.Position.*;
 
 public class LeagueTest {
 

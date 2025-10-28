@@ -1,7 +1,11 @@
 package edu.bsu.cs222.gui.controllers;
 
-import edu.bsu.cs222.*;
+import edu.bsu.cs222.gui.GraphicalUserInterface;
 import edu.bsu.cs222.gui.PlayersViewCell;
+import edu.bsu.cs222.model.League;
+import edu.bsu.cs222.model.Player;
+import edu.bsu.cs222.model.PlayerRetriever;
+import edu.bsu.cs222.model.Position;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -23,7 +27,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
-import static edu.bsu.cs222.Position.*;
+import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
     @FXML private Button teamViewButton;

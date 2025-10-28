@@ -1,6 +1,6 @@
 package edu.bsu.cs222.gui.controllers;
 
-import edu.bsu.cs222.Player;
+import edu.bsu.cs222.model.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;

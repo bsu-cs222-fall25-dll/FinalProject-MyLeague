@@ -1,10 +1,12 @@
 package edu.bsu.cs222;
 
+import edu.bsu.cs222.model.Player;
+import edu.bsu.cs222.model.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
-import static edu.bsu.cs222.Position.*;
+import static edu.bsu.cs222.model.Position.*;
 
 public class PlayerTest {
     @Test
