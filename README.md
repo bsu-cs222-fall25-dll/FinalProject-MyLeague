@@ -1,6 +1,6 @@
 # MyLeague
 
-**Authors:** Chris Burke, Evan Wilson, Jack Kerth, and Oladayo Ayorinde
+**Authors:** Chris Burke, Evan Wilson, Jack Kerth, and Oladayo David Ayorinde
 
 ## Project Summary
 
@@ -25,7 +25,7 @@ MyLeague is a Fantasy Football Draft application that allows users to view the c
 2. **Set up API credentials:**
     - Locate the `.env.example` file at the root of the project
     - Replace `YOUR_API_KEY` so the second line reads: `API_KEY=your_actual_api_key`
-    - Get your API key from [RapidAPI - Tank01 NFL Statistics](https://rapidapi.com/tank01/api/tank01-nfl-live-in-game-real-time-statistics-nfl)
+    - Get your API key from [RapidAPI - Tank01 NFL Statistics](https://rapidapi.com/tank01/api/tank01-nfl-live-in-game-real-time-statistics-nfl) by signing up for the basic subscription.
     - Rename `.env.example` to `.env`
 
 3. **Build and run the program:**
