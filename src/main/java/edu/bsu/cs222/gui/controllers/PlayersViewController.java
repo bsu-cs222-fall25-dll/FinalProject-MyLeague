@@ -213,7 +213,6 @@ public class PlayersViewController {
         });
 
         creator.setOnCloseRequest(event ->{
-            System.out.println(previousLeagueString);
             leagueSelector.setValue(previousLeagueString);
             teamSelector.setValue(previousTeamString);
             setDisable(false);
