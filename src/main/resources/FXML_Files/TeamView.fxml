@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <?import javafx.scene.shape.Circle?>
 <GridPane style="-fx-background-color: #333;" prefHeight="400.0" prefWidth="600.0"
@@ -24,9 +22,7 @@
     </rowConstraints>
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-padding: 0 0 0 10;">
         <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-            <image>
                 <Image url="/logo.png" />
-            </image>
             <clip>
                 <Circle centerX="35" centerY="35" radius="35" />
             </clip>
@@ -42,7 +38,7 @@
     <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="70.0"
               GridPane.columnIndex="3" GridPane.rowIndex="1"
               GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-    <ComboBox fx:id="teamFilter" prefHeight="26.0" prefWidth="70.0"
+    <ComboBox prefHeight="26.0" prefWidth="70.0"
               GridPane.columnIndex="4" GridPane.rowIndex="1"
               GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
     <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0"
@@ -53,7 +49,7 @@
           spacing="10.0" alignment="TOP_CENTER">
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
         <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
-        <Button fx:id="playersViewButton" mnemonicParsing="false" onAction="#openPlayersView" text="Players"
+        <Button mnemonicParsing="false" onAction="#openPlayersView" text="Players"
                 style="-fx-background-color: #555; -fx-text-fill: white; -fx-font-weight: bold;" />
     </VBox>
 

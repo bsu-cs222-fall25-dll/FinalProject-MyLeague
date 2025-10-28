@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -103,13 +102,9 @@ public class TeamViewCellController {
 
         Button cancelButton = (Button) root.lookup("#cancelButton");
 
-        cancelButton.setOnAction(e -> {
-            creator.close();
-        });
+        cancelButton.setOnAction(e -> creator.close());
 
-        creator.setOnCloseRequest(event -> {
-            creator.close();
-        });
+        creator.setOnCloseRequest(event -> creator.close());
 
         creator.showAndWait();
     }

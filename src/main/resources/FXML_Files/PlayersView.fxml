@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 
 <GridPane style="-fx-background-color: #333;" prefHeight="400.0" prefWidth="600.0"
           xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
@@ -25,11 +23,9 @@
         <RowConstraints prefHeight="40.0" />
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
-    <StackPane alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-            <image>
                 <Image url="/logo.png" />
-            </image>
             <clip>
                 <Circle centerX="35" centerY="35" radius="35" />
             </clip>
