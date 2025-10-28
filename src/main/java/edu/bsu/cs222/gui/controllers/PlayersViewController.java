@@ -86,10 +86,7 @@ public class PlayersViewController {
             String team = teamFilter.getValue();
             if (!team.isBlank()){
                 if(!team.equals("All")){
-                    if (team.equals("None")){
-                        if (!player.getTeam().isBlank()) {return false;}
-                    }
-                    if (!team.equals(player.getTeam())) {return false;}
+                    return team.equals(player.getTeam());
                 }
             }
             return true;
