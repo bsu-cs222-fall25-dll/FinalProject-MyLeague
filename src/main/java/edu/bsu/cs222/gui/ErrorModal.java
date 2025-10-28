@@ -25,7 +25,7 @@ public class ErrorModal {
 
         stage.setOnCloseRequest(event ->{
             stage.close();
-            if (disable) {((PlayersViewController) parent).setDisable(false);};
+            if (disable) {((PlayersViewController) parent).setDisable(false);}
         });
 
         Button closeButton = (Button) root.lookup("#closeButton");

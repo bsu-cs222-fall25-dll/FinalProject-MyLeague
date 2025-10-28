@@ -49,6 +49,7 @@ public class League {
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;
         private final ArrayList<String> playerNameList = new ArrayList<>();
+        private int calculatedScore = -1;
 
         private Team(String teamName, ArrayList<Position> positions) {
             this.teamName = teamName;
@@ -82,6 +83,14 @@ public class League {
 
         public ArrayList<String> getPlayerNameList(){
             return playerNameList;
+        }
+
+        public int getCalculatedScore() {
+            return calculatedScore;
+        }
+
+        public void setCalculatedScore(int calculatedScore) {
+            this.calculatedScore = calculatedScore;
         }
     }
 }
