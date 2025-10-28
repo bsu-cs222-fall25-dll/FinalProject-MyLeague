@@ -22,7 +22,7 @@ public class GraphicalUserInterface extends Application {
     public void start(Stage stage) throws IOException, InterruptedException {
         boolean networkError = PlayerRetriever.getPlayersFromJsonOrApi();
         if (networkError){
-            ErrorModal.throwErrorModal(new Stage(), "Network Error", null);
+            ErrorModal.throwErrorModal("Network Error", null);
         }
         else {
             leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
