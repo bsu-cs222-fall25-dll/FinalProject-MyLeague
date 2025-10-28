@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener;
+
 import java.io.IOException;
 import java.util.Objects;
 import static edu.bsu.cs222.Position.*;
@@ -173,5 +174,34 @@ public class PlayersViewCellController {
             return;
         }
         addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getName()));
+    }
+
+    public void viewPlayerStats() throws IOException {
+            parent.setDisable(true);
+            Stage creator = new Stage();
+            creator.initModality(Modality.APPLICATION_MODAL);
+            creator.setTitle("View Player Stats");
+
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerStatsModal.fxml")));
+            Parent root = loader.load();
+
+            creator.setScene(new Scene(root));
+
+            PlayerStatsModalController controller = loader.getController();
+            controller.setPlayer(currentPlayer);
+
+            Button cancelButton = (Button) root.lookup("#cancelButton");
+
+            cancelButton.setOnAction(e -> {
+                parent.setDisable(false);
+                creator.close();
+            });
+
+            creator.setOnCloseRequest(event -> {
+                parent.setDisable(false);
+                creator.close();
+            });
+
+            creator.showAndWait();
     }
 }

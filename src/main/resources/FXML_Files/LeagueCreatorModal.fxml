@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0"
-          prefWidth="311.0" xmlns="http://javafx.com/javafx/17.0.12">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-    </rowConstraints>
-    <TextField id="nameField" promptText="Enter league name"/>
-    <Button id="createButton" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <tooltip>
-            <Tooltip text="Create league"/>
-        </tooltip>
-    </Button>
-    <Button id="cancelButton" mnemonicParsing="false" text="Cancel" GridPane.rowIndex="1">
-        <tooltip>
-            <Tooltip text="Cancel league creation"/>
-        </tooltip>
-    </Button>
-</GridPane>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="360" prefHeight="180"
+            style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;">
+    <top>
+        <Label text="Create League" BorderPane.alignment="CENTER_LEFT">
+            <font>
+                <Font name="System Bold" size="16"/>
+            </font>
+            <padding>
+                <Insets top="15" left="20" bottom="5"/>
+            </padding>
+            <textFill>#e0e0e0</textFill>
+        </Label>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10"/>
+            </padding>
+            <TextField fx:id="nameField"
+                       promptText="Enter team name"
+                       maxWidth="200"
+                       style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 6; -fx-border-radius: 6;"/>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="10" bottom="15"/>
+            </padding>
+            <Button fx:id="createButton"
+                    text="Add"
+                    prefWidth="100"
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;"/>
+
+            <Button fx:id="cancelButton"
+                    text="Cancel"
+                    prefWidth="100"
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
