@@ -43,7 +43,7 @@ public class TeamViewController {
         teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
 
         positionFilter.getItems().add("All");
-        for (Position position: Position.values()){
+        for (Position position: GraphicalUserInterface.getLeagueList().getFirst().getTeamPositions()){
             positionFilter.getItems().add(position.toString());
         }
         positionFilter.setValue("All");
@@ -78,6 +78,12 @@ public class TeamViewController {
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> loadTeamPlayers());
 
         leagueSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
+            positionFilter.getItems().clear();
+            positionFilter.getItems().add("All");
+            for (Position position: Objects.requireNonNull(getLeagueByName(newVal)).getTeamPositions()){
+                positionFilter.getItems().add(position.toString());
+            }
+
             setTeamItems(Objects.requireNonNull(getLeagueByName(newVal)));
             teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
             loadTeamPlayers();
