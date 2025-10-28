@@ -21,22 +21,42 @@
         <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openPlayersView" text="Players">
          <VBox.margin>
             <Insets top="5.0" />
-         </VBox.margin></Button>
+         </VBox.margin>
+            <tooltip>
+                <Tooltip text="Open player viewer"/>
+            </tooltip>
+        </Button>
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
          <VBox.margin>
             <Insets top="5.0" />
-         </VBox.margin></ComboBox>
+         </VBox.margin>
+            <tooltip>
+                <Tooltip text="Select a league"/>
+            </tooltip>
+        </ComboBox>
         <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
          <VBox.margin>
             <Insets top="5.0" />
-         </VBox.margin></ComboBox>
+         </VBox.margin>
+            <tooltip>
+                <Tooltip text="Select a team"/>
+            </tooltip>
+        </ComboBox>
     </VBox>
     <ListView id="listView" fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-    <TextField fx:id="searchField" promptText="Search player name" GridPane.columnIndex="3" />
+    <TextField fx:id="searchField" promptText="Search player name" GridPane.columnIndex="3">
+    </TextField>
     <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER">
         <GridPane.margin>
           <Insets />
         </GridPane.margin>
+        <tooltip>
+            <Tooltip text="Filter by player position"/>
+        </tooltip>
     </ComboBox>
-   <Button fx:id="scoreButton" mnemonicParsing="false" onAction="#calculateTeamScore" prefWidth="65.0" text="Calculate" GridPane.columnIndex="5" />
+   <Button fx:id="scoreButton" mnemonicParsing="false" onAction="#calculateTeamScore" prefWidth="65.0" text="Calculate" GridPane.columnIndex="5">
+       <tooltip>
+           <Tooltip text="Calculate team score"/>
+       </tooltip>
+   </Button>
 </GridPane>

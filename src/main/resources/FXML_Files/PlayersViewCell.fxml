@@ -15,5 +15,9 @@
         <Label fx:id="detailsLbl" text="Label" />
         <Label fx:id="statsLbl" text="Label" />
     </VBox>
-   <Button fx:id="addPlayerButton" mnemonicParsing="false" text="Add" onAction="#playerAdder"/>
+   <Button fx:id="addPlayerButton" mnemonicParsing="false" text="Add" onAction="#playerAdder">
+       <tooltip>
+           <Tooltip text="Add player to team"/>
+       </tooltip>
+   </Button>
 </HBox>

@@ -15,6 +15,10 @@
         <Label fx:id="detailsLbl" text="Label" />
         <Label fx:id="statsLbl" text="Label" />
     </VBox>
-   <Button mnemonicParsing="false" onAction="#removePlayer" text="Remove" />
+   <Button mnemonicParsing="false" onAction="#removePlayer" text="Remove">
+       <tooltip>
+           <Tooltip text="Remove player from team"/>
+       </tooltip>
+   </Button>
    <Label fx:id="positionLbl" text="Label" />
 </HBox>

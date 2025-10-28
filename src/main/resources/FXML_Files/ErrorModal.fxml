@@ -12,5 +12,8 @@
         <VBox.margin>
           <Insets/>
         </VBox.margin>
+        <tooltip>
+            <Tooltip text="Close error pop-up"/>
+        </tooltip>
     </Button>
 </VBox>

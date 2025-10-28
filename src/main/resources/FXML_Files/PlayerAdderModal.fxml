@@ -16,11 +16,39 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <Button fx:id="flexButton" mnemonicParsing="false" text="Flex" GridPane.columnIndex="5" GridPane.rowIndex="1" disable="true"/>
-    <Button fx:id="closeButton" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="5" />
-   <Button fx:id="qbButton" mnemonicParsing="false" text="QB" GridPane.rowIndex="1" disable="true"/>
-   <Button fx:id="rbButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="RB" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true" />
-   <Button fx:id="wrButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="WR" GridPane.columnIndex="2" GridPane.rowIndex="1" disable="true"/>
-   <Button fx:id="teButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="TE" GridPane.columnIndex="3" GridPane.rowIndex="1" disable="true"/>
-   <Button fx:id="kButton" layoutX="165.0" layoutY="127.0" mnemonicParsing="false" text="K" GridPane.columnIndex="4" GridPane.rowIndex="1" disable="true"/>
+    <Button fx:id="flexButton" mnemonicParsing="false" text="Flex" GridPane.columnIndex="5" GridPane.rowIndex="1" disable="true">
+        <tooltip>
+            <Tooltip text="Add player as flex"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="closeButton" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="5">
+        <tooltip>
+            <Tooltip text="Cancel add player"/>
+        </tooltip>
+    </Button>
+   <Button fx:id="qbButton" mnemonicParsing="false" text="QB" GridPane.rowIndex="1" disable="true">
+    <tooltip>
+        <Tooltip text="Add player as quarterback"/>
+    </tooltip>
+   </Button>
+   <Button fx:id="rbButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="RB" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true">
+       <tooltip>
+           <Tooltip text="Add player as running back"/>
+       </tooltip>
+   </Button>
+   <Button fx:id="wrButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="WR" GridPane.columnIndex="2" GridPane.rowIndex="1" disable="true">
+        <tooltip>
+            <Tooltip text="Add player as wide receiver"/>
+        </tooltip>
+   </Button>
+   <Button fx:id="teButton" layoutX="113.0" layoutY="127.0" mnemonicParsing="false" text="TE" GridPane.columnIndex="3" GridPane.rowIndex="1" disable="true">
+       <tooltip>
+           <Tooltip text="Add player as tight end"/>
+       </tooltip>
+   </Button>
+   <Button fx:id="kButton" layoutX="165.0" layoutY="127.0" mnemonicParsing="false" text="K" GridPane.columnIndex="4" GridPane.rowIndex="1" disable="true">
+       <tooltip>
+           <Tooltip text="Add player as kicker"/>
+       </tooltip>
+   </Button>
 </GridPane>
