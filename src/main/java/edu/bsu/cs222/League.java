@@ -11,9 +11,9 @@ public class League {
     private final ArrayList<Position> teamPositions;
     private final String name;
 
-    public League(String name, ArrayList<Position> teamPositons){
+    public League(String name, ArrayList<Position> teamPositions){
         this.name = name;
-        this.teamPositions = teamPositons;
+        this.teamPositions = teamPositions;
     }
 
     public void addTeam(String teamName){

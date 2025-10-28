@@ -11,7 +11,7 @@ public class PlayerStatsModalController {
     public Button weeklyStatsBtn;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
-    String currentStatView = "Season";
+    String currentStatView = "Season Stats";
     private Player player;
 
     public void setPlayer(Player player){
@@ -28,13 +28,13 @@ public class PlayerStatsModalController {
 
     @FXML
     private void setSeasonStatView(){
-        currentStatView = "Season";
+        currentStatView = "Season Stats";
         tabLbl.setText(currentStatView);
     }
 
     @FXML
     private void setWeeklyStatView(){
-        currentStatView = "Weekly";
+        currentStatView = "Weekly Stats";
         tabLbl.setText(currentStatView);
     }
 }

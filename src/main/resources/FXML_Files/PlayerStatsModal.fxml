@@ -4,20 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
     <ToolBar layoutX="6.0" prefHeight="40.0" prefWidth="139.0">
-        <Button onAction="#setSeasonStatView" fx:id="seasonStatsBtn" mnemonicParsing="false" text="Season"/>
-        <Button onAction="#setWeeklyStatView" fx:id="weeklyStatsBtn" mnemonicParsing="false" text="Weekly"/>
+        <Button fx:id="seasonStatsBtn" mnemonicParsing="false" onAction="#setSeasonStatView" text="Season" />
+        <Button fx:id="weeklyStatsBtn" mnemonicParsing="false" onAction="#setWeeklyStatView" text="Weekly" />
     </ToolBar>
-    <Button fx:id="cancelButton" layoutX="457.0" layoutY="325.0" mnemonicParsing="false" prefHeight="53.0"
-            prefWidth="120.0" text="Close"/>
+    <Button fx:id="cancelButton" layoutX="457.0" layoutY="325.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="120.0" text="Close" />
     <Label fx:id="playerLabel" layoutX="23.0" layoutY="60.0" text="Label">
         <font>
-          <Font size="20.0"/>
+          <Font size="20.0" />
         </font>
     </Label>
-    <Label fx:id="tabLbl" layoutX="154.0" layoutY="20.0" text="Label"/>
+    <Label fx:id="tabLbl" layoutX="154.0" layoutY="20.0" text="Label" />
+   <HBox layoutX="19.0" layoutY="118.0" prefHeight="171.0" prefWidth="558.0" style="-fx-background-color: lightgray;" />
 </AnchorPane>

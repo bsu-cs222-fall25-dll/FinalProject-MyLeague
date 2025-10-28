@@ -2,38 +2,65 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewController">
+<GridPane style="-fx-background-color: #333;" prefHeight="400.0" prefWidth="600.0"
+          xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewController">
+
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints maxWidth="103.6" minWidth="98.0" prefWidth="103.6" />
         <ColumnConstraints maxWidth="17.0" minWidth="0.0" prefWidth="0.0" />
         <ColumnConstraints maxWidth="375.0" minWidth="0.0" prefWidth="363.0" />
         <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
-      <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+        <ColumnConstraints maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
     </columnConstraints>
+
     <rowConstraints>
-        <RowConstraints maxHeight="37.8000244140625" minHeight="10.0" prefHeight="37.8000244140625" />
-        <RowConstraints maxHeight="384.1999816894531" minHeight="362.5999755859375" prefHeight="362.5999755859375" />
+        <RowConstraints prefHeight="70.0" />
+        <RowConstraints prefHeight="40.0" />
+        <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
-    <VBox prefHeight="408.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <Button fx:id="teamViewButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
-        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
-         <VBox.margin>
-            <Insets left="5.0" />
-         </VBox.margin></ComboBox>
-        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
-         <VBox.margin>
-            <Insets left="5.0" />
-         </VBox.margin></ComboBox>
+
+    <StackPane alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
+            <image>
+                <Image url="/logo.png" />
+            </image>
+            <clip>
+                <Circle centerX="35" centerY="35" radius="35" />
+            </clip>
+        </ImageView>
+    </StackPane>
+
+    <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="0">
+        <Label text="MyLeague Players" style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;" />
+    </HBox>
+
+    <TextField fx:id="searchField" promptText="Search player name"
+               GridPane.columnIndex="3" GridPane.rowIndex="1"
+               GridPane.halignment="LEFT" GridPane.valignment="CENTER"
+               prefWidth="200.0" />
+    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0"
+              GridPane.columnIndex="4" GridPane.rowIndex="1"
+              GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+    <ComboBox fx:id="teamFilter" prefWidth="65.0"
+              GridPane.columnIndex="5" GridPane.rowIndex="1"
+              GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+
+    <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0"
+              GridPane.columnIndex="3" GridPane.columnSpan="3"
+              GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+
+    <VBox prefHeight="408.0" prefWidth="100.0"
+          GridPane.columnIndex="1" GridPane.rowIndex="2"
+          spacing="10.0" alignment="TOP_CENTER">
+        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
+        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
+        <Button fx:id="teamViewButton" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
     </VBox>
-    <ListView id="listView" fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-    <TextField fx:id="searchField" promptText="Search player name" GridPane.columnIndex="3" />
-    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-        <GridPane.margin>
-          <Insets />
-        </GridPane.margin>
-    </ComboBox>
-    <ComboBox fx:id="teamFilter" prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
 </GridPane>
