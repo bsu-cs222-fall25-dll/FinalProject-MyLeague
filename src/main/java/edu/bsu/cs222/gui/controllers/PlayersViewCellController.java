@@ -3,6 +3,7 @@ package edu.bsu.cs222.gui.controllers;
 import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.Position;
+import edu.bsu.cs222.gui.ErrorModal;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -94,23 +95,15 @@ public class PlayersViewCellController {
         League.Team team = parent.getCurrentTeam();
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader loader;
-        Parent root;
 
         if (team == null){
-            creator.setTitle("Error");
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/ErrorModal.fxml")));
-            root = loader.load();
-            creator.setScene(new Scene(root));
-
-            Label errorLbl = (Label) root.lookup("#errorLbl");
-            errorLbl.setText("Please select a team, before attempting to add a player");
+            ErrorModal.throwErrorModal(creator, "Please select a team, before attempting to add a player", parent);
         }
         else {
             creator.setTitle("Player Adder");
 
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
-            root = loader.load();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
+            Parent root = loader.load();
 
             creator.setScene(new Scene(root));
 
@@ -136,22 +129,21 @@ public class PlayersViewCellController {
             teButton.setOnAction(e -> addPlayer(TE, creator));
             kButton.setOnAction(e -> addPlayer(K, creator));
             flexButton.setOnAction(e -> addPlayer(FLEX, creator));
+
+            creator.setOnCloseRequest(event ->{
+                parent.setDisable(false);
+                creator.close();
+            });
+
+            Button closeButton = (Button) root.lookup("#cancelButton");
+
+            closeButton.setOnAction(e -> {
+                parent.setDisable(false);
+                creator.close();
+            });
+
+            creator.showAndWait();
         }
-
-
-        creator.setOnCloseRequest(event ->{
-            parent.setDisable(false);
-            creator.close();
-        });
-
-        Button closeButton = (Button) root.lookup("#closeButton");
-
-        closeButton.setOnAction(e -> {
-            parent.setDisable(false);
-            creator.close();
-        });
-
-        creator.showAndWait();
     }
 
     public void setParentController(PlayersViewController parent) {

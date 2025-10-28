@@ -4,16 +4,17 @@ import edu.bsu.cs222.GraphicalUserInterface;
 import edu.bsu.cs222.League;
 import edu.bsu.cs222.Player;
 import edu.bsu.cs222.Position;
+import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.TeamViewCell;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.*;
@@ -97,6 +98,12 @@ public class TeamViewController {
         }
         else {
             playerList.setAll(getCurrentTeam().getPlayerMap().keySet());
+            if (team.getCalculatedScore() == -1){
+                scoreButton.setText("Calculate");
+            }
+            else {
+                scoreButton.setText(team.getCalculatedScore() + "pts");
+            }
         }
     }
 
@@ -153,7 +160,18 @@ public class TeamViewController {
         return (teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
     }
 
-    public void calculateTeamScore() {
-        scoreButton.setText("10pts");
+    public void calculateTeamScore() throws IOException {
+        League.Team team = getCurrentTeam();
+        if (team == null){
+            ErrorModal.throwErrorModal(new Stage(), "Select a team", new Object());
+        }
+        else if (team.getPlayerMap().isEmpty()){
+            ErrorModal.throwErrorModal(new Stage(), "Add players to team", new Object());
+        }
+        else{
+            int score = 10;
+            team.setCalculatedScore(score);
+            scoreButton.setText(score + "pts");
+        }
     }
 }
