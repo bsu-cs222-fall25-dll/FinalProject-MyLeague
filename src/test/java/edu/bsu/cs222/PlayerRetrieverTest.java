@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -29,6 +30,15 @@ public class PlayerRetrieverTest {
         PlayerRetriever retriever = new PlayerRetriever();
         retriever.createAndSavePlayerListFromApi();
         Assertions.assertNotNull(retriever.getPlayersFromJson());
+    }
+
+    @Test
+    void testGetPlayersFromJsonOrAPIDoesNotReturnNullAfterDeletingJson() throws IOException, InterruptedException {
+        if (new File("src/main/resources/PlayerList.json").delete()){
+            PlayerRetriever retriever = new PlayerRetriever();
+            retriever.getPlayersFromJsonOrApi();
+            Assertions.assertNotNull(retriever.getPlayersFromJson());
+        }
     }
 
     @Test

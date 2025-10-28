@@ -46,6 +46,8 @@ public class PlayerRetriever {
             return response.body();
         }
         catch (IOException e){
+            //TODO: Throw error if exception
+            //Can't truly be tested
             return "";
         }
     }

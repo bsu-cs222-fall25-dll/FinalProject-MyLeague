@@ -57,7 +57,7 @@ public class LeagueTest {
     }
 
     @Test
-    void testGetTeamByNameReflectsAddedPlayer(){
+    void testGetTeamPlayerMapReflectsAddedPlayer(){
         League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
         league.addTeam("Test");
         Player player = new Player("Chris Burke");
@@ -81,5 +81,22 @@ public class LeagueTest {
         league.getTeamByName("Test").addPlayer(player, QB);
         league.getTeamByName("Test").removePlayer(player);
         Assertions.assertTrue(league.getTeamByName("Test").getPlayerMap().isEmpty());
+    }
+
+    @Test
+    void testGetTeamNameListReflectsAddedPlayer(){
+        League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
+        league.addTeam("Test");
+        Player player = new Player("Chris Burke");
+        league.getTeamByName("Test").addPlayer(player, QB);
+        Assertions.assertEquals("Chris Burke", league.getTeamByName("Test").getPlayerNameList().getFirst());
+    }
+
+    @Test
+    void testGetCalculatedScoreReturnsSetScore(){
+        League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)));
+        league.addTeam("Test");
+        league.getTeamByName("Test").setCalculatedScore(10);
+        Assertions.assertEquals(10, league.getTeamByName("Test").getCalculatedScore());
     }
 }

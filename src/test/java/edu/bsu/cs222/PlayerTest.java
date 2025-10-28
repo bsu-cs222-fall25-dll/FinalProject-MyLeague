@@ -1,11 +1,11 @@
 package edu.bsu.cs222;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import java.util.HashMap;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.Objects;
+import static edu.bsu.cs222.Position.*;
+
 public class PlayerTest {
     @Test
     void getScoreTest(){
@@ -57,5 +57,39 @@ public class PlayerTest {
         Player chris = new Player("Chris Burke");
         Assertions.assertEquals("C. Burke", chris.getShortName());
 
+    }
+
+    @Test
+    void testCustomPlayerEqualsWithDifferentMemoryAddress(){
+        Player player0 = new Player("Chris", "12345");
+        Player player1 = new Player("Chris", "12345");
+        Assertions.assertEquals(player0, player1);
+    }
+
+    @Test
+    void testCustomPlayerEqualsWithSameMemoryAddress(){
+        Player player0 = new Player("Chris", "12345");
+        Assertions.assertEquals(player0, player0);
+    }
+
+    @Test
+    void testCustomerPlayerEqualsWithNull(){
+        Player player0 = new Player("Chris", "12345");
+        Assertions.assertNotEquals(null, player0);
+    }
+
+    @Test
+    void testCustomerPlayerEqualsWithDifferentObject(){
+        Player player0 = new Player("Chris", "12345");
+        Assertions.assertNotEquals(new Object(), player0);
+    }
+
+    @Test
+    void testCustomPlayerMapContainsPlayer(){
+        Player player0 = new Player("Chris", "12345");
+        Player player1 = new Player("Chris", "12345");
+        HashMap<Player, Position> map = new HashMap<>();
+        map.put(player0, QB);
+        Assertions.assertTrue(map.containsKey(player1));
     }
 }
