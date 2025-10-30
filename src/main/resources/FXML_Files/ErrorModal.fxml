@@ -3,17 +3,41 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="172.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/17.0.12">
-    <Label id="errorLbl"/>
-    <Button id="closeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Close">
-        <VBox.margin>
-          <Insets/>
-        </VBox.margin>
-        <tooltip>
-            <Tooltip text="Close error pop-up"/>
-        </tooltip>
-    </Button>
-</VBox>
+<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <Label text="Error" BorderPane.alignment="CENTER_LEFT">
+            <font>
+                <Font name="System Bold" size="16" />
+            </font>
+            <padding>
+                <Insets bottom="5" left="20" top="15" />
+            </padding>
+            <textFill>#e0e0e0</textFill>
+        </Label>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="15" />
+            </padding>
+            <Label fx:id="errorLbl" maxWidth="250.0" style="-fx-text-fill: #ff6b6b; -fx-font-size: 13px;" textAlignment="CENTER" wrapText="true">
+            <font>
+               <Font size="15.0" />
+            </font></Label>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="15" top="10" />
+            </padding>
+            <Button fx:id="closeButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Close">
+                <tooltip>
+                    <Tooltip text="Close error pop-up" />
+                </tooltip>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>
