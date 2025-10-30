@@ -35,11 +35,11 @@ public class PlayerRetriever {
     public static boolean getPlayersFromJsonOrApi() throws IOException, InterruptedException {
         File jsonFile = new File("src/main/resources/PlayerList.json");
         if (jsonFile.exists()){
-            return createAndSavePlayerListFromApi();
-        }
-        else {
             createPlayerList(getPlayersFromJson());
             return false;
+        }
+        else {
+            return createAndSavePlayerListFromApi();
         }
     }
 
