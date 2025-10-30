@@ -63,7 +63,7 @@ public class PlayersViewCellController {
 
         headshot.setImage(DEFAULT);
 
-        if (imageUrl.equals("not found") ||imageUrl.isBlank()){return;}
+        if (imageUrl.equals("Not Found") ||imageUrl.isBlank()){return;}
 
         Image headshotImage = new Image(imageUrl, 70, 70, true, true, true);
 
@@ -97,7 +97,7 @@ public class PlayersViewCellController {
         creator.initModality(Modality.APPLICATION_MODAL);
 
         if (team == null){
-            ErrorModal.throwErrorModal("Please select a team, before attempting to add a player", parent);
+            ErrorModal.throwErrorModal("Please select a team before attempting to add a player", parent);
         }
         else {
             creator.setTitle("Player Adder");
