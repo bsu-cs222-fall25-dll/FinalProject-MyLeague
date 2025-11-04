@@ -20,16 +20,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private Button reloadButton;
     @FXML private Button teamViewButton;
     @FXML private ComboBox<String> teamSelector;
     @FXML private ComboBox<String> leagueSelector;
@@ -39,6 +43,8 @@ public class PlayersViewController {
     @FXML private ComboBox<String> positionFilter;
 
     private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
+
+    private final ImageView reloadIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/reload_icon.png"))), 20, 20, true, true));
 
     public ReadOnlyObjectProperty<League.Team> currentTeamProperty() {
         return currentTeam.getReadOnlyProperty();
@@ -61,6 +67,8 @@ public class PlayersViewController {
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
+
+        reloadButton.setGraphic(reloadIcon);
 
         managePlayersView(PlayerRetriever.getPlayerArrayList());
     }
@@ -173,7 +181,7 @@ public class PlayersViewController {
     }
 
     public void openTeamView() throws IOException {
-        GraphicalUserInterface.setRoot("/FXML_Files/TeamView.fxml");
+        GraphicalUserInterface.setRoot("/fxml_files/TeamView.fxml");
     }
 
     public void setDisable(boolean disable){
@@ -190,7 +198,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Files/LeagueCreatorModal.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/LeagueCreatorModal.fxml"));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -230,7 +238,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("Team Creator");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/TeamCreatorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/TeamCreatorModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));

@@ -29,7 +29,7 @@ public class PlayersViewCellController {
     private PlayersViewController parent;
     private Player currentPlayer;
 
-    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
+    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/images/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
     private String lastUrl;
 
@@ -102,7 +102,7 @@ public class PlayersViewCellController {
         else {
             creator.setTitle("Player Adder");
 
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerAdderModal.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerAdderModal.fxml")));
             Parent root = loader.load();
 
             creator.setScene(new Scene(root));
@@ -174,7 +174,7 @@ public class PlayersViewCellController {
             creator.initModality(Modality.APPLICATION_MODAL);
             creator.setTitle("View Player Stats");
 
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerStatsModal.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerStatsModal.fxml")));
             Parent root = loader.load();
 
             creator.setScene(new Scene(root));

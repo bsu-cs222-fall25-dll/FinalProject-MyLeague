@@ -150,7 +150,7 @@ public class TeamViewController {
     }
 
     public void openPlayersView() throws IOException {
-        GraphicalUserInterface.setRoot("/FXML_Files/PlayersView.fxml");
+        GraphicalUserInterface.setRoot("/fxml_files/PlayersView.fxml");
     }
 
     public League.Team getCurrentTeam() {
