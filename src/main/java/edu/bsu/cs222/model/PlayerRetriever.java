@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerRetriever {
-    private static final ArrayList<Player> playerArrayList = new ArrayList<>();
+    private static ArrayList<Player> playerArrayList;
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
     public static boolean createAndSavePlayerListFromApi() throws InterruptedException, IOException {
@@ -69,6 +69,7 @@ public class PlayerRetriever {
     public static void createPlayerList(String jsonData) {
         JSONObject jsonObject = new JSONObject(jsonData);
         JSONArray players = jsonObject.getJSONArray("body");
+        playerArrayList = new ArrayList<>();
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
             String posString = player.getString("pos");
