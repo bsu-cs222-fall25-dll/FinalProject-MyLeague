@@ -19,7 +19,7 @@
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
     <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-        <Image url="/logo.png" />
+        <Image url="/images/myLeague_logo.png" />
         <clip>
             <Circle centerX="35" centerY="35" radius="35" />
         </clip>

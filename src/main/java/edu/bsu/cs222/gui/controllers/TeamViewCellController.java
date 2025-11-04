@@ -25,7 +25,7 @@ public class TeamViewCellController {
     @FXML private Label positionLbl;
     private String lastUrl;
 
-    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
+    private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/images/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
 
     @FXML
     public void initialize(){
@@ -93,7 +93,7 @@ public class TeamViewCellController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("View Player Stats");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML_Files/PlayerStatsModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerStatsModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));

@@ -25,7 +25,7 @@
     </rowConstraints>
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-                <Image url="/logo.png" />
+                <Image url="/images/myLeague_logo.png" />
             <clip>
                 <Circle centerX="35" centerY="35" radius="35" />
             </clip>
@@ -54,6 +54,6 @@
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
         <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
         <Button fx:id="teamViewButton" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
-        <Button fx:id="reloadButton" mnemonicParsing="false" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="" />
+        <Button fx:id="reloadButton" mnemonicParsing="false"/>
     </VBox>
 </GridPane>

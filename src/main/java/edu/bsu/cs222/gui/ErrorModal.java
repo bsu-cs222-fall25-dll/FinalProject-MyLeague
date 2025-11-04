@@ -19,7 +19,7 @@ public class ErrorModal {
         boolean playersView = parent != null && parent.getClass() == PlayersViewController.class;
 
         stage.setTitle("Error");
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ErrorModal.class.getResource("/FXML_Files/ErrorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ErrorModal.class.getResource("/fxml_files/ErrorModal.fxml")));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
 
