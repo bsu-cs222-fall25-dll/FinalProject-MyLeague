@@ -29,7 +29,7 @@
                 <Button fx:id="weeklyStatsBtn" text="Weekly" onAction="#setWeeklyStatView" prefWidth="80" prefHeight="30" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"/>
             </HBox>
 <!-- Insert this after it's created... It's just a template... fx:id="statsDisplay"-->
-            <HBox  spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" prefHeight="200" prefWidth="560"/>
+            <HBox spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" prefHeight="200" prefWidth="560"/>
         </VBox>
     </center>
     <bottom>

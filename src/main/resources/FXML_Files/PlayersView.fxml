@@ -54,5 +54,6 @@
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
         <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
         <Button fx:id="teamViewButton" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
+        <Button fx:id="reloadButton" mnemonicParsing="false" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="" />
     </VBox>
 </GridPane>
