@@ -17,7 +17,7 @@
     </top>
 
     <center>
-        <SplitPane dividerPositions="0.744007670182167" style="-fx-background-color: transparent;">
+        <SplitPane fx:id="splitPane" dividerPositions="0.744007670182167" style="-fx-background-color: transparent;">
             <VBox prefHeight="268.0" prefWidth="511.0" spacing="15" style="-fx-background-color: #2b2b2b;">
                 <padding>
                     <Insets bottom="10" left="20" right="20" top="10" />
@@ -39,15 +39,22 @@
                         <Tooltip text="View weekly stats"/>
                     </tooltip>
                     </Button>
+
+                    <Button fx:id="compareButton" onAction="#toggleComparePanel" prefHeight="30" prefWidth="90" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Compare">
+                        <tooltip>
+                            <Tooltip text="Compare this player with another"/>
+                        </tooltip>
+                    </Button>
                 </HBox>
 
                 <HBox prefHeight="200" prefWidth="560" spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" />
             </VBox>
-            <VBox spacing="10" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;">
+
+            <VBox fx:id="comparePanel" spacing="10" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;" visible="false" managed="false">
                 <padding>
                     <Insets bottom="15" left="10" right="10" top="15" />
                 </padding>
-                <Label style="-fx-font-size: 14px;" text="Search Player" textFill="#e0e0e0" />
+                <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
                 <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
                 <tooltip>
                     <Tooltip text="Enter a player's name to compare stats"/>
