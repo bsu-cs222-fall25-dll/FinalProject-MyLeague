@@ -19,17 +19,23 @@
             <textFill>#e0e0e0</textFill>
         </Label>
     </top>
+
     <center>
         <VBox alignment="CENTER" spacing="10">
             <padding>
                 <Insets top="10"/>
             </padding>
             <TextField fx:id="nameField"
-                       promptText="Enter team name"
+                       promptText="Enter fantasy league name"
                        maxWidth="200"
-                       style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 6; -fx-border-radius: 6;"/>
+                       style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 6; -fx-border-radius: 6;">
+            <tooltip>
+                <Tooltip text="Enter a name for your fantasy league"/>
+            </tooltip>
+            </TextField>
         </VBox>
     </center>
+
     <bottom>
         <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
             <padding>
@@ -38,12 +44,20 @@
             <Button fx:id="createButton"
                     text="Add"
                     prefWidth="100"
-                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;"/>
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;">
+            <tooltip>
+                <Tooltip text="Create your fantasy league"/>
+            </tooltip>
+            </Button>
 
             <Button fx:id="cancelButton"
                     text="Cancel"
                     prefWidth="100"
-                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;"/>
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;">
+            <tooltip>
+                <Tooltip text="Close popup"/>
+            </tooltip>
+            </Button>
         </HBox>
     </bottom>
 </BorderPane>

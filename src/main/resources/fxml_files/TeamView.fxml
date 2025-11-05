@@ -1,38 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.image.Image?>
+
 <GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
+
     <columnConstraints>
         <ColumnConstraints minWidth="100.0" prefWidth="100.0" />
         <ColumnConstraints prefWidth="380.0" />
         <ColumnConstraints halignment="CENTER" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
         <ColumnConstraints halignment="CENTER" maxWidth="96.39999999999998" minWidth="69.39999999999998" prefWidth="70.0" />
     </columnConstraints>
+
     <rowConstraints>
         <RowConstraints prefHeight="70.0" />
         <RowConstraints prefHeight="40.0" />
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
+
     <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
         <Image url="/images/myLeague_logo.png" />
         <clip>
             <Circle centerX="35" centerY="35" radius="35" />
         </clip>
     </ImageView>
+
      <Label style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 4;" text="MyTeam" GridPane.columnIndex="1" />
-    <TextField fx:id="searchField" prefWidth="200.0" promptText="Search player name" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+
+    <TextField fx:id="searchField" prefWidth="200.0" promptText="Search player name" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <tooltip>
+        <Tooltip text="Search your roster by player name"/>
+    </tooltip>
+    </TextField>
+
+    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <tooltip>
+        <Tooltip text="Filter your roster by position"/>
+    </tooltip>
+    </ComboBox>
+
     <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+
     <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
-        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
-        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
-        <Button mnemonicParsing="false" onAction="#openPlayersView" style="-fx-background-color: #555; -fx-text-fill: white; -fx-font-weight: bold;" text="Players" />
+
+        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
+        <tooltip>
+            <Tooltip text="Select a league to view"/>
+        </tooltip>
+        </ComboBox>
+
+        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
+        <tooltip>
+            <Tooltip text="Select a team to view its roster"/>
+        </tooltip>
+        </ComboBox>
+
+        <Button mnemonicParsing="false" onAction="#openPlayersView" style="-fx-background-color: #555; -fx-text-fill: white; -fx-font-weight: bold;" text="Players">
+        <tooltip>
+            <Tooltip text="Return to player browser to add more players"/>
+        </tooltip>
+        </Button>
     </VBox>
-   <Button fx:id="scoreButton" prefWidth="65.0" text="Calculate" GridPane.columnIndex="3" GridPane.rowIndex="1" onAction="#calculateTeamScore"/>
+
+   <Button fx:id="scoreButton" prefWidth="65.0" text="Calculate" GridPane.columnIndex="3" GridPane.rowIndex="1" onAction="#calculateTeamScore">
+   <tooltip>
+       <Tooltip text="Calculate your team's fantasy points"/>
+   </tooltip>
+   </Button>
 
 </GridPane>
