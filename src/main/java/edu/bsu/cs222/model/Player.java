@@ -192,7 +192,6 @@ public class Player {
         this.interceptions = interceptions;
     }
 
-
     public void setFumbles(int fumbles) {
         this.fumbles = fumbles;
     }
