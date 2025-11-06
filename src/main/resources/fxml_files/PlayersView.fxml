@@ -25,16 +25,16 @@
     </rowConstraints>
 
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-        <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-                <Image url="/images/myLeague_logo.png" />
-            <clip>
-                <Circle centerX="35" centerY="35" radius="35" />
-            </clip>
-        </ImageView>
+<!--        <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">-->
+<!--                <Image url="/images/myLeague_logo.png" />-->
+<!--            <clip>-->
+<!--                <Circle centerX="35" centerY="35" radius="35" />-->
+<!--            </clip>-->
+<!--        </ImageView>-->
     </StackPane>
 
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="0">
-        <Label text="MyLeague Players" style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;" />
+        <Label text="MyLeague Players" style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;" />
     </HBox>
 
     <TextField fx:id="searchField" promptText="Search player name"
