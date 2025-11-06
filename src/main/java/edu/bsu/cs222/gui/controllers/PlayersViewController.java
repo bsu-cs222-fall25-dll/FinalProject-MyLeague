@@ -1,5 +1,6 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.GraphicalUserInterface;
 import edu.bsu.cs222.gui.PlayersViewCell;
 import edu.bsu.cs222.model.League;
@@ -321,5 +322,16 @@ public class PlayersViewController {
             }
         }
         return null;
+    }
+
+    public void reloadPlayerList() throws IOException, InterruptedException {
+        boolean networkError = PlayerRetriever.createAndSavePlayerListFromApi();
+
+        if (networkError){
+            ErrorModal.throwErrorModal("Network Error", null);
+        }
+        else {
+            GraphicalUserInterface.setRoot("/fxml_files/PlayersView.fxml");
+        }
     }
 }

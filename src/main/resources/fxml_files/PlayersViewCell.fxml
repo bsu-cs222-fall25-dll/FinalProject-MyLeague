@@ -5,15 +5,23 @@
 <?import javafx.scene.layout.*?>
 
 <HBox onMouseClicked="#viewPlayerStats" alignment="CENTER_LEFT" spacing="12" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewCellController" prefHeight="70" prefWidth="400">
+
     <padding>
         <Insets top="8" bottom="8" left="10" right="10"/>
     </padding>
+
     <ImageView fx:id="headshot" fitHeight="54" fitWidth="54" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);"/>
+
     <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
         <Label fx:id="nameLbl" text="Player Name" style="-fx-font-weight: bold; -fx-text-fill: black;"/>
         <Label fx:id="detailsLbl" text="Team • Position" style="-fx-text-fill: #555555;"/>
         <Label fx:id="statsLbl" text="Stats Summary" style="-fx-text-fill: #777777;"/>
     </VBox>
-    <Button fx:id="addPlayerButton" text="Add" mnemonicParsing="false" onAction="#playerAdder" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" prefWidth="80" prefHeight="35"/>
+
+    <Button fx:id="addPlayerButton" text="Add" mnemonicParsing="false" onAction="#playerAdder" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" prefWidth="80" prefHeight="35">
+    <tooltip>
+        <Tooltip text="Add this player to your team roster" />
+    </tooltip>
+    </Button>
 </HBox>
 

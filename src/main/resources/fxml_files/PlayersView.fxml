@@ -23,6 +23,7 @@
         <RowConstraints prefHeight="40.0" />
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
+
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
 <!--        <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">-->
 <!--                <Image url="/images/myLeague_logo.png" />-->
@@ -31,29 +32,65 @@
 <!--            </clip>-->
 <!--        </ImageView>-->
     </StackPane>
+
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="0">
         <Label text="MyLeague Players" style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;" />
     </HBox>
+
     <TextField fx:id="searchField" promptText="Search player name"
                GridPane.columnIndex="3" GridPane.rowIndex="1"
                GridPane.halignment="LEFT" GridPane.valignment="CENTER"
-               prefWidth="200.0" />
+               prefWidth="200.0">
+    <tooltip>
+        <Tooltip text="Search for players by name"/>
+    </tooltip>
+    </TextField>
+
     <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0"
               GridPane.columnIndex="4" GridPane.rowIndex="1"
-              GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+    <tooltip>
+        <Tooltip text="Filter players by position (QB, RB, WR, TE, K)"/>
+    </tooltip>
+    </ComboBox>
+
     <ComboBox fx:id="teamFilter" prefWidth="65.0"
               GridPane.columnIndex="5" GridPane.rowIndex="1"
-              GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+    <tooltip>
+        <Tooltip text="Filter players by NFL team"/>
+    </tooltip>
+    </ComboBox>
 
     <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0"
               GridPane.columnIndex="3" GridPane.columnSpan="3"
               GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+
     <VBox prefHeight="408.0" prefWidth="100.0"
           GridPane.columnIndex="1" GridPane.rowIndex="2"
           spacing="10.0" alignment="TOP_CENTER">
-        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0" />
-        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0" />
-        <Button fx:id="teamViewButton" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam" />
-        <Button fx:id="reloadButton" mnemonicParsing="false"/>
+        <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
+        <tooltip>
+            <Tooltip text="Select or create a fantasy league"/>
+        </tooltip>
+        </ComboBox>
+
+        <ComboBox fx:id="teamSelector" prefHeight="26.0" prefWidth="90.0">
+        <tooltip>
+            <Tooltip text="Select or create a team in your league"/>
+        </tooltip>
+        </ComboBox>
+
+        <Button fx:id="teamViewButton" mnemonicParsing="false" onAction="#openTeamView" text="MyTeam">
+        <tooltip>
+            <Tooltip text="View your team's roaster and manage players"/>
+        </tooltip>
+        </Button>
+
+        <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadPlayerList">
+        <tooltip>
+            <Tooltip text="Reload"/>
+        </tooltip>
+        </Button>
     </VBox>
 </GridPane>
