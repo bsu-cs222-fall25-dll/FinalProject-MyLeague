@@ -132,7 +132,7 @@ public class PlayersViewController {
         });
 
         teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (!Objects.equals("Create", oldVal) && !oldVal.isBlank()) {
+            if (oldVal != null && !oldVal.equals("Create") && !oldVal.isBlank()) {
                 previousTeamString = oldVal;
             }
             if (newVal != null && !newVal.equals("None")) {
@@ -192,6 +192,7 @@ public class PlayersViewController {
         teamFilter.setDisable(disable);
         searchField.setDisable(disable);
         teamViewButton.setDisable(disable);
+        reloadButton.setDisable(disable);
     }
 
     private void leagueCreator() throws IOException {
