@@ -215,6 +215,11 @@ public class PlayersViewController {
             if (event.getCode() == KeyCode.ENTER){
                 createLeague(nameField.getText(), creator);
                 event.consume();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                leagueSelector.setValue(previousLeagueString);
+                teamSelector.setValue(previousTeamString);
+                setDisable(false);
+                creator.close();
             }
         });
 
@@ -255,6 +260,10 @@ public class PlayersViewController {
             if (event.getCode() == KeyCode.ENTER){
                 createTeam(nameField.getText(), creator, league);
                 event.consume();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                teamSelector.setValue(previousTeamString);
+                setDisable(false);
+                creator.close();
             }
         });
 

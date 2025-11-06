@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.beans.value.ChangeListener;
@@ -142,6 +143,13 @@ public class PlayersViewCellController {
                 creator.close();
             });
 
+            creator.getScene().setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ESCAPE){
+                    parent.setDisable(false);
+                    creator.close();
+                }
+            });
+
             creator.showAndWait();
         }
     }
@@ -192,6 +200,13 @@ public class PlayersViewCellController {
             creator.setOnCloseRequest(event -> {
                 parent.setDisable(false);
                 creator.close();
+            });
+
+            creator.getScene().setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ESCAPE){
+                    parent.setDisable(false);
+                    creator.close();
+                }
             });
 
             creator.showAndWait();

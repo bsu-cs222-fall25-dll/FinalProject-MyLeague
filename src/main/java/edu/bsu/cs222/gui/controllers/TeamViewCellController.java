@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -106,6 +107,12 @@ public class TeamViewCellController {
         cancelButton.setOnAction(e -> creator.close());
 
         creator.setOnCloseRequest(event -> creator.close());
+
+        creator.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE){
+                creator.close();
+            }
+        });
 
         creator.showAndWait();
     }

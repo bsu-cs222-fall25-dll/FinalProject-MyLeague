@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,6 +38,15 @@ public class ErrorModal {
             stage.close();
             if (playersView) {
                 ((PlayersViewController) parent).setDisable(false);
+            }
+        });
+
+        stage.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.ESCAPE){
+                stage.close();
+                if (playersView) {
+                    ((PlayersViewController) parent).setDisable(false);
+                }
             }
         });
 
