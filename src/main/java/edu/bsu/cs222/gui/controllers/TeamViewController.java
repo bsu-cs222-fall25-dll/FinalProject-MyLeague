@@ -155,7 +155,7 @@ public class TeamViewController {
 
     public League.Team getCurrentTeam() {
         String teamString = teamSelector.getValue();
-        return (teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
+        return (teamString == null || teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
     }
 
     public void calculateTeamScore() throws IOException {
