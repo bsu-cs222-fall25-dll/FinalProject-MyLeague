@@ -20,12 +20,12 @@
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
 
-    <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
-        <Image url="/images/myLeague_logo.png" />
-        <clip>
-            <Circle centerX="35" centerY="35" radius="35" />
-        </clip>
-    </ImageView>
+<!--    <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">-->
+<!--        <Image url="/images/myLeague_logo.png" />-->
+<!--        <clip>-->
+<!--            <Circle centerX="35" centerY="35" radius="35" />-->
+<!--        </clip>-->
+<!--    </ImageView>-->
 
      <Label style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 4;" text="MyTeam" GridPane.columnIndex="1" />
 
@@ -57,7 +57,7 @@
         </tooltip>
         </ComboBox>
 
-        <Button mnemonicParsing="false" onAction="#openPlayersView" style="-fx-background-color: #555; -fx-text-fill: white; -fx-font-weight: bold;" text="Players">
+        <Button mnemonicParsing="false" onAction="#openPlayersView" text="Players">
         <tooltip>
             <Tooltip text="Return to player browser to add more players"/>
         </tooltip>
