@@ -1,17 +1,23 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.gui.list_cells.PlayerCompareCell;
 import edu.bsu.cs222.model.Player;
+import edu.bsu.cs222.model.PlayerRetriever;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 public class PlayerStatsModalController {
     public Button cancelButton;
     public Button seasonStatsBtn;
     public Button weeklyStatsBtn;
     public SplitPane splitPane;
+    @FXML private ListView<Player> listView;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
     @FXML private VBox comparePanel;
@@ -31,6 +37,19 @@ public class PlayerStatsModalController {
             playerLabel.setText(player.getName());
             tabLbl.setText(currentStatView);
         }
+    }
+
+    @FXML
+    private void initialize() {
+        listView.setFixedCellSize(15);
+        listView.setCellFactory(lv -> new PlayerCompareCell());
+        //positionFilter.setValue("All");
+        //teamFilter.setValue("All");
+
+        managePlayerCompareView(PlayerRetriever.getPlayerArrayList());
+    }
+
+    private void managePlayerCompareView(ArrayList<Player> playerArrayList) {
     }
 
     @FXML
