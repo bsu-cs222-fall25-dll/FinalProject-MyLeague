@@ -44,7 +44,7 @@ public class PlayerStatsModalController {
 
     @FXML
     private void initialize() {
-        listView.setFixedCellSize(15);
+        listView.setFixedCellSize(25);
         listView.setCellFactory(lv -> new PlayerCompareCell());
         //positionFilter.setValue("All");
         //teamFilter.setValue("All");
