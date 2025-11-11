@@ -2,7 +2,7 @@ package edu.bsu.cs222.gui.controllers;
 
 import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.GraphicalUserInterface;
-import edu.bsu.cs222.gui.PlayersViewCell;
+import edu.bsu.cs222.gui.list_cells.PlayersViewCell;
 import edu.bsu.cs222.model.League;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.PlayerRetriever;

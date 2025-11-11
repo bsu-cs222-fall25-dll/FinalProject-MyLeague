@@ -1,4 +1,4 @@
-package edu.bsu.cs222.gui;
+package edu.bsu.cs222.gui.list_cells;
 
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.gui.controllers.PlayersViewCellController;
