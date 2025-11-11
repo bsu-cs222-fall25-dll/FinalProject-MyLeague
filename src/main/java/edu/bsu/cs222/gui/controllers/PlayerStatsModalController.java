@@ -3,6 +3,9 @@ package edu.bsu.cs222.gui.controllers;
 import edu.bsu.cs222.gui.list_cells.PlayerCompareCell;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.PlayerRetriever;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
@@ -49,7 +52,11 @@ public class PlayerStatsModalController {
         managePlayerCompareView(PlayerRetriever.getPlayerArrayList());
     }
 
-    private void managePlayerCompareView(ArrayList<Player> playerArrayList) {
+    private void managePlayerCompareView(ArrayList<Player> players) {
+        players.remove(player);
+        ObservableList<Player> observableList = FXCollections.observableList(players);
+        FilteredList<Player> filteredList = new FilteredList<>(observableList, p -> true);
+        listView.setItems(filteredList);
     }
 
     @FXML
