@@ -1,5 +1,6 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.list_cells.PlayerCompareCell;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.PlayerRetriever;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PlayerStatsModalController {
@@ -140,7 +142,12 @@ public class PlayerStatsModalController {
         }
     }
 
-    public void compareStats(Player comparedPlayer) throws InterruptedException {
+    public void compareStats(Player comparedPlayer) throws InterruptedException, IOException {
+        boolean networkError = comparedPlayer.setStatsWithAPI();
+        if (networkError){
+            ErrorModal.throwErrorModal("Network Error", null);
+            return;
+        }
         HashMap<String, Integer> comparedPlayerStats = comparedPlayer.getPlayerStats();
     }
 }

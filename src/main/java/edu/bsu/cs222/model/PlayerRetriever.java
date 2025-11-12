@@ -25,11 +25,9 @@ public class PlayerRetriever {
             //Can't be tested
             return true;
         }
-        else {
-            createPlayerList(response);
-            savePlayerListToJson();
-            return false;
-        }
+        createPlayerList(response);
+        savePlayerListToJson();
+        return false;
     }
 
     public static boolean getPlayersFromJsonOrApi() throws IOException, InterruptedException {

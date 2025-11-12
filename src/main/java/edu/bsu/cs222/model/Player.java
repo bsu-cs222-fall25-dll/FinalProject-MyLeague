@@ -136,8 +136,7 @@ public class Player {
         return  (Math.round(compPCT *1000) / 1000.0);
     }
 
-    public double getWeekScore() throws InterruptedException {
-        checkDateAndSetStatsWithAPI();
+    public double getWeekScore() {
         return ((playerStats.get("weekRushYds")+playerStats.get("weekRecYds")) * 0.1 +
                 (playerStats.get("weekRushTD")+playerStats.get("weekRecTD"))*7
                 + playerStats.get("weekPassTD") * 4 + playerStats.get("weekPassYds") *0.04 +
@@ -313,19 +312,24 @@ public class Player {
         playerStats.put("seasonFumbles", seasonFumbles);
     }
 
-    private void checkDateAndSetStatsWithAPI() throws InterruptedException {
+    public boolean setStatsWithAPI() throws InterruptedException {
         if (!lastScoreDateIsToday()){
-            setPlayerStats(getStatsFromAPI());
+            String response = getStatsFromAPI();
+            if (response.equals("Network Error")){
+                //Can't be tested
+                return true;
+            }
+            setPlayerStats(response);
         }
+        return false;
     }
 
-    public HashMap<String, Integer> getPlayerStats() throws InterruptedException {
-        checkDateAndSetStatsWithAPI();
+    public HashMap<String, Integer> getPlayerStats() {
         return playerStats;
     }
 
     private boolean lastScoreDateIsToday(){
-        return lastScoreDate.equals(LocalDate.now());
+        return lastScoreDate != null && lastScoreDate.equals(LocalDate.now());
     }
 
     @Override

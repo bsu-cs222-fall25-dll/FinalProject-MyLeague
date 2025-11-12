@@ -4,6 +4,8 @@ import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
+
 public class PlayerCompareCellController {
     @FXML private Label detailsLbl;
     @FXML private Label nameLbl;
@@ -20,7 +22,7 @@ public class PlayerCompareCellController {
         this.parent = parent;
     }
 
-    public void compareStats() throws InterruptedException {
+    public void compareStats() throws InterruptedException, IOException {
         parent.compareStats(player);
     }
 }

@@ -160,6 +160,7 @@ public class TeamViewController {
 
     public void calculateTeamScore() throws IOException, InterruptedException {
         League.Team team = getCurrentTeam();
+
         if (team == null){
             ErrorModal.throwErrorModal("Select a team", null);
         }
@@ -169,6 +170,11 @@ public class TeamViewController {
         else{
             double score = 0;
             for (Player player : playerList){
+                boolean networkError = player.setStatsWithAPI();
+                if (networkError){
+                    ErrorModal.throwErrorModal("Network Error", null);
+                    return;
+                }
                 score += player.getWeekScore();
             }
             team.setCalculatedScore(score);
