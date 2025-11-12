@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class TeamViewController {
@@ -158,7 +159,7 @@ public class TeamViewController {
         return (teamString == null || teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
     }
 
-    public void calculateTeamScore() throws IOException {
+    public void calculateTeamScore() throws IOException, InterruptedException {
         League.Team team = getCurrentTeam();
         if (team == null){
             ErrorModal.throwErrorModal("Select a team", null);
@@ -167,7 +168,17 @@ public class TeamViewController {
             ErrorModal.throwErrorModal("Add players to team", null);
         }
         else{
-            int score = 10;
+            double score = 0;
+            LocalDate today = LocalDate.now();
+            for (Player player : playerList){
+                if (player.getLastScoreDate() != null && player.getLastScoreDate().equals(today)){
+                    score += player.getWeekScore();
+                }
+                else {
+                    player.setPlayerStats(player.getWeekStatsFromAPI());
+                    score += player.getWeekScore();
+                }
+            }
             team.setCalculatedScore(score);
             scoreButton.setText(score + "pts");
         }
