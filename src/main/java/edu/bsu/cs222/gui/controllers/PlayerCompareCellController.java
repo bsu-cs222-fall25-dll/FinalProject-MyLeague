@@ -20,7 +20,7 @@ public class PlayerCompareCellController {
         this.parent = parent;
     }
 
-    public void compareStats() {
+    public void compareStats() throws InterruptedException {
         parent.compareStats(player);
     }
 }

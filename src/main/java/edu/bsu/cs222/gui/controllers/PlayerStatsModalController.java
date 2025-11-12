@@ -11,10 +11,8 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
+
+import java.util.*;
 
 public class PlayerStatsModalController {
     public Button cancelButton;
@@ -142,6 +140,7 @@ public class PlayerStatsModalController {
         }
     }
 
-    public void compareStats(Player player) {
+    public void compareStats(Player comparedPlayer) throws InterruptedException {
+        HashMap<String, Integer> comparedPlayerStats = comparedPlayer.getPlayerStats();
     }
 }
