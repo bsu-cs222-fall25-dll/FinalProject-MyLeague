@@ -298,6 +298,20 @@ public class Player {
                 return;
             }
         }
+
+        playerStats.put("seasonRecYds", seasonRecYds);
+        playerStats.put("seasonRecTD", seasonRecTD);
+        playerStats.put("seasonReceptions", seasonReceptions);
+        playerStats.put("seasonRushYd", seasonRushYds);
+        playerStats.put("seasonRushTD", seasonRushTD);
+        playerStats.put("seasonPassYds", seasonPassYds);
+        playerStats.put("seasonPassTD", seasonPassTD);
+        playerStats.put("seasonInterceptions", seasonInterceptions);
+        playerStats.put("seasonFgMade", seasonFgMade);
+        playerStats.put("seasonFgAttempts", seasonFgAttempts);
+        playerStats.put("seasonXpMade", seasonXpMade);
+        playerStats.put("seasonXpAttempts", seasonXpAttempts);
+        playerStats.put("seasonFumbles", seasonFumbles);
     }
 
     public LocalDate getLastScoreDate() {
