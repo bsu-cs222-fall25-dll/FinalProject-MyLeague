@@ -1,0 +1,9 @@
+Clean Player Class
+Clean Player Constructor by passing in dictionary instead of multiple parameters
+
+Implement benching
+Implement league customization
+
+Implement quick birthday Easter egg
+
+Show stats and comparison in player stats modal
