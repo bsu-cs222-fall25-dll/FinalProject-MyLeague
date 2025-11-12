@@ -136,7 +136,8 @@ public class Player {
         return  (Math.round(compPCT *1000) / 1000.0);
     }
 
-    public double getWeekScore(){
+    public double getWeekScore() throws InterruptedException {
+        checkDateAndSetStatsWithAPI();
         return ((playerStats.get("weekRushYds")+playerStats.get("weekRecYds")) * 0.1 +
                 (playerStats.get("weekRushTD")+playerStats.get("weekRecTD"))*7
                 + playerStats.get("weekPassTD") * 4 + playerStats.get("weekPassYds") *0.04 +
@@ -159,9 +160,7 @@ public class Player {
         return bDay;
     }
 
-
-
-    public String getWeekStatsFromAPI() throws InterruptedException {
+    private String getStatsFromAPI() throws InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=1"))
                 .header("x-rapidapi-key", API_KEY)
@@ -314,8 +313,19 @@ public class Player {
         playerStats.put("seasonFumbles", seasonFumbles);
     }
 
-    public LocalDate getLastScoreDate() {
-        return lastScoreDate;
+    private void checkDateAndSetStatsWithAPI() throws InterruptedException {
+        if (!lastScoreDateIsToday()){
+            setPlayerStats(getStatsFromAPI());
+        }
+    }
+
+    public HashMap<String, Integer> getPlayerStats() throws InterruptedException {
+        checkDateAndSetStatsWithAPI();
+        return playerStats;
+    }
+
+    private boolean lastScoreDateIsToday(){
+        return lastScoreDate.equals(LocalDate.now());
     }
 
     @Override
@@ -330,5 +340,9 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(playerID);
+    }
+
+    public void setLastScoreDate(LocalDate lastScoreDate) {
+        this.lastScoreDate = lastScoreDate;
     }
 }

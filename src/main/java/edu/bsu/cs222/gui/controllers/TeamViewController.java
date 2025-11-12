@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 
 public class TeamViewController {
@@ -169,15 +168,8 @@ public class TeamViewController {
         }
         else{
             double score = 0;
-            LocalDate today = LocalDate.now();
             for (Player player : playerList){
-                if (player.getLastScoreDate() != null && player.getLastScoreDate().equals(today)){
-                    score += player.getWeekScore();
-                }
-                else {
-                    player.setPlayerStats(player.getWeekStatsFromAPI());
-                    score += player.getWeekScore();
-                }
+                score += player.getWeekScore();
             }
             team.setCalculatedScore(score);
             scoreButton.setText(score + "pts");

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -15,9 +16,10 @@ import static edu.bsu.cs222.model.Position.*;
 
 public class PlayerTest {
     @Test
-    void getWeekScoreTest(){
+    void getWeekScoreTest() throws InterruptedException {
         Player burrow = new Player();
-
+        burrow.setLastScoreDate(LocalDate.now())
+;
         HashMap<String, Integer> playerStats = new HashMap<>();
         playerStats.put("weekRushYds", 30);
         playerStats.put("weekRushTD", 1);
@@ -58,8 +60,9 @@ public class PlayerTest {
         Assertions.assertEquals(0.676, burrow.getCompletionPCT());
     }
     @Test
-    void testKickerPoints(){
+    void testKickerPoints() throws InterruptedException {
         Player youngHoe_Koo = new Player();
+        youngHoe_Koo.setLastScoreDate(LocalDate.now());
 
         HashMap<String, Integer> playerStats = new HashMap<>();
         playerStats.put("weekXpAttempts", 3);
