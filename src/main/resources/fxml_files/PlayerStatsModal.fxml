@@ -54,18 +54,18 @@
                  </padding>
                  <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
                  <HBox>
-                     <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
+                     <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;" fx:id="searchField">
                          <tooltip>
                              <Tooltip text="Enter a player's name to compare stats" />
                          </tooltip>
                      </TextField>
-                     <ComboBox prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <ComboBox prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" fx:id="positionFilter">
                          <tooltip>
                              <Tooltip text="Filter players by position (QB, RB, WR, TE, K)" />
                          </tooltip>
                      </ComboBox>
 
-                     <ComboBox prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <ComboBox prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" fx:id="teamFilter">
                          <tooltip>
                              <Tooltip text="Filter players by NFL team" />
                          </tooltip>

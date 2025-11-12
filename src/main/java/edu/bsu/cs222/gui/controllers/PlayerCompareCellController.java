@@ -13,6 +13,7 @@ public class PlayerCompareCellController {
     public void setData(Player player) {
         this.player = player;
         nameLbl.setText(player.getName());
+        detailsLbl.setText(player.getPosition().toString() + " • " + player.getTeam());
     }
 
     public void setParentController(PlayerStatsModalController parent) {

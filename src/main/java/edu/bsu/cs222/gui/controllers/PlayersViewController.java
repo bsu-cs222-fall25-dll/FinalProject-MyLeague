@@ -86,17 +86,13 @@ public class PlayersViewController {
             if (!runSearch(queries, player)) {return false;}
 
             String positionString = positionFilter.getValue();
-            if (!positionString.isBlank()){
-                if(!positionString.equals("All")){
-                    if (player.getPosition() != Position.valueOf(positionString)) {return false;}
-                }
+            if (!positionString.isBlank() && !positionString.equals("All")){
+                if (player.getPosition() != Position.valueOf(positionString)) {return false;}
             }
 
             String team = teamFilter.getValue();
-            if (!team.isBlank()){
-                if(!team.equals("All")){
-                    return team.equals(player.getTeam());
-                }
+            if (!team.isBlank() && !team.equals("All")){
+                return team.equals(player.getTeam());
             }
             return true;
         },
@@ -173,10 +169,9 @@ public class PlayersViewController {
         teamFilter.getItems().add("All");
 
         for (Position position: Position.values()){
-            if(position != FLEX){
-                positionFilter.getItems().add(position.toString());
-            }
+            positionFilter.getItems().add(position.toString());
         }
+        positionFilter.getItems().remove("FLEX");
 
         teamFilter.getItems().addAll(teams);
     }
