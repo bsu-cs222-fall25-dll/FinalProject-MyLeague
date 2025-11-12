@@ -20,10 +20,11 @@ public class PlayerStatsModalController {
     public Button seasonStatsBtn;
     public Button weeklyStatsBtn;
     public SplitPane splitPane;
+    @FXML private VBox playerComparisonPanel;
     @FXML private ListView<Player> listView;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
-    @FXML private VBox comparePanel;
+    @FXML private VBox playerSelectPanel;
     @FXML private Button compareButton;
 
     String currentStatView = "Season Stats";
@@ -45,7 +46,7 @@ public class PlayerStatsModalController {
     @FXML
     private void initialize() {
         listView.setFixedCellSize(25);
-        listView.setCellFactory(lv -> new PlayerCompareCell());
+        listView.setCellFactory(lv -> new PlayerCompareCell(this));
         //positionFilter.setValue("All");
         //teamFilter.setValue("All");
 
@@ -74,8 +75,8 @@ public class PlayerStatsModalController {
     @FXML
     private void toggleComparePanel() {
         isComparePanelVisible = !isComparePanelVisible;
-        comparePanel.setVisible(isComparePanelVisible);
-        comparePanel.setManaged(isComparePanelVisible);
+        playerSelectPanel.setVisible(isComparePanelVisible);
+        playerSelectPanel.setManaged(isComparePanelVisible);
 
         if (isComparePanelVisible) {
             compareButton.setText("Hide");
@@ -83,5 +84,12 @@ public class PlayerStatsModalController {
         else {
             compareButton.setText("Compare");
         }
+    }
+
+    public void compareStats(Player player) {
+        playerSelectPanel.setVisible(false);
+        playerSelectPanel.setManaged(false);
+        playerComparisonPanel.setVisible(true);
+        playerComparisonPanel.setManaged(true);
     }
 }
