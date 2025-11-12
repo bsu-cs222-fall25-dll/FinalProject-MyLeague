@@ -5,7 +5,6 @@ import edu.bsu.cs222.model.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -102,7 +101,6 @@ public class PlayerTest {
     }
     @Test
     void testSetPlayerStatsTaysomHillReceiving() throws IOException {
-        File file = new File("src/main/resources/TaysomHill.json");
         Player taysom = new Player();
         taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
         Assertions.assertEquals(1, taysom.playerStats.get("targets"));
@@ -110,14 +108,12 @@ public class PlayerTest {
 
     @Test
     void testSetPlayerStatsTaysomHillRushing() throws IOException {
-        File file = new File("src/main/resources/TaysomHill.json");
         Player taysom = new Player();
         taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
         Assertions.assertEquals(7, taysom.playerStats.get("carries"));
     }
     @Test
     void testSetPlayerStatsTaysomHillPassing() throws IOException {
-        File file = new File("src/main/resources/TaysomHill.json");
         Player taysom = new Player();
         taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
         Assertions.assertEquals(1, taysom.playerStats.get("passAttempts"));
@@ -129,7 +125,6 @@ public class PlayerTest {
     }
     @Test
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
-        File file = new File("src/main/resources/BrandonAubrey.json");
         Player brandon = new Player();
         brandon.setPlayerStats(readSampleFileAsString("BrandonAubrey"));
         Assertions.assertEquals(1, brandon.playerStats.get("fgMade"));

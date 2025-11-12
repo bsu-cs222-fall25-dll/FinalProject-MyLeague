@@ -1,7 +1,6 @@
 package edu.bsu.cs222.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -255,7 +254,6 @@ public class Player {
             }
         }
         catch (JSONException e){
-            currentStats = null;
             playerStats.put("recYds", 0);
             playerStats.put("recTD", 0);
             playerStats.put("receptions", 0);
@@ -275,7 +273,6 @@ public class Player {
             }
         }
         catch (JSONException e){
-            currentStats = null;
             playerStats.put("rushYds", 0);
             playerStats.put("rushTD", 0);
             playerStats.put("carries", 0);
@@ -296,7 +293,6 @@ public class Player {
             }
         }
         catch (JSONException e){
-            currentStats = null;
             playerStats.put("passAttempts", 0);
             playerStats.put("passCompletions", 0);
             playerStats.put("passYds", 0);
@@ -312,7 +308,6 @@ public class Player {
             playerStats.put("xpAttempts", Integer.parseInt(currentStats.getString("xpAttempts")));
         }
         catch (JSONException e){
-            currentStats = null;
             playerStats.put("fgMade", 0);
             playerStats.put("fgAttempts", 0);
             playerStats.put("xpMade", 0);
@@ -323,7 +318,6 @@ public class Player {
             playerStats.put("fumblesLost", Integer.parseInt(currentStats.getString("fumblesLost")));
         }
         catch (JSONException e){
-            currentStats = null;
             playerStats.put("fumblesLost", 0);
         }
     }
