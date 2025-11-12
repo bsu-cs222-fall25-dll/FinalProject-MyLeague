@@ -4,7 +4,13 @@ import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static edu.bsu.cs222.model.Position.*;
 
@@ -93,5 +99,39 @@ public class PlayerTest {
         HashMap<Player, Position> map = new HashMap<>();
         map.put(player0, QB);
         Assertions.assertTrue(map.containsKey(player1));
+    }
+    @Test
+    void testSetPlayerStatsTaysomHillReceiving() throws IOException {
+        File file = new File("src/main/resources/TaysomHill.json");
+        Player taysom = new Player();
+        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
+        Assertions.assertEquals(1, taysom.playerStats.get("targets"));
+    }
+
+    @Test
+    void testSetPlayerStatsTaysomHillRushing() throws IOException {
+        File file = new File("src/main/resources/TaysomHill.json");
+        Player taysom = new Player();
+        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
+        Assertions.assertEquals(7, taysom.playerStats.get("carries"));
+    }
+    @Test
+    void testSetPlayerStatsTaysomHillPassing() throws IOException {
+        File file = new File("src/main/resources/TaysomHill.json");
+        Player taysom = new Player();
+        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
+        Assertions.assertEquals(1, taysom.playerStats.get("passAttempts"));
+    }
+    private String readSampleFileAsString(String file) throws NullPointerException, IOException {
+        InputStream sampleFile = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream(file + ".json");
+        return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
+    }
+    @Test
+    void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
+        File file = new File("src/main/resources/BrandonAubrey.json");
+        Player brandon = new Player();
+        brandon.setPlayerStats(readSampleFileAsString("BrandonAubrey"));
+        Assertions.assertEquals(1, brandon.playerStats.get("fgMade"));
     }
 }

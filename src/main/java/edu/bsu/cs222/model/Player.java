@@ -1,10 +1,21 @@
 package edu.bsu.cs222.model;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Player {
+    private static final String API_KEY = Dotenv.load().get("API_KEY");
     private String name;
     private String shortName;
     private Position position;
@@ -32,22 +43,7 @@ public class Player {
     private int completions;
     private int fumbles;
     private int interceptions;
-
-    public void setExtraPointsMade(int extraPointsMade) {
-        this.extraPointsMade = extraPointsMade;
-    }
-
-    public void setFieldGoalsMade(int fieldGoalsMade) {
-        this.fieldGoalsMade = fieldGoalsMade;
-    }
-
-    public void setFieldGoalAttempts(int fieldGoalAttempts) {
-        this.fieldGoalAttempts = fieldGoalAttempts;
-    }
-
-    public void setExtraPointAttempts(int extraPointAttempts) {
-        this.extraPointAttempts = extraPointAttempts;
-    }
+    public Map <String, Integer> playerStats = new HashMap<>();
 
     private int fieldGoalsMade;
     private int fieldGoalAttempts;
@@ -191,6 +187,22 @@ public class Player {
     public void setInterceptions(int interceptions) {
         this.interceptions = interceptions;
     }
+    public void setExtraPointsMade(int extraPointsMade) {
+        this.extraPointsMade = extraPointsMade;
+    }
+
+    public void setFieldGoalsMade(int fieldGoalsMade) {
+        this.fieldGoalsMade = fieldGoalsMade;
+    }
+
+    public void setFieldGoalAttempts(int fieldGoalAttempts) {
+        this.fieldGoalAttempts = fieldGoalAttempts;
+    }
+
+    public void setExtraPointAttempts(int extraPointAttempts) {
+        this.extraPointAttempts = extraPointAttempts;
+    }
+
 
     public void setFumbles(int fumbles) {
         this.fumbles = fumbles;
@@ -206,6 +218,114 @@ public class Player {
 
     public String getbDay() {
         return bDay;
+    }
+
+
+
+    public String getWeeklyStatsFromAPI() throws InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=1"))
+                .header("x-rapidapi-key", API_KEY)
+                .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        }
+        catch (IOException e){
+            //Can't truly be tested
+            return "Network Error";
+        }
+    }
+    public void setPlayerStats(String jsonData) {
+        JSONObject jsonObject = new JSONObject(jsonData).getJSONArray("body").getJSONObject(0);
+        JSONObject currentStats;
+        try {
+            currentStats = jsonObject.getJSONObject("Receiving"); //Receiving stats
+            playerStats.put("recYds", Integer.parseInt(currentStats.getString("recYds")));
+            playerStats.put("recTD", Integer.parseInt(currentStats.getString("recTD")));
+            playerStats.put("receptions", Integer.parseInt(currentStats.getString("receptions")));
+            playerStats.put("targets", Integer.parseInt(currentStats.getString("targets")));
+            try {
+                playerStats.put("receivingTwoPointConversion", Integer.parseInt(currentStats.getString("receivingTwoPointConversion")));
+            }
+            catch (JSONException e){
+                playerStats.put("receivingTwoPointConversion", 0);
+            }
+        }
+        catch (JSONException e){
+            currentStats = null;
+            playerStats.put("recYds", 0);
+            playerStats.put("recTD", 0);
+            playerStats.put("receptions", 0);
+            playerStats.put("targets", 0);
+            playerStats.put("receivingTwoPointConversion", 0);
+        }
+        try {
+            currentStats = jsonObject.getJSONObject("Rushing"); //Rushing stats
+            playerStats.put("rushYds", Integer.parseInt(currentStats.getString("rushYds")));
+            playerStats.put("rushTD", Integer.parseInt(currentStats.getString("rushTD")));
+            playerStats.put("carries", Integer.parseInt(currentStats.getString("carries")));
+            try {
+                playerStats.put("rushingTwoPointConversion", Integer.parseInt(currentStats.getString("rushingTwoPointConversion")));
+            }
+            catch (JSONException e){
+                playerStats.put("rushingTwoPointConversion", 0);
+            }
+        }
+        catch (JSONException e){
+            currentStats = null;
+            playerStats.put("rushYds", 0);
+            playerStats.put("rushTD", 0);
+            playerStats.put("carries", 0);
+            playerStats.put("rushingTwoPointConversion", 0);
+        }
+        try {
+            currentStats = jsonObject.getJSONObject("Passing"); //Passing stats
+            playerStats.put("passAttempts", Integer.parseInt(currentStats.getString("passAttempts")));
+            playerStats.put("passCompletions", Integer.parseInt(currentStats.getString("passCompletions")));
+            playerStats.put("passYds", Integer.parseInt(currentStats.getString("passYds")));
+            playerStats.put("passTD", Integer.parseInt(currentStats.getString("passTD")));
+            playerStats.put("int", Integer.parseInt(currentStats.getString("int")));
+            try {
+                playerStats.put("passingTwoPointConversion", Integer.parseInt(currentStats.getString("passingTwoPointConversion")));
+            }
+            catch (JSONException e){
+                playerStats.put("passingTwoPointConversion", 0);
+            }
+        }
+        catch (JSONException e){
+            currentStats = null;
+            playerStats.put("passAttempts", 0);
+            playerStats.put("passCompletions", 0);
+            playerStats.put("passYds", 0);
+            playerStats.put("passTD", 0);
+            playerStats.put("int", 0);
+            playerStats.put("passingTwoPointConversion", 0);
+        }
+        try{
+            currentStats = jsonObject.getJSONObject("Kicking"); //Passing stats
+            playerStats.put("fgMade", Integer.parseInt(currentStats.getString("fgMade")));
+            playerStats.put("fgAttempts", Integer.parseInt(currentStats.getString("fgAttempts")));
+            playerStats.put("xpMade", Integer.parseInt(currentStats.getString("xpMade")));
+            playerStats.put("xpAttempts", Integer.parseInt(currentStats.getString("xpAttempts")));
+        }
+        catch (JSONException e){
+            currentStats = null;
+            playerStats.put("fgMade", 0);
+            playerStats.put("fgAttempts", 0);
+            playerStats.put("xpMade", 0);
+            playerStats.put("xpAttempts", 0);
+        }
+        try{
+            currentStats = jsonObject.getJSONObject("Defense"); //For fumbles
+            playerStats.put("fumblesLost", Integer.parseInt(currentStats.getString("fumblesLost")));
+        }
+        catch (JSONException e){
+            currentStats = null;
+            playerStats.put("fumblesLost", 0);
+        }
     }
 
     @Override
