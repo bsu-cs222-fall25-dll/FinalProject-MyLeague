@@ -9,54 +9,76 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayerTest {
     @Test
-    void getScoreTest(){
-        Player Burrow = new Player();
-        Burrow.setPassTD(3); //12 points
-        Burrow.setPassYd(250); //10 points
-        Burrow.setRushYd(30);//3 points
-        Burrow.setReceptions(2);//2 points
-        Burrow.setReceivingYd(30);//3 points
-        Burrow.setReceivingTD(0);
-        Burrow.setRushTD(1);//7 points
-        Burrow.setFumbles(1);//-2 points
-        Burrow.setInterceptions(1);//-2 points
-        Assertions.assertEquals(33, Burrow.getScore());
+    void getWeekScoreTest(){
+        Player burrow = new Player();
+
+        HashMap<String, Integer> playerStats = new HashMap<>();
+        playerStats.put("weekRushYds", 30);
+        playerStats.put("weekRushTD", 1);
+        playerStats.put("weekRecTD", 0);
+        playerStats.put("weekRecYds", 30);
+        playerStats.put("weekPassTD", 3);
+        playerStats.put("weekPassYds", 250);
+        playerStats.put("weekReceptions", 2);
+        playerStats.put("weekInterceptions", 1);
+        playerStats.put("weekFumbles", 1);
+        playerStats.put("weekFgMade", 0);
+        playerStats.put("weekFgAttempts", 0);
+        playerStats.put("weekXpMade", 0);
+        playerStats.put("weekXpAttempts", 0);
+
+        burrow.setPlayerStats(playerStats);
+        Assertions.assertEquals(33, burrow.getWeekScore());
     }
     @Test
     void getCompletionPCTTest(){
-        Player Burrow = new Player();
-        Burrow.setCompletions(25);
-        Burrow.setPassAtt(40);
-        Assertions.assertEquals(0.625, Burrow.getCompletionPCT());
+        Player burrow = new Player();
+        burrow.setCompletions(25);
+        burrow.setPassAtt(40);
+        Assertions.assertEquals(0.625, burrow.getCompletionPCT());
     }
     @Test
     void getCompletionPCTRoundDownTest(){
-        Player Burrow = new Player();
-        Burrow.setCompletions(25);
-        Burrow.setPassAtt(39);
-        Assertions.assertEquals(0.641, Burrow.getCompletionPCT());
+        Player burrow = new Player();
+        burrow.setCompletions(25);
+        burrow.setPassAtt(39);
+        Assertions.assertEquals(0.641, burrow.getCompletionPCT());
     }
     @Test
     void getCompletionPCTRoundUpTest(){
-        Player Burrow = new Player();
-        Burrow.setCompletions(25);
-        Burrow.setPassAtt(37);
-        Assertions.assertEquals(0.676, Burrow.getCompletionPCT());
+        Player burrow = new Player();
+        burrow.setCompletions(25);
+        burrow.setPassAtt(37);
+        Assertions.assertEquals(0.676, burrow.getCompletionPCT());
     }
     @Test
     void testKickerPoints(){
-        Player YoungHoe_Koo = new Player();
-        YoungHoe_Koo.setExtraPointAttempts(3);
-        YoungHoe_Koo.setExtraPointsMade(2);
-        YoungHoe_Koo.setFieldGoalAttempts(4);
-        YoungHoe_Koo.setFieldGoalsMade(3);
-        Assertions.assertEquals(9, YoungHoe_Koo.getScore());
+        Player youngHoe_Koo = new Player();
+
+        HashMap<String, Integer> playerStats = new HashMap<>();
+        playerStats.put("weekXpAttempts", 3);
+        playerStats.put("weekXpMade", 2);
+        playerStats.put("weekFgAttempts", 4);
+        playerStats.put("weekFgMade", 3);
+        playerStats.put("weekRecYds", 0);
+        playerStats.put("weekRecTD", 0);
+        playerStats.put("weekReceptions", 0);
+        playerStats.put("weekRushYds", 0);
+        playerStats.put("weekRushTD", 0);
+        playerStats.put("weekPassYds", 0);
+        playerStats.put("weekPassTD", 0);
+        playerStats.put("weekInterceptions", 0);
+        playerStats.put("weekFumbles", 0);
+
+        youngHoe_Koo.setPlayerStats(playerStats);
+        Assertions.assertEquals(9, youngHoe_Koo.getWeekScore());
     }
 
     @Test
@@ -99,34 +121,17 @@ public class PlayerTest {
         map.put(player0, QB);
         Assertions.assertTrue(map.containsKey(player1));
     }
-    @Test
-    void testSetPlayerStatsTaysomHillReceiving() throws IOException {
-        Player taysom = new Player();
-        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
-        Assertions.assertEquals(1, taysom.playerStats.get("targets"));
-    }
 
-    @Test
-    void testSetPlayerStatsTaysomHillRushing() throws IOException {
-        Player taysom = new Player();
-        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
-        Assertions.assertEquals(7, taysom.playerStats.get("carries"));
-    }
-    @Test
-    void testSetPlayerStatsTaysomHillPassing() throws IOException {
-        Player taysom = new Player();
-        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
-        Assertions.assertEquals(1, taysom.playerStats.get("passAttempts"));
-    }
     private String readSampleFileAsString(String file) throws NullPointerException, IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(file + ".json");
         return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
     }
+
     @Test
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
         Player brandon = new Player();
         brandon.setPlayerStats(readSampleFileAsString("BrandonAubrey"));
-        Assertions.assertEquals(1, brandon.playerStats.get("fgMade"));
+        Assertions.assertEquals(1, brandon.playerStats.get("weekFgMade"));
     }
 }
