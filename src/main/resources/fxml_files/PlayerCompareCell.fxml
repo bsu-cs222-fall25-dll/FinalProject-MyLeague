@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="12" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerCompareCellController" prefHeight="15" prefWidth="400" >
+
+    <padding>
+        <Insets top="8" bottom="8" left="10" right="10"/>
+    </padding>
+
+    <HBox spacing="20" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+        <Label fx:id="nameLbl" text="Player Name" style="-fx-font-weight: bold; -fx-text-fill: black;"/>
+        <Label fx:id="detailsLbl" text="Team • Position" style="-fx-text-fill: #555555;"/>
+    </HBox>
+</HBox>

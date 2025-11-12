@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.skin.TabPaneSkin.TabControlButtons?>
 <BorderPane prefHeight="400" prefWidth="700" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10">
@@ -55,13 +54,30 @@
                     <Insets bottom="15" left="10" right="10" top="15" />
                 </padding>
                 <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
-                <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
-                <tooltip>
-                    <Tooltip text="Enter a player's name to compare stats"/>
-                </tooltip>
-                </TextField>
+                <HBox>
+                    <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
+                        <tooltip>
+                            <Tooltip text="Enter a player's name to compare stats"/>
+                        </tooltip>
+                    </TextField>
+                    <ComboBox prefHeight="26.0" prefWidth="65.0"
+                              GridPane.columnIndex="4" GridPane.rowIndex="1"
+                              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="Filter players by position (QB, RB, WR, TE, K)"/>
+                        </tooltip>
+                    </ComboBox>
 
-                <ListView prefWidth="180" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
+                    <ComboBox prefWidth="65.0"
+                              GridPane.columnIndex="5" GridPane.rowIndex="1"
+                              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <tooltip>
+                            <Tooltip text="Filter players by NFL team"/>
+                        </tooltip>
+                    </ComboBox>
+                </HBox>
+
+                <ListView fx:id = "listView" prefWidth="180" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
             </VBox>
         </SplitPane>
     </center>
