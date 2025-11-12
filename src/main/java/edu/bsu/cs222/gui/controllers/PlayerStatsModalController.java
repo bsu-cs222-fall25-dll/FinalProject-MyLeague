@@ -20,7 +20,6 @@ public class PlayerStatsModalController {
     public Button seasonStatsBtn;
     public Button weeklyStatsBtn;
     public SplitPane splitPane;
-    @FXML private VBox playerComparisonPanel;
     @FXML private ListView<Player> listView;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
@@ -87,9 +86,5 @@ public class PlayerStatsModalController {
     }
 
     public void compareStats(Player player) {
-        playerSelectPanel.setVisible(false);
-        playerSelectPanel.setManaged(false);
-        playerComparisonPanel.setVisible(true);
-        playerComparisonPanel.setManaged(true);
     }
 }

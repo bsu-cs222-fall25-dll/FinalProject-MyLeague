@@ -48,40 +48,32 @@
 
                 <HBox prefHeight="200" prefWidth="560" spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" />
             </VBox>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-                <VBox fx:id="playerSelectPanel" managed="false" spacing="10" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;" visible="false">
-                    <padding>
-                        <Insets bottom="15" left="10" right="10" top="15" />
-                    </padding>
-                    <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
-                    <HBox>
-                        <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
-                            <tooltip>
-                                <Tooltip text="Enter a player's name to compare stats" />
-                            </tooltip>
-                        </TextField>
-                        <ComboBox prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                            <tooltip>
-                                <Tooltip text="Filter players by position (QB, RB, WR, TE, K)" />
-                            </tooltip>
-                        </ComboBox>
+             <VBox fx:id="playerSelectPanel" managed="false" spacing="10" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;" visible="false">
+                 <padding>
+                     <Insets bottom="15" left="10" right="10" top="15" />
+                 </padding>
+                 <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
+                 <HBox>
+                     <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;">
+                         <tooltip>
+                             <Tooltip text="Enter a player's name to compare stats" />
+                         </tooltip>
+                     </TextField>
+                     <ComboBox prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                         <tooltip>
+                             <Tooltip text="Filter players by position (QB, RB, WR, TE, K)" />
+                         </tooltip>
+                     </ComboBox>
 
-                        <ComboBox prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                            <tooltip>
-                                <Tooltip text="Filter players by NFL team" />
-                            </tooltip>
-                        </ComboBox>
-                    </HBox>
+                     <ComboBox prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                         <tooltip>
+                             <Tooltip text="Filter players by NFL team" />
+                         </tooltip>
+                     </ComboBox>
+                 </HBox>
 
-                    <ListView fx:id="listView" prefWidth="180" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
-                </VBox>
-
-                <VBox fx:id="playerComparisonPanel" managed="false" spacing="10"
-                      style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;"
-                      visible="false">
-                    <Label prefHeight="18.0" prefWidth="191.0" text="Player Stat One" textFill="WHITE"/>
-                </VBox>
-            </StackPane>
+                 <ListView fx:id="listView" prefWidth="180" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
+             </VBox>
         </SplitPane>
     </center>
 
