@@ -58,6 +58,12 @@ public class PlayersViewCellController {
 
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
 
+        League.Team currentTeam = parent.getCurrentTeam();
+
+        if (currentTeam != null ) {
+            addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getName()));
+        }
+
         if (imageUrl.equals(lastUrl)) {return;}
 
         lastUrl = imageUrl;
@@ -66,15 +72,15 @@ public class PlayersViewCellController {
 
         if (imageUrl.equals("Not Found") ||imageUrl.isBlank()){return;}
 
-        Image headshotImage = new Image(imageUrl, 70, 70, true, true, true);
+        try {Image headshotImage = new Image(imageUrl, 70, 70, true, true, true);
 
-        headshotImage.progressProperty().addListener((obs, ov, nv) -> {
+        headshotImage.progressProperty().addListener((_, _, nv) -> {
             if (nv.doubleValue() >= 1.0 && !headshotImage.isError() && imageUrl.equals(lastUrl)){
                 headshot.setImage(headshotImage);
             }
         });
 
-        headshotImage.errorProperty().addListener((obs, wasErr, isErr) -> {
+        headshotImage.errorProperty().addListener((_, _, isErr) -> {
             if (isErr && imageUrl.equals(lastUrl)) {
                 headshot.setImage(DEFAULT);
             }
@@ -82,13 +88,8 @@ public class PlayersViewCellController {
 
         if (!headshotImage.isBackgroundLoading() && imageUrl.equals(lastUrl)){
             headshot.setImage(headshotImage);
-        }
-
-        League.Team currentTeam = parent.getCurrentTeam();
-
-        if (currentTeam != null ) {
-            addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getName()));
-        }
+        } }
+        catch (IllegalArgumentException ignored){}
     }
 
     public void playerAdder() throws IOException {
@@ -138,21 +139,21 @@ public class PlayersViewCellController {
                 }
             }
 
-            qbButton.setOnAction(e -> addPlayer(QB, creator));
-            rbButton.setOnAction(e -> addPlayer(RB, creator));
-            wrButton.setOnAction(e -> addPlayer(WR, creator));
-            teButton.setOnAction(e -> addPlayer(TE, creator));
-            kButton.setOnAction(e -> addPlayer(K, creator));
-            flexButton.setOnAction(e -> addPlayer(FLEX, creator));
+            qbButton.setOnAction(_ -> addPlayer(QB, creator));
+            rbButton.setOnAction(_ -> addPlayer(RB, creator));
+            wrButton.setOnAction(_ -> addPlayer(WR, creator));
+            teButton.setOnAction(_ -> addPlayer(TE, creator));
+            kButton.setOnAction(_ -> addPlayer(K, creator));
+            flexButton.setOnAction(_ -> addPlayer(FLEX, creator));
 
-            creator.setOnCloseRequest(event ->{
+            creator.setOnCloseRequest(_ ->{
                 parent.setDisable(false);
                 creator.close();
             });
 
             Button closeButton = (Button) root.lookup("#cancelButton");
 
-            closeButton.setOnAction(e -> {
+            closeButton.setOnAction( _ -> {
                 parent.setDisable(false);
                 creator.close();
             });
@@ -171,7 +172,7 @@ public class PlayersViewCellController {
     public void setParentController(PlayersViewController parent) {
         this.parent = parent;
 
-        ChangeListener<League.Team> teamListener = (obs, oldVal, newVal) -> updateAddButton(newVal);
+        ChangeListener<League.Team> teamListener = (_, _, newVal) -> updateAddButton(newVal);
         parent.currentTeamProperty().addListener(teamListener);
     }
 
@@ -206,12 +207,12 @@ public class PlayersViewCellController {
 
             Button cancelButton = (Button) root.lookup("#cancelButton");
 
-            cancelButton.setOnAction(e -> {
+            cancelButton.setOnAction(_ -> {
                 parent.setDisable(false);
                 creator.close();
             });
 
-            creator.setOnCloseRequest(event -> {
+            creator.setOnCloseRequest(_ -> {
                 parent.setDisable(false);
                 creator.close();
             });

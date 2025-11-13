@@ -15,8 +15,12 @@ public class TeamViewCell extends ListCell<Player> {
     private final TeamViewController parent;
     private Node view;
     private FXMLLoader loader;
+    private final boolean networkError;
 
-    public TeamViewCell(TeamViewController parent) {this.parent = parent;}
+    public TeamViewCell(TeamViewController parent, boolean networkError) {
+        this.parent = parent;
+        this.networkError = networkError;
+    }
 
     @Override
     protected void updateItem(Player player, boolean empty) {
@@ -43,7 +47,7 @@ public class TeamViewCell extends ListCell<Player> {
         }
 
         try {
-            controller.setData(player);
+            controller.setData(player, networkError);
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }

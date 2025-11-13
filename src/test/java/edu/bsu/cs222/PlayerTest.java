@@ -134,6 +134,6 @@ public class PlayerTest {
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
         Player brandon = new Player();
         brandon.setPlayerStats(readSampleFileAsString());
-        Assertions.assertEquals(17, brandon.playerStats.get("seasonFgMade"));
+        Assertions.assertEquals(17, brandon.getPlayerStats().get("seasonFgMade"));
     }
 }

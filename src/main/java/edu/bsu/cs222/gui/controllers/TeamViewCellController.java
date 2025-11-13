@@ -1,6 +1,5 @@
 package edu.bsu.cs222.gui.controllers;
 
-import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TeamViewCellController {
+    @FXML private Label lastMatchLbl;
     @FXML private Label lastWeekLbl;
     @FXML private Label seasonLbl;
     private TeamViewController parent;
@@ -38,7 +38,7 @@ public class TeamViewCellController {
         headshot.setSmooth(true);
     }
 
-    public void setData(Player player) throws InterruptedException, IOException {
+    public void setData(Player player, boolean networkError) throws InterruptedException, IOException {
         currentPlayer = player;
         String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
         String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
@@ -50,15 +50,14 @@ public class TeamViewCellController {
         StringBuilder lastWeekSoreBuilder = new StringBuilder("Last Week: ");
         StringBuilder seasonScoreBuilder = new StringBuilder("Season: ");
 
-
-        boolean networkError = player.setStatsWithAPI();
         if (networkError){
-            ErrorModal.throwErrorModal("Network Error Can't Show Score", null);
             lastWeekSoreBuilder.append("0pts");
             seasonScoreBuilder.append("0pts");
+            lastMatchLbl.setText("NA");
         } else{
             lastWeekSoreBuilder.append(player.getWeekScore()).append("pts");
             seasonScoreBuilder.append(player.getSeasonScore()).append("pts");
+            lastMatchLbl.setText(player.getLastGame());
         }
 
         nameLbl.setText(String.format("%s #%s", player.getName(), playerNumber));

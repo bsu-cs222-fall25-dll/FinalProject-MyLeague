@@ -1,10 +1,10 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.GraphicalUserInterface;
 import edu.bsu.cs222.model.League;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.Position;
-import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.list_cells.TeamViewCell;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -21,8 +21,8 @@ import java.util.*;
 
 public class TeamViewController {
 
+    @FXML private Label teamScore;
     @FXML private ImageView logoImageView;
-    @FXML private Button scoreButton;
     @FXML private ComboBox<String> leagueSelector;
     @FXML private ComboBox<String> teamSelector;
     @FXML private ListView<Player> listView;
@@ -30,23 +30,42 @@ public class TeamViewController {
     @FXML private TextField searchField;
 
     private final ObservableList<Player> playerList = FXCollections.observableArrayList();
-    private final FilteredList<Player> filteredList = new FilteredList<>(playerList, p -> true);
+    private final FilteredList<Player> filteredList = new FilteredList<>(playerList, _ -> true);
 
     private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
 
 
     @FXML
-    public void initialize() {
-        listView.setFixedCellSize(70);
-        listView.setCellFactory(lb -> new TeamViewCell(this));
-        listView.setItems(filteredList);
-        logoImageView.setImage(logoImage);
+    public void initialize() throws InterruptedException, IOException {
+
 
         setLeagueItems();
         leagueSelector.setValue(GraphicalUserInterface.getLeagueList().getFirst().getName());
 
         setTeamItems(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())));
         teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
+        boolean networkError = false;
+        if (!teamSelector.getValue().equals("None")){
+            double score = 0;
+            for (Player player : getCurrentTeam().getPlayerMap().keySet()){
+                networkError = player.setStatsWithAPI();
+                if (networkError){
+                    break;}
+                score += player.getWeekScore();
+            }
+            teamScore.setText(String.format("%.1fpts", score));
+        }
+
+        boolean finalNetworkError = networkError;
+
+        if (finalNetworkError){
+            ErrorModal.throwErrorModal("Network Error", null);
+        }
+
+        listView.setFixedCellSize(70);
+        listView.setCellFactory(_ -> new TeamViewCell(this, finalNetworkError));
+        listView.setItems(filteredList);
+        logoImageView.setImage(logoImage);
 
         positionFilter.getItems().add("All");
         for (Position position: GraphicalUserInterface.getLeagueList().getFirst().getTeamPositions()){
@@ -81,9 +100,16 @@ public class TeamViewController {
 
         loadTeamPlayers();
 
-        teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> loadTeamPlayers());
+        teamSelector.valueProperty().addListener((_, _, _) -> {
+            try {
+                calculateScore();
+            } catch (InterruptedException e) {
+                teamScore.setText("0.0pts");
+            }
+            loadTeamPlayers();
+        });
 
-        leagueSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
+        leagueSelector.valueProperty().addListener((_, _, newVal) -> {
             positionFilter.getItems().clear();
             positionFilter.getItems().add("All");
             for (Position position: Objects.requireNonNull(getLeagueByName(newVal)).getTeamPositions()){
@@ -93,9 +119,25 @@ public class TeamViewController {
             setTeamItems(Objects.requireNonNull(getLeagueByName(newVal)));
             teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
             loadTeamPlayers();
+            try {
+                calculateScore();
+            } catch (InterruptedException e) {
+                teamScore.setText("0.0pts");
+            }
         });
     }
 
+
+    private void calculateScore() throws InterruptedException {
+        double score = 0;
+        for (Player player : getCurrentTeam().getPlayerMap().keySet()){
+            boolean networkError = player.setStatsWithAPI();
+            if (networkError){
+                return;}
+            score += player.getWeekScore();
+        }
+        teamScore.setText(String.format("%.1fpts", score));
+    }
     private void loadTeamPlayers() {
         League.Team team = getCurrentTeam();
         if (team == null) {
@@ -103,12 +145,6 @@ public class TeamViewController {
         }
         else {
             playerList.setAll(getCurrentTeam().getPlayerMap().keySet());
-            if (team.getCalculatedScore() == -1){
-                scoreButton.setText("Calculate");
-            }
-            else {
-                scoreButton.setText(team.getCalculatedScore() + "pts");
-            }
         }
     }
 
@@ -163,24 +199,5 @@ public class TeamViewController {
     public League.Team getCurrentTeam() {
         String teamString = teamSelector.getValue();
         return (teamString == null || teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
-    }
-
-    public void calculateTeamScore() throws IOException {
-        League.Team team = getCurrentTeam();
-
-        if (team == null){
-            ErrorModal.throwErrorModal("Select a team", null);
-        }
-        else if (team.getPlayerMap().isEmpty()){
-            ErrorModal.throwErrorModal("Add players to team", null);
-        }
-        else{
-            double score = 0;
-            for (Player player : playerList){
-                score += player.getWeekScore();
-            }
-            team.setCalculatedScore(score);
-            scoreButton.setText(String.format("%.1fpts", score));
-        }
     }
 }
