@@ -4,16 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER_LEFT" onMouseClicked="#compareStats" prefHeight="30" prefWidth="400" spacing="12"
-      xmlns="http://javafx.com/javafx/11.0.14-internal"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="edu.bsu.cs222.gui.controllers.PlayerCompareCellController">
+<HBox alignment="CENTER_LEFT" onMouseClicked="#compareStats" prefHeight="30" spacing="12" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerCompareCellController">
 
     <padding>
         <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
 
-    <HBox alignment="CENTER_LEFT" spacing="20" HBox.hgrow="ALWAYS">
+    <HBox alignment="CENTER_LEFT" spacing="20" HBox.hgrow="NEVER">
         <Label fx:id="nameLbl" style="-fx-font-weight: bold; -fx-text-fill: white;" text="Player Name" />
         <Label fx:id="detailsLbl" style="-fx-text-fill: white;" text="Team • Position" />
     </HBox>
