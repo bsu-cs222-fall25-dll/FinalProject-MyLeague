@@ -66,5 +66,5 @@
             </tooltip>
         </Button>
     </VBox>
-   <Label fx:id="teamScore" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" style="-fx-text-fill: white;"/>
+   <Label fx:id="teamScore" text="0.0pts" GridPane.columnIndex="4" GridPane.rowIndex="1" style="-fx-text-fill: white;"/>
 </GridPane>
