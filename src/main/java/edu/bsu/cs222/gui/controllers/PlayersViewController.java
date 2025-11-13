@@ -34,6 +34,7 @@ import java.util.List;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private ImageView logoImageView;
     @FXML private Button reloadButton;
     @FXML private Button teamViewButton;
     @FXML private ComboBox<String> teamSelector;
@@ -46,6 +47,7 @@ public class PlayersViewController {
     private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
 
     private final ImageView reloadIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/reload_icon.png"))), 20, 20, true, true));
+    private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
 
     public ReadOnlyObjectProperty<League.Team> currentTeamProperty() {
         return currentTeam.getReadOnlyProperty();
@@ -70,6 +72,7 @@ public class PlayersViewController {
         leagueSelector.setValue("Default");
 
         reloadButton.setGraphic(reloadIcon);
+        logoImageView.setImage(logoImage);
 
         managePlayersView(PlayerRetriever.getPlayerArrayList());
     }

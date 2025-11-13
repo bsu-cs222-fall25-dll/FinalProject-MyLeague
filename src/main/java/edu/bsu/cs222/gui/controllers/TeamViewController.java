@@ -13,12 +13,15 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.*;
 
 public class TeamViewController {
 
+    @FXML private ImageView logoImageView;
     @FXML private Button scoreButton;
     @FXML private ComboBox<String> leagueSelector;
     @FXML private ComboBox<String> teamSelector;
@@ -29,11 +32,15 @@ public class TeamViewController {
     private final ObservableList<Player> playerList = FXCollections.observableArrayList();
     private final FilteredList<Player> filteredList = new FilteredList<>(playerList, p -> true);
 
+    private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
+
+
     @FXML
     public void initialize() {
         listView.setFixedCellSize(70);
         listView.setCellFactory(lb -> new TeamViewCell(this));
         listView.setItems(filteredList);
+        logoImageView.setImage(logoImage);
 
         setLeagueItems();
         leagueSelector.setValue(GraphicalUserInterface.getLeagueList().getFirst().getName());

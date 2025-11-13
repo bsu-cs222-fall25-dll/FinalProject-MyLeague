@@ -2,7 +2,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
+<GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
 
     <columnConstraints>
         <ColumnConstraints minWidth="100.0" prefWidth="100.0" />
@@ -17,12 +19,11 @@
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
     </rowConstraints>
 
-<!--    <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">-->
-<!--        <Image url="/images/myLeague_logo.png" />-->
-<!--        <clip>-->
-<!--            <Circle centerX="35" centerY="35" radius="35" />-->
-<!--        </clip>-->
-<!--    </ImageView>-->
+    <ImageView fx:id="logoImageView" fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
+        <clip>
+            <Circle centerX="35" centerY="35" radius="35" />
+        </clip>
+    </ImageView>
 
      <Label style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 4;" text="MyTeam" GridPane.columnIndex="1" />
 

@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
 <GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewController">
 
     <columnConstraints>
@@ -20,12 +22,11 @@
     </rowConstraints>
 
     <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-<!--        <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true">-->
-<!--                <Image url="/images/myLeague_logo.png" />-->
-<!--            <clip>-->
-<!--                <Circle centerX="35" centerY="35" radius="35" />-->
-<!--            </clip>-->
-<!--        </ImageView>-->
+        <ImageView fx:id="logoImageView" fitHeight="70.0" fitWidth="70.0" preserveRatio="true">
+            <clip>
+                <Circle centerX="35" centerY="35" radius="35" />
+            </clip>
+        </ImageView>
     </StackPane>
 
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="0">
