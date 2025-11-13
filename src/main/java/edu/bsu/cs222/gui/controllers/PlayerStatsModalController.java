@@ -18,6 +18,7 @@ import java.util.*;
 
 public class PlayerStatsModalController {
 
+    @FXML private Button cancelButton;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
     @FXML private Button compareButton;

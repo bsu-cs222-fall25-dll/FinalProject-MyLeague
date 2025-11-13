@@ -124,7 +124,6 @@
                 </HBox>
 
                 <ListView fx:id="listView"
-                          prefWidth="180"
                           style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
             </VBox>
         </SplitPane>
@@ -135,7 +134,8 @@
             <padding>
                 <Insets top="15" bottom="15" />
             </padding>
-            <Button text="Close"
+            <Button id="cancelButton"
+                    text="Close"
                     prefWidth="120"
                     prefHeight="40"
                     style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" />
