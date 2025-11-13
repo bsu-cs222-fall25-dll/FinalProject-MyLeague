@@ -5,12 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400" prefWidth="720"
-            style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;"
-            xmlns="http://javafx.com/javafx/11.0.14-internal"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
-
+<BorderPane prefHeight="400" prefWidth="700" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10">
             <padding>
@@ -21,110 +16,64 @@
     </top>
 
     <center>
-        <SplitPane fx:id="splitPane" dividerPositions="0.68" style="-fx-background-color: transparent;">
-            <VBox spacing="15" style="-fx-background-color: #2b2b2b;">
+        <SplitPane fx:id="splitPane" dividerPositions="0.40068886337543047" style="-fx-background-color: transparent;">
+            <VBox prefHeight="268.0" prefWidth="511.0" spacing="15" style="-fx-background-color: #2b2b2b;">
                 <padding>
                     <Insets bottom="10" left="20" right="20" top="10" />
                 </padding>
-
                 <Label fx:id="playerLabel" text="Player Name" textFill="white">
                     <font>
                         <Font size="20" />
                     </font>
                 </Label>
-
                 <HBox spacing="10">
-                    <Button fx:id="seasonStatsBtn" onAction="#setSeasonStatView"
-                            prefHeight="30" prefWidth="80"
-                            style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"
-                            text="Season" />
-                    <Button fx:id="weeklyStatsBtn" onAction="#setWeeklyStatView"
-                            prefHeight="30" prefWidth="80"
-                            style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"
-                            text="Weekly" />
-                    <Button fx:id="compareButton" onAction="#toggleComparePanel"
-                            prefHeight="30" prefWidth="90"
-                            style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"
-                            text="Compare" />
-                </HBox>
-                <GridPane hgap="15" vgap="8">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" percentWidth="25" />
-                        <ColumnConstraints halignment="LEFT" percentWidth="25" />
-                        <ColumnConstraints halignment="LEFT" percentWidth="25" />
-                        <ColumnConstraints halignment="LEFT" percentWidth="25" />
-                    </columnConstraints>
+                    <Button fx:id="seasonStatsBtn" onAction="#setSeasonStatView" prefHeight="30" prefWidth="80" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Season">
+                    <tooltip>
+                        <Tooltip text="View season stats" />
+                    </tooltip>
+                    </Button>
 
-                    <Label text="Passing" style="-fx-font-weight: bold; -fx-text-fill: #ffffff;" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
+                    <Button fx:id="weeklyStatsBtn" onAction="#setWeeklyStatView" prefHeight="30" prefWidth="80" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Weekly">
+                    <tooltip>
+                        <Tooltip text="View weekly stats" />
+                    </tooltip>
+                    </Button>
 
-                    <Label text="Yds:" textFill="WHITE" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <Label fx:id="passYdsValueLbl" textFill="#cccccc" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                    <Label text="TD:" textFill="WHITE" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                    <Label fx:id="passTdValueLbl" textFill="#cccccc" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                    <Label text="Int:" textFill="WHITE" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <Label fx:id="interceptionsValueLbl" textFill="#cccccc" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                    <Label text="Rushing" style="-fx-font-weight: bold; -fx-text-fill: #ffffff;" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
-
-                    <Label text="Yds:" textFill="WHITE" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <Label fx:id="rushYdsValueLbl" textFill="#cccccc" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                    <Label text="TD:" textFill="WHITE" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-                    <Label fx:id="rushTdValueLbl" textFill="#cccccc" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
-
-                    <Label text="Receiving" style="-fx-font-weight: bold; -fx-text-fill: #ffffff;" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
-
-                    <Label text="Yds:" textFill="WHITE" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                    <Label fx:id="recYdsValueLbl" textFill="#cccccc" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                    <Label text="Rec:" textFill="WHITE" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
-                    <Label fx:id="receptionsValueLbl" textFill="#cccccc" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
-
-                    <Label text="TD:" textFill="WHITE" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                    <Label fx:id="tdValueLbl" textFill="#cccccc" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                    <Label text="Kicking" style="-fx-font-weight: bold; -fx-text-fill: #ffffff;" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
-
-                    <Label text="FG:" textFill="WHITE" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-                    <Label fx:id="fgMadeValueLbl" textFill="#cccccc" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-
-                    <Label text="Attempts:" textFill="WHITE" GridPane.rowIndex="9" GridPane.columnIndex="2"/>
-                    <Label fx:id="fgAttemptsValueLbl" textFill="#cccccc" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
-
-                    <Label text="XP:" textFill="WHITE" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                    <Label fx:id="xpMadeValueLbl" textFill="#cccccc" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-
-                    <Label text="Attempts:" textFill="WHITE" GridPane.rowIndex="10" GridPane.columnIndex="2"/>
-                    <Label fx:id="xpAttemptsValueLbl" textFill="#cccccc" GridPane.rowIndex="10" GridPane.columnIndex="3"/>
-
-                    <Label text="Fumbles:" textFill="WHITE" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-                    <Label fx:id="fumblesValueLbl" textFill="#cccccc" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-                </GridPane>
-
-            </VBox>
-
-            <VBox fx:id="playerSelectPanel" managed="false" spacing="10"
-                  style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;"
-                  visible="false" prefWidth="260">
-                <padding>
-                    <Insets bottom="15" left="10" right="10" top="15" />
-                </padding>
-
-                <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
-
-                <HBox spacing="5">
-                    <TextField fx:id="searchField" promptText="Enter player name"
-                               style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;" />
-                    <ComboBox fx:id="positionFilter" prefWidth="60" />
-                    <ComboBox fx:id="teamFilter" prefWidth="60" />
+                    <Button fx:id="compareButton" onAction="#toggleComparePanel" prefHeight="30" prefWidth="90" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Compare">
+                        <tooltip>
+                            <Tooltip text="Compare this player with another" />
+                        </tooltip>
+                    </Button>
                 </HBox>
 
-                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                    <ListView fx:id="listView" prefWidth="240" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
-                </ScrollPane>
+                <HBox prefHeight="200" prefWidth="560" spacing="10" style="-fx-background-color: #3c3c3c; -fx-background-radius: 6;" />
             </VBox>
+             <VBox fx:id="playerSelectPanel" managed="false" spacing="10" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-width: 0 0 0 1;" visible="false">
+                 <padding>
+                     <Insets bottom="15" left="10" right="10" top="15" />
+                 </padding>
+                 <Label style="-fx-font-size: 14px;" text="Compare with..." textFill="#e0e0e0" />
+                 <HBox>
+                     <TextField promptText="Enter player name" style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-prompt-text-fill: #aaaaaa;" fx:id="searchField">
+                         <tooltip>
+                             <Tooltip text="Enter a player's name to compare stats" />
+                         </tooltip>
+                     </TextField>
+                     <ComboBox prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" fx:id="positionFilter">
+                         <tooltip>
+                             <Tooltip text="Filter players by position (QB, RB, WR, TE, K)" />
+                         </tooltip>
+                     </ComboBox>
+
+                     <ComboBox prefWidth="65.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" fx:id="teamFilter">
+                         <tooltip>
+                             <Tooltip text="Filter players by NFL team" />
+                         </tooltip>
+                     </ComboBox>
+                 </HBox>
+
+                 <ListView fx:id="listView" prefWidth="180" style="-fx-background-color: #3c3c3c; -fx-control-inner-background: #3c3c3c; -fx-text-fill: white; -fx-background-radius: 6;" />
+             </VBox>
         </SplitPane>
     </center>
 
@@ -133,9 +82,11 @@
             <padding>
                 <Insets bottom="15" top="15" />
             </padding>
-            <Button fx:id="cancelButton" prefHeight="40" prefWidth="120"
-                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;"
-                    text="Close" />
+            <Button fx:id="cancelButton" prefHeight="40" prefWidth="120" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Close">
+            <tooltip>
+                <Tooltip text="Close popup" />
+            </tooltip>
+            </Button>
         </HBox>
     </bottom>
 </BorderPane>
