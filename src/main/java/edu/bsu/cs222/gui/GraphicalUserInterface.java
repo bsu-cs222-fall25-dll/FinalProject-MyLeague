@@ -27,7 +27,7 @@ public class GraphicalUserInterface extends Application {
         else {
             leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K))));
             FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayersView.fxml")));
-            scene = new Scene(playersViewLoader.load(), 600, 400);
+            scene = new Scene(playersViewLoader.load(), 700, 500);
 
             stage.setTitle("MyLeague");
             stage.setScene(scene);

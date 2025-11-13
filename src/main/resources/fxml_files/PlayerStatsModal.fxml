@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="850.0"
+<BorderPane prefHeight="500.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.bsu.cs222.gui.controllers.PlayerStatsModalController"
@@ -20,7 +20,7 @@
     </top>
 
     <center>
-        <SplitPane fx:id="splitPane" dividerPositions="0.4" style="-fx-background-color: transparent;">
+        <SplitPane dividerPositions="0.4" style="-fx-background-color: transparent;">
             <VBox spacing="15" style="-fx-background-color: #2b2b2b;">
                 <padding>
                     <Insets top="10" right="20" bottom="10" left="20" />
@@ -29,7 +29,7 @@
                 <Label fx:id="playerLabel" text="Player Name" textFill="white" style="-fx-font-size: 22px;" />
 
                 <HBox spacing="10">
-                    <Button fx:id="seasonStatsBtn" text="Season"
+                    <Button text="Season"
                             onAction="#setSeasonStatView"
                             prefHeight="30" prefWidth="80"
                             style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;">
@@ -38,7 +38,7 @@
                         </tooltip>
                     </Button>
 
-                    <Button fx:id="weeklyStatsBtn" text="Last Week"
+                    <Button text="Last Week"
                             onAction="#setWeeklyStatView"
                             prefHeight="30" prefWidth="90"
                             style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;">
@@ -135,8 +135,7 @@
             <padding>
                 <Insets top="15" bottom="15" />
             </padding>
-            <Button fx:id="cancelButton"
-                    text="Close"
+            <Button text="Close"
                     prefWidth="120"
                     prefHeight="40"
                     style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" />

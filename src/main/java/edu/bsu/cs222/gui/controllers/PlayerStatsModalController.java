@@ -18,13 +18,8 @@ import java.util.*;
 
 public class PlayerStatsModalController {
 
-    @FXML private SplitPane splitPane;
-
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
-    @FXML private Button cancelButton;
-    @FXML private Button seasonStatsBtn;
-    @FXML private Button weeklyStatsBtn;
     @FXML private Button compareButton;
 
     @FXML private VBox playerSelectPanel;
@@ -77,13 +72,20 @@ public class PlayerStatsModalController {
         updateStatsLabels();
     }
 
-    private void updateStatsLabels() {
+    private void updateStatsLabels() throws InterruptedException, IOException {
         if (player == null) return;
 
         playerLabel.setText(player.getName());
         tabLbl.setText(currentStatView);
 
+        boolean networkError = player.setStatsWithAPI();
+        if (networkError){
+            ErrorModal.throwErrorModal("Network Error", null);
+            return;
+        }
+
         Map<String, Integer> stats = player.getPlayerStats();
+
         String prefix = currentStatView.equals("Season Stats") ? "season" : "week";
 
         passYdsValueLbl.setText(String.valueOf(stats.getOrDefault(prefix + "PassYds", 0)));
@@ -133,7 +135,7 @@ public class PlayerStatsModalController {
             // Team filter
             String teamString = teamFilter.getValue();
             if (!teamString.equals("All") && !teamString.isBlank()) {
-                if (!teamString.equals(p.getTeam())) return false;
+                return teamString.equals(p.getTeam());
             }
 
             return true;
@@ -161,13 +163,13 @@ public class PlayerStatsModalController {
     }
 
     @FXML
-    private void setSeasonStatView() {
+    private void setSeasonStatView() throws IOException, InterruptedException {
         currentStatView = "Season Stats";
         updateStatsLabels();
     }
 
     @FXML
-    private void setWeeklyStatView() {
+    private void setWeeklyStatView() throws IOException, InterruptedException {
         currentStatView = "Weekly Stats";
         updateStatsLabels();
     }
