@@ -184,19 +184,17 @@ public class PlayerStatsModalController {
     public void showComparePlayer(Player playerToCompare) throws InterruptedException, IOException {
         if (playerToCompare == null) return;
 
-        compareButton.setText("Hide");
-
         setPlayer(playerToCompare);
     }
 
-    public void compareStats(Player comparedPlayer) throws InterruptedException, IOException {
-        boolean networkError = comparedPlayer.setStatsWithAPI();
-        if (networkError) {
-            ErrorModal.throwErrorModal("Network Error", null);
-            return;
-        }
-
-        Map<String, Integer> comparedStats = comparedPlayer.getPlayerStats();
-        // Future: update UI for side-by-side comparison
-    }
+//    public void compareStats(Player comparedPlayer) throws InterruptedException, IOException {
+//        boolean networkError = comparedPlayer.setStatsWithAPI();
+//        if (networkError) {
+//            ErrorModal.throwErrorModal("Network Error", null);
+//            return;
+//        }
+//
+//        Map<String, Integer> comparedStats = comparedPlayer.getPlayerStats();
+//        // Future: update UI for side-by-side comparison
+//    }
 }
