@@ -176,7 +176,7 @@ public class PlayersViewCellController {
         addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getName()));
     }
 
-    public void viewPlayerStats() throws IOException {
+    public void viewPlayerStats() throws IOException, InterruptedException {
             parent.setDisable(true);
             Stage creator = new Stage();
             creator.initModality(Modality.APPLICATION_MODAL);

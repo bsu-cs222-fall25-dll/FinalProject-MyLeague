@@ -89,7 +89,7 @@ public class TeamViewCellController {
         this.parent = parent;
     }
 
-    public void viewPlayerStats() throws IOException {
+    public void viewPlayerStats() throws IOException, InterruptedException {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("View Player Stats");
