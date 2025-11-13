@@ -190,11 +190,13 @@ public class Player {
     public void setPlayerStats(String jsonData){
         JSONArray playerGames = new JSONObject(jsonData).getJSONArray("body");
         JSONObject recentGame = playerGames.getJSONObject(0);
+        JSONObject currentStats;
 
         LocalDate today = LocalDate.now();
         lastScoreDate = today;
-        JSONObject currentStats;
-        LocalDate recentGameDate = LocalDate.parse(recentGame.getString("gameID").substring(0, 8), DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int seasonYear = today.getMonthValue() >= Month.SEPTEMBER.getValue() ? today.getYear() : today.getYear() - 1;
+        LocalDate seasonStart = LocalDate.of(seasonYear, Month.SEPTEMBER, 1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
+        LocalDate weekStart = today.getDayOfWeek() == DayOfWeek.TUESDAY ? today : today.with(TemporalAdjusters.previous(DayOfWeek.TUESDAY));
 
         playerStats.put("weekRecYds", 0);
         playerStats.put("weekRecTD", 0);
@@ -210,41 +212,6 @@ public class Player {
         playerStats.put("weekXpAttempts", 0);
         playerStats.put("weekFumbles", 0);
 
-        if (recentGameDate.isAfter(today.with(TemporalAdjusters.previous(DayOfWeek.MONDAY)))){
-            try {
-                currentStats = recentGame.getJSONObject("Receiving"); //Receiving stats
-                playerStats.put("weekRecYds", Integer.parseInt(currentStats.getString("recYds")));
-                playerStats.put("weekRecTD", Integer.parseInt(currentStats.getString("recTD")));
-                playerStats.put("weekReceptions", Integer.parseInt(currentStats.getString("receptions")));
-            } catch (JSONException ignored) {}
-
-            try {
-                currentStats = recentGame.getJSONObject("Rushing"); //Rushing stats
-                playerStats.put("weekRushYds", Integer.parseInt(currentStats.getString("rushYds")));
-                playerStats.put("weekRushTD", Integer.parseInt(currentStats.getString("rushTD")));
-            } catch (JSONException ignored) {}
-
-            try {
-                currentStats = recentGame.getJSONObject("Passing"); //Passing stats
-                playerStats.put("weekPassYds", Integer.parseInt(currentStats.getString("passYds")));
-                playerStats.put("weekPassTD", Integer.parseInt(currentStats.getString("passTD")));
-                playerStats.put("weekInterceptions", Integer.parseInt(currentStats.getString("int")));
-            } catch (JSONException ignored) {}
-
-            try{
-                currentStats = recentGame.getJSONObject("Kicking"); //Passing stats
-                playerStats.put("weekFgMade", Integer.parseInt(currentStats.getString("fgMade")));
-                playerStats.put("weekFgAttempts", Integer.parseInt(currentStats.getString("fgAttempts")));
-                playerStats.put("weekXpMade", Integer.parseInt(currentStats.getString("xpMade")));
-                playerStats.put("weekXpAttempts", Integer.parseInt(currentStats.getString("xpAttempts")));
-            } catch (JSONException ignored) {}
-
-            try{
-                currentStats = recentGame.getJSONObject("Defense"); //For fumbles
-                playerStats.put("weekFumbles", Integer.parseInt(currentStats.getString("fumblesLost")));
-            } catch (JSONException ignored) {}
-        }
-
         int seasonRecYds = 0;
         int seasonRecTD = 0;
         int seasonReceptions = 0;
@@ -259,12 +226,45 @@ public class Player {
         int seasonXpAttempts = 0;
         int seasonFumbles = 0;
 
-        int seasonYear = today.getMonthValue() >= Month.SEPTEMBER.getValue() ? today.getYear() : today.getYear() - 1;
-        LocalDate seasonStart = LocalDate.of(seasonYear, Month.SEPTEMBER, 1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
-
         for (Object gameObject : playerGames){
             JSONObject game = (JSONObject) gameObject;
             LocalDate gameDate = LocalDate.parse(game.getString("gameID").substring(0, 8), DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+            if(gameDate.isAfter(weekStart.with(TemporalAdjusters.previous(DayOfWeek.TUESDAY))) && gameDate.isBefore(weekStart)){
+                try {
+                    currentStats = recentGame.getJSONObject("Receiving"); //Receiving stats
+                    playerStats.put("weekRecYds", Integer.parseInt(currentStats.getString("recYds")));
+                    playerStats.put("weekRecTD", Integer.parseInt(currentStats.getString("recTD")));
+                    playerStats.put("weekReceptions", Integer.parseInt(currentStats.getString("receptions")));
+                } catch (JSONException ignored) {}
+
+                try {
+                    currentStats = recentGame.getJSONObject("Rushing"); //Rushing stats
+                    playerStats.put("weekRushYds", Integer.parseInt(currentStats.getString("rushYds")));
+                    playerStats.put("weekRushTD", Integer.parseInt(currentStats.getString("rushTD")));
+                } catch (JSONException ignored) {}
+
+                try {
+                    currentStats = recentGame.getJSONObject("Passing"); //Passing stats
+                    playerStats.put("weekPassYds", Integer.parseInt(currentStats.getString("passYds")));
+                    playerStats.put("weekPassTD", Integer.parseInt(currentStats.getString("passTD")));
+                    playerStats.put("weekInterceptions", Integer.parseInt(currentStats.getString("int")));
+                } catch (JSONException ignored) {}
+
+                try{
+                    currentStats = recentGame.getJSONObject("Kicking"); //Passing stats
+                    playerStats.put("weekFgMade", Integer.parseInt(currentStats.getString("fgMade")));
+                    playerStats.put("weekFgAttempts", Integer.parseInt(currentStats.getString("fgAttempts")));
+                    playerStats.put("weekXpMade", Integer.parseInt(currentStats.getString("xpMade")));
+                    playerStats.put("weekXpAttempts", Integer.parseInt(currentStats.getString("xpAttempts")));
+                } catch (JSONException ignored) {}
+
+                try{
+                    currentStats = recentGame.getJSONObject("Defense"); //For fumbles
+                    playerStats.put("weekFumbles", Integer.parseInt(currentStats.getString("fumblesLost")));
+                } catch (JSONException ignored) {}
+            }
+
             if (gameDate.isAfter(seasonStart)){
                 try {
                     currentStats = game.getJSONObject("Receiving"); //Receiving stats

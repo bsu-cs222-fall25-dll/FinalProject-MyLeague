@@ -33,9 +33,9 @@
                     </tooltip>
                     </Button>
 
-                    <Button fx:id="weeklyStatsBtn" onAction="#setWeeklyStatView" prefHeight="30" prefWidth="80" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Weekly">
+                    <Button fx:id="weeklyStatsBtn" onAction="#setWeeklyStatView" prefHeight="30" prefWidth="80" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Last Week">
                     <tooltip>
-                        <Tooltip text="View weekly stats" />
+                        <Tooltip text="View last week's stats" />
                     </tooltip>
                     </Button>
 

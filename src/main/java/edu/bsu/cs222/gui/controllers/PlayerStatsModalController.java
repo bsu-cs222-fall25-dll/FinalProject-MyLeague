@@ -124,7 +124,7 @@ public class PlayerStatsModalController {
 
     @FXML
     private void setWeeklyStatView(){
-        currentStatView = "Weekly Stats";
+        currentStatView = "Last Week Stats";
         tabLbl.setText(currentStatView);
     }
 
