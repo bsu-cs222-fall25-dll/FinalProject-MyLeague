@@ -115,13 +115,27 @@ public class PlayersViewCellController {
             Button kButton = (Button) root.lookup("#kButton");
             Button flexButton = (Button) root.lookup("#flexButton");
 
-            for (Position position: team.getFreePositions()){
-                if (position == QB){ qbButton.setDisable(false);}
-                if (position == RB){ rbButton.setDisable(false);}
-                if (position == WR){ wrButton.setDisable(false);}
-                if (position == TE){ teButton.setDisable(false);}
-                if (position == K){ kButton.setDisable(false);}
-                if (position == FLEX){ flexButton.setDisable(false);}
+            for (Position position: team.getFreePositions()) {
+                if (position == QB && currentPlayer.getPosition() == QB) {
+                    qbButton.setDisable(false);
+                }
+                if (position == RB && currentPlayer.getPosition() == RB) {
+                    rbButton.setDisable(false);
+                }
+                if (position == WR && currentPlayer.getPosition() == WR) {
+                    wrButton.setDisable(false);
+                }
+                if (position == TE && currentPlayer.getPosition() == TE) {
+                    teButton.setDisable(false);
+                }
+                if (position == K && currentPlayer.getPosition() == K) {
+                    kButton.setDisable(false);
+                }
+                if (position == FLEX && currentPlayer.getPosition() == RB
+                        || position == FLEX && currentPlayer.getPosition() == WR
+                        || position == FLEX && currentPlayer.getPosition() == TE){
+                    flexButton.setDisable(false);
+                }
             }
 
             qbButton.setOnAction(e -> addPlayer(QB, creator));
