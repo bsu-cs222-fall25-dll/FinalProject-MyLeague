@@ -18,7 +18,6 @@ import java.util.*;
 
 public class PlayerStatsModalController {
 
-    @FXML private Button cancelButton;
     @FXML private Label playerLabel;
     @FXML private Label tabLbl;
     @FXML private Button compareButton;
@@ -46,8 +45,6 @@ public class PlayerStatsModalController {
     private String currentStatView = "Season Stats";
     private Player player;
     private boolean isComparePanelVisible = false;
-    private boolean isComparing = false;
-    private Player comparePlayer;
 
     @FXML
     private void initialize() {
@@ -187,14 +184,9 @@ public class PlayerStatsModalController {
     public void showComparePlayer(Player playerToCompare) throws InterruptedException, IOException {
         if (playerToCompare == null) return;
 
-        comparePlayer = playerToCompare;
-        isComparing = true;
+        compareButton.setText("Hide");
 
-        playerSelectPanel.setVisible(false);
-        playerSelectPanel.setManaged(false);
-        compareButton.setText("Compare");
-
-        setPlayer(comparePlayer);
+        setPlayer(playerToCompare);
     }
 
     public void compareStats(Player comparedPlayer) throws InterruptedException, IOException {
