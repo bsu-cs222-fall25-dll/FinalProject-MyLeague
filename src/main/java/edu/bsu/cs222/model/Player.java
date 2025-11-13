@@ -141,14 +141,14 @@ public class Player {
                 playerStats.get("weekFgAttempts") + playerStats.get("weekFgMade")*4);
     }
 
-    public double getSeasonScore() {
-        return ((playerStats.get("seasonRushYds")+playerStats.get("seasonRecYds")) * 0.1 +
-                (playerStats.get("seasonRushTD")+playerStats.get("seasonRecTD"))*7
-                + playerStats.get("seasonPassTD") * 4 + playerStats.get("seasonPassYds") *0.04 +
-                playerStats.get("seasonReceptions") - playerStats.get("seasonInterceptions")*2 - playerStats.get("seasonFumbles")*2
-                - playerStats.get("seasonXpAttempts") + playerStats.get("seasonXpMade")*2 -
-                playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade")*4);
-    }
+//    public double getSeasonScore() {
+//        return ((playerStats.get("seasonRushYds")+playerStats.get("seasonRecYds")) * 0.1 +
+//                (playerStats.get("seasonRushTD")+playerStats.get("seasonRecTD"))*7
+//                + playerStats.get("seasonPassTD") * 4 + playerStats.get("seasonPassYds") *0.04 +
+//                playerStats.get("seasonReceptions") - playerStats.get("seasonInterceptions")*2 - playerStats.get("seasonFumbles")*2
+//                - playerStats.get("seasonXpAttempts") + playerStats.get("seasonXpMade")*2 -
+//                playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade")*4);
+//    }
 
     public String getShortName() {
         return shortName;
