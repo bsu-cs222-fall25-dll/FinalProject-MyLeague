@@ -16,7 +16,7 @@ import static edu.bsu.cs222.model.Position.*;
 
 public class PlayerTest {
     @Test
-    void getWeekScoreTest() throws InterruptedException {
+    void getWeekScoreTest() {
         Player burrow = new Player();
         burrow.setLastScoreDate(LocalDate.now())
 ;
@@ -60,7 +60,7 @@ public class PlayerTest {
         Assertions.assertEquals(0.676, burrow.getCompletionPCT());
     }
     @Test
-    void testKickerPoints() throws InterruptedException {
+    void testKickerPoints() {
         Player youngHoe_Koo = new Player();
         youngHoe_Koo.setLastScoreDate(LocalDate.now());
 
@@ -124,16 +124,16 @@ public class PlayerTest {
         Assertions.assertTrue(map.containsKey(player1));
     }
 
-    private String readSampleFileAsString(String file) throws NullPointerException, IOException {
+    private String readSampleFileAsString() throws NullPointerException, IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(file + ".json");
+                .getResourceAsStream("BrandonAubrey" + ".json");
         return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
     }
 
     @Test
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
         Player brandon = new Player();
-        brandon.setPlayerStats(readSampleFileAsString("BrandonAubrey"));
-        Assertions.assertEquals(1, brandon.playerStats.get("weekFgMade"));
+        brandon.setPlayerStats(readSampleFileAsString());
+        Assertions.assertEquals(17, brandon.playerStats.get("seasonFgMade"));
     }
 }
