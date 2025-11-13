@@ -6,4 +6,6 @@ Implement league customization
 
 Implement quick birthday Easter egg
 
-Show stats and comparison in player stats modal
+Show comparison in player stats modal
+
+Update playerStatsModal visuals, fix listViewHorizontalBar
