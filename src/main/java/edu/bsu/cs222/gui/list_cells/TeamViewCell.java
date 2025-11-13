@@ -42,7 +42,11 @@ public class TeamViewCell extends ListCell<Player> {
             }
         }
 
-        controller.setData(player);
+        try {
+            controller.setData(player);
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
         setGraphic(view);
     }
 }

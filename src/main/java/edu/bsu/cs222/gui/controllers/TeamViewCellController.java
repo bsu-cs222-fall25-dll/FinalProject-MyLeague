@@ -1,5 +1,6 @@
 package edu.bsu.cs222.gui.controllers;
 
+import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +18,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TeamViewCellController {
+    @FXML private Label lastWeekLbl;
+    @FXML private Label seasonLbl;
     private TeamViewController parent;
     private Player currentPlayer;
     @FXML private ImageView headshot;
     @FXML private Label nameLbl;
     @FXML private Label detailsLbl;
     @FXML private Label statsLbl;
-    @FXML private Label positionLbl;
     private String lastUrl;
 
     private static final Image DEFAULT = new Image (Objects.requireNonNull(PlayersViewCellController.class.getResource("/images/default_avatar.jpg")).toExternalForm(), 70, 70, true, true);
@@ -36,20 +38,34 @@ public class TeamViewCellController {
         headshot.setSmooth(true);
     }
 
-    public void setData(Player player) {
+    public void setData(Player player) throws InterruptedException, IOException {
         currentPlayer = player;
         String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
-        String playerPosition = (player.getPosition() == null ? "NA" : player.getPosition().toString());
         String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
         String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
         String playerHeight = (player.getHeight() == null ? "NA" : player.getHeight());
         String playerWeight = (player.getWeight() == null ? "NA" : player.getWeight());
         String playerSchool = (player.getSchool() == null ? "NA" : player.getSchool());
 
+        StringBuilder lastWeekSoreBuilder = new StringBuilder("Last Week: ");
+        StringBuilder seasonScoreBuilder = new StringBuilder("Season: ");
+
+
+        boolean networkError = player.setStatsWithAPI();
+        if (networkError){
+            ErrorModal.throwErrorModal("Network Error Can't Show Score", null);
+            lastWeekSoreBuilder.append("0pts");
+            seasonScoreBuilder.append("0pts");
+        } else{
+            lastWeekSoreBuilder.append(player.getWeekScore()).append("pts");
+            seasonScoreBuilder.append(player.getSeasonScore()).append("pts");
+        }
+
         nameLbl.setText(String.format("%s #%s", player.getName(), playerNumber));
-        detailsLbl.setText(String.format("%s | %s | %s", playerTeam, playerPosition, playerSchool));
+        detailsLbl.setText(String.format("%s | %s | %s", playerTeam, parent.getCurrentTeam().getPlayerMap().get(player).toString(), playerSchool));
         statsLbl.setText(String.format("Exp: %syr | %s %slbs", playerExp, playerHeight, playerWeight));
-        positionLbl.setText(parent.getCurrentTeam().getPlayerMap().get(player).toString());
+        lastWeekLbl.setText(lastWeekSoreBuilder.toString());
+        seasonLbl.setText(seasonScoreBuilder.toString());
 
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
 
