@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.http.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class PlayerRetriever {
@@ -70,8 +71,10 @@ public class PlayerRetriever {
         playerArrayList = new ArrayList<>();
         for (int i = 0; i < players.length(); ++i){
             JSONObject player = players.getJSONObject(i);
+            HashMap<String, String> playerInfo = new HashMap<>();
             String posString = player.getString("pos");
-            String espnName = player.getString("espnName");
+
+            String name = player.getString("espnName");
 
             if (posString.equals("FB")){
                 posString = "RB";
@@ -81,7 +84,7 @@ public class PlayerRetriever {
                 posString = "K";
             }
 
-            if (espnName.equals("Taysom Hill")){
+            if (name.equals("Taysom Hill")){
                 posString = "TE";
             }
 
@@ -95,18 +98,20 @@ public class PlayerRetriever {
             }
 
             if (posObject != null) {
-                String team = player.getString("team");
-                String jerseyNum = player.getString("jerseyNum");
-                String height = player.getString("height");
-                String weight = player.getString("weight");
-                String school = player.getString("school");
-                String playerID = player.getString("playerID");
-                String teamID = player.getString("teamID");
+                playerInfo.put("name", name);
+                playerInfo.put("position", posString);
+                playerInfo.put("team", player.getString("team"));
+                playerInfo.put("jerseyNumber", player.getString("jerseyNum"));
+                playerInfo.put("height", player.getString("height"));
+                playerInfo.put("weight", player.getString("weight"));
+                playerInfo.put("school", player.getString("school"));
+                playerInfo.put("playerID", player.getString("playerID"));
+                playerInfo.put("teamID", player.getString("teamID"));
                 String exp = player.getString("exp");
                 if (exp.equals("R")){
                     exp = "0";
                 }
-                JSONObject injury = player.getJSONObject("injury");
+                playerInfo.put("experience", exp);
 
                 String age;
 
@@ -115,6 +120,7 @@ public class PlayerRetriever {
                 } catch (JSONException e) {
                     age = "not found";
                 }
+                playerInfo.put("age", age);
 
                 String bDay;
                 try {
@@ -122,16 +128,17 @@ public class PlayerRetriever {
                 } catch (JSONException e) {
                     bDay = "not found";
                 }
+                playerInfo.put("bDay", bDay);
 
-                String espnHeadshot;
+                String headshot;
                 try {
-                    espnHeadshot = player.getString("espnHeadshot");
+                    headshot = player.getString("espnHeadshot");
                 } catch (JSONException e) {
-                    espnHeadshot = "not found";
+                    headshot = "not found";
                 }
+                playerInfo.put("headshot", headshot);
 
-                Player newPlayer = new Player(espnName, posObject, team, jerseyNum, height, weight, age, bDay,
-                        espnHeadshot, injury, school, playerID, teamID, exp);
+                Player newPlayer = new Player(playerInfo);
 
                 playerArrayList.add(newPlayer);
             }
@@ -156,7 +163,6 @@ public class PlayerRetriever {
             jsonObject.put("age", player.getAge());
             jsonObject.put("bDay", player.getbDay());
             jsonObject.put("espnHeadshot", player.getHeadshot());
-            jsonObject.put("injury", player.getInjury());
             jsonObject.put("school", player.getSchool());
             jsonObject.put("playerID", player.getPlayerID());
             jsonObject.put("teamID", player.getTeamID());

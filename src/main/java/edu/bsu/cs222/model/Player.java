@@ -29,7 +29,6 @@ public class Player {
     private String weight;
     private String age;
     private String headshot;
-    private JSONObject injury;
     private String school;
     private String playerID;
     private String teamID;
@@ -42,25 +41,22 @@ public class Player {
     public HashMap <String, Integer> playerStats = new HashMap<>();
 
 
-    public Player(String name, Position position, String team, String jerseyNumber, String height,
-                  String weight, String age, String bDay, String headshot, JSONObject injury, String school,
-                  String playerID, String teamID, String experience) {
-        this.name = name;
-        this.position = position;
-        this.team = team;
-        this.jerseyNumber = jerseyNumber;
-        this.height = height;
-        this.weight = weight;
-        this.age = age;
-        this.headshot = headshot;
-        this.injury = injury;
-        this.school = school;
-        this.playerID = playerID;
-        this.teamID = teamID;
-        this.experience = experience;
-        this.bDay = bDay;
+    public Player(HashMap<String, String> playerInfo) {
+        this.name = playerInfo.get("name");
+        this.position = Position.valueOf(playerInfo.get("position"));
+        this.team = playerInfo.get("team");
+        this.jerseyNumber = playerInfo.get("jerseyNumber");
+        this.height = playerInfo.get("height");
+        this.weight = playerInfo.get("weight");
+        this.age = playerInfo.get("age");
+        this.bDay = playerInfo.get("bDay");
+        this.headshot = playerInfo.get("headshot");
+        this.school = playerInfo.get("school");
+        this.playerID = playerInfo.get("playerID");
+        this.teamID = playerInfo.get("teamID");
+        this.experience = playerInfo.get("experience");
 
-        this.shortName = name.charAt(0) + ". " + name.split(" ")[1];
+        this.shortName = this.name.charAt(0) + ". " + this.name.split(" ")[1];
     }
 
     public Player(String name){
@@ -156,10 +152,6 @@ public class Player {
 
     public String getShortName() {
         return shortName;
-    }
-
-    public JSONObject getInjury() {
-        return injury;
     }
 
     public String getbDay() {
