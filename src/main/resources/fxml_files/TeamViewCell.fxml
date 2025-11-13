@@ -19,10 +19,14 @@
     <Label fx:id="statsLbl" style="-fx-text-fill: #777777;" text="Stats Summary" />
 </VBox>
     <VBox alignment="CENTER" layoutX="87.0" layoutY="18.0" spacing="2">
+        <Label alignment="CENTER" contentDisplay="TOP" style="-fx-font-weight: bold; -fx-text-fill: black;" text="Score" />
+        <Label fx:id="seasonLbl" style="-fx-text-fill: #555555;" text="Season:" />
+        <Label fx:id="lastWeekLbl" style="-fx-text-fill: #555555;" text="Last Week:" />
+    </VBox>
+    <VBox alignment="CENTER" layoutX="182.0" layoutY="18.0" spacing="2">
         <Label alignment="CENTER" contentDisplay="TOP" style="-fx-font-weight: bold; -fx-text-fill: black;"
-               text="Score"/>
-        <Label fx:id="seasonLbl" style="-fx-text-fill: #555555;" text="Season:"/>
-        <Label fx:id="lastWeekLbl" style="-fx-text-fill: #555555;" text="Last Week:"/>
+               text="Last Match"/>
+        <Label fx:id="lastMatchLbl" style="-fx-text-fill: #555555;"/>
     </VBox>
 
 <Button alignment="CENTER" mnemonicParsing="false" onAction="#removePlayer" prefHeight="35" prefWidth="80" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6;" text="Remove">

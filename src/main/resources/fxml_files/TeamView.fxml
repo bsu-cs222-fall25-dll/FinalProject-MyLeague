@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.*?>
 
-<GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0"
-          style="-fx-background-color: #333;"
-          xmlns="http://javafx.com/javafx/17.0.12"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
+<GridPane minHeight="500" minWidth="700" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewController">
 
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints prefWidth="125" />
-        <ColumnConstraints prefWidth="414.0" hgrow="ALWAYS" />
+        <ColumnConstraints hgrow="ALWAYS" prefWidth="414.0" />
         <ColumnConstraints prefWidth="80.0" />
         <ColumnConstraints prefWidth="80.0" />
     </columnConstraints>
@@ -34,38 +30,24 @@
     </StackPane>
 
     <HBox alignment="CENTER_LEFT" spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="0">
-        <Label style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;"
-               text="MyTeam" />
+        <Label style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 0 0 0 8;" text="MyTeam" />
     </HBox>
 
-    <TextField fx:id="searchField" prefWidth="200.0" promptText="Search player name"
-               GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <TextField fx:id="searchField" prefWidth="200.0" promptText="Search player name" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <tooltip>
             <Tooltip text="Search your roster by player name" />
         </tooltip>
     </TextField>
 
-    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0"
-              GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+    <ComboBox fx:id="positionFilter" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <tooltip>
             <Tooltip text="Filter your roster by position" />
         </tooltip>
     </ComboBox>
 
-    <Button fx:id="scoreButton" prefWidth="65.0" text="Calculate"
-            GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"
-            onAction="#calculateTeamScore">
-        <tooltip>
-            <Tooltip text="Calculate your team's fantasy points" />
-        </tooltip>
-    </Button>
+    <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
 
-    <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0"
-              GridPane.columnIndex="2" GridPane.columnSpan="3"
-              GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-
-    <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="100.0" spacing="10.0"
-          GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
             <tooltip>
                 <Tooltip text="Select a league to view" />
@@ -84,4 +66,5 @@
             </tooltip>
         </Button>
     </VBox>
+   <Label fx:id="teamScore" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" style="-fx-text-fill: white;"/>
 </GridPane>

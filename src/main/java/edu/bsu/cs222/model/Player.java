@@ -37,8 +37,9 @@ public class Player {
     //Above are stats shown from player list, below are stats which require a deeper API call.
     private int passAtt;
     private int completions;
+    private String lastGame;
     private LocalDate lastScoreDate;
-    public HashMap <String, Integer> playerStats = new HashMap<>();
+    private HashMap <String, Integer> playerStats = new HashMap<>();
 
 
     public Player(HashMap<String, String> playerInfo) {
@@ -181,7 +182,6 @@ public class Player {
 
     public void setPlayerStats(String jsonData){
         JSONArray playerGames = new JSONObject(jsonData).getJSONArray("body");
-        JSONObject recentGame = playerGames.getJSONObject(0);
         JSONObject currentStats;
 
         LocalDate today = LocalDate.now();
@@ -218,33 +218,38 @@ public class Player {
         int seasonXpAttempts = 0;
         int seasonFumbles = 0;
 
+        JSONObject game = playerGames.getJSONObject(0);
+        String gameID = game.getString("gameID");
+        lastGame = gameID.substring(9).replace("@", " vs ");
+
+
         for (Object gameObject : playerGames){
-            JSONObject game = (JSONObject) gameObject;
+            game = (JSONObject) gameObject;
             LocalDate gameDate = LocalDate.parse(game.getString("gameID").substring(0, 8), DateTimeFormatter.ofPattern("yyyyMMdd"));
 
             if(gameDate.isAfter(weekStart.with(TemporalAdjusters.previous(DayOfWeek.TUESDAY))) && gameDate.isBefore(weekStart)){
                 try {
-                    currentStats = recentGame.getJSONObject("Receiving"); //Receiving stats
+                    currentStats = game.getJSONObject("Receiving"); //Receiving stats
                     playerStats.put("weekRecYds", Integer.parseInt(currentStats.getString("recYds")));
                     playerStats.put("weekRecTD", Integer.parseInt(currentStats.getString("recTD")));
                     playerStats.put("weekReceptions", Integer.parseInt(currentStats.getString("receptions")));
                 } catch (JSONException ignored) {}
 
                 try {
-                    currentStats = recentGame.getJSONObject("Rushing"); //Rushing stats
+                    currentStats = game.getJSONObject("Rushing"); //Rushing stats
                     playerStats.put("weekRushYds", Integer.parseInt(currentStats.getString("rushYds")));
                     playerStats.put("weekRushTD", Integer.parseInt(currentStats.getString("rushTD")));
                 } catch (JSONException ignored) {}
 
                 try {
-                    currentStats = recentGame.getJSONObject("Passing"); //Passing stats
+                    currentStats = game.getJSONObject("Passing"); //Passing stats
                     playerStats.put("weekPassYds", Integer.parseInt(currentStats.getString("passYds")));
                     playerStats.put("weekPassTD", Integer.parseInt(currentStats.getString("passTD")));
                     playerStats.put("weekInterceptions", Integer.parseInt(currentStats.getString("int")));
                 } catch (JSONException ignored) {}
 
                 try{
-                    currentStats = recentGame.getJSONObject("Kicking"); //Passing stats
+                    currentStats = game.getJSONObject("Kicking"); //Passing stats
                     playerStats.put("weekFgMade", Integer.parseInt(currentStats.getString("fgMade")));
                     playerStats.put("weekFgAttempts", Integer.parseInt(currentStats.getString("fgAttempts")));
                     playerStats.put("weekXpMade", Integer.parseInt(currentStats.getString("xpMade")));
@@ -252,7 +257,7 @@ public class Player {
                 } catch (JSONException ignored) {}
 
                 try{
-                    currentStats = recentGame.getJSONObject("Defense"); //For fumbles
+                    currentStats = game.getJSONObject("Defense"); //For fumbles
                     playerStats.put("weekFumbles", Integer.parseInt(currentStats.getString("fumblesLost")));
                 } catch (JSONException ignored) {}
             }
@@ -329,6 +334,10 @@ public class Player {
 
     private boolean lastScoreDateIsToday(){
         return lastScoreDate != null && lastScoreDate.equals(LocalDate.now());
+    }
+
+    public String getLastGame() {
+        return lastGame;
     }
 
     @Override
