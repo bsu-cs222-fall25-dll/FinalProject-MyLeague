@@ -175,7 +175,7 @@ public class TeamViewController {
                     ErrorModal.throwErrorModal("Network Error", null);
                     return;
                 }
-                score += player.getSeasonScore();
+                score += player.getWeekScore();
             }
             team.setCalculatedScore(score);
             scoreButton.setText(String.format("%.1fpts", score));
