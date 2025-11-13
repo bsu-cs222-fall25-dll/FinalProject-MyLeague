@@ -1,9 +1,6 @@
-Update playerStatsModal visuals, fix listViewHorizontalBar
-
 Show comparison in player stats modal
 
 Clean Player Class
-Clean Player Constructor by passing in dictionary instead of multiple parameters
 
 Implement benching
 Implement league customization
