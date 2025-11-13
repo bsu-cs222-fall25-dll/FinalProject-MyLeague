@@ -165,7 +165,7 @@ public class TeamViewController {
         return (teamString == null || teamString.equals("None") ? null : Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamString));
     }
 
-    public void calculateTeamScore() throws IOException, InterruptedException {
+    public void calculateTeamScore() throws IOException {
         League.Team team = getCurrentTeam();
 
         if (team == null){
@@ -177,11 +177,6 @@ public class TeamViewController {
         else{
             double score = 0;
             for (Player player : playerList){
-                boolean networkError = player.setStatsWithAPI();
-                if (networkError){
-                    ErrorModal.throwErrorModal("Network Error", null);
-                    return;
-                }
                 score += player.getWeekScore();
             }
             team.setCalculatedScore(score);
