@@ -101,10 +101,12 @@ public class TeamViewController {
         loadTeamPlayers();
 
         teamSelector.valueProperty().addListener((_, _, _) -> {
-            try {
-                calculateScore();
-            } catch (InterruptedException e) {
-                teamScore.setText("0.0pts");
+            if (getCurrentTeam() != null){
+                try {
+                    calculateScore();
+                } catch (InterruptedException e) {
+                    teamScore.setText("0.0pts");
+                }
             }
             loadTeamPlayers();
         });
@@ -119,10 +121,12 @@ public class TeamViewController {
             setTeamItems(Objects.requireNonNull(getLeagueByName(newVal)));
             teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
             loadTeamPlayers();
-            try {
-                calculateScore();
-            } catch (InterruptedException e) {
-                teamScore.setText("0.0pts");
+            if (getCurrentTeam() != null){
+                try {
+                    calculateScore();
+                } catch (InterruptedException e) {
+                    teamScore.setText("0.0pts");
+                }
             }
         });
     }
