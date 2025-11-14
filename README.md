@@ -46,7 +46,7 @@ MyLeague is a Fantasy Football Draft application that allows users to view the c
 ```bash
    ./gradlew run
 ```
-- JDK 21 preferred
+- JDK 22 preferred
 - Requires JavaFX 17 or higher
 
 ## Program Instructions
@@ -124,4 +124,4 @@ The application uses the following scoring system:
 ---
 
 ## Version
-Current release: **v0.2.0**
+Current release: **v0.2.1**
