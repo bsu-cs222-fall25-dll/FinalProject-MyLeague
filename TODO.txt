@@ -1,5 +1,7 @@
 Show comparison in player stats modal
 
+Update IOExceptions
+
 Clean Player Class
 
 Implement benching
