@@ -37,7 +37,7 @@ public class GraphicalUserInterface extends Application {
             stage.setScene(scene);
             stage.show();
 
-            stage.setOnCloseRequest(event -> stage.close());
+            stage.setOnCloseRequest(_ -> stage.close());
         }
     }
 

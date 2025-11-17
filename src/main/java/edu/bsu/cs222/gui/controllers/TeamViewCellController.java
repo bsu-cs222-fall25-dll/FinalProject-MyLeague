@@ -78,13 +78,13 @@ public class TeamViewCellController {
 
         Image headshotImage = new Image(imageUrl, 70, 70, true, true, true);
 
-        headshotImage.progressProperty().addListener((obs, ov, nv) -> {
+        headshotImage.progressProperty().addListener((_, _, nv) -> {
             if (nv.doubleValue() >= 1.0 && !headshotImage.isError() && imageUrl.equals(lastUrl)){
                 headshot.setImage(headshotImage);
             }
         });
 
-        headshotImage.errorProperty().addListener((obs, wasErr, isErr) -> {
+        headshotImage.errorProperty().addListener((_, _, isErr) -> {
             if (isErr && imageUrl.equals(lastUrl)) {
                 headshot.setImage(DEFAULT);
             }
@@ -119,9 +119,9 @@ public class TeamViewCellController {
 
         Button cancelButton = (Button) root.lookup("#cancelButton");
 
-        cancelButton.setOnAction(e -> creator.close());
+        cancelButton.setOnAction(_ -> creator.close());
 
-        creator.setOnCloseRequest(event -> creator.close());
+        creator.setOnCloseRequest(_ -> creator.close());
 
         creator.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE){

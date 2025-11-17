@@ -65,7 +65,7 @@ public class PlayersViewController {
     @FXML
     public void initialize() {
         listView.setFixedCellSize(70);
-        listView.setCellFactory(lv -> new PlayersViewCell(this));
+        listView.setCellFactory(_ -> new PlayersViewCell(this));
         positionFilter.setValue("All");
         teamFilter.setValue("All");
         leagueSelector.setValue("Default");
@@ -78,7 +78,7 @@ public class PlayersViewController {
 
     public void managePlayersView(ArrayList<Player> players) {
         ObservableList<Player> observableList = FXCollections.observableList(players);
-        FilteredList<Player> filteredList = new FilteredList<>(observableList, p -> true);
+        FilteredList<Player> filteredList = new FilteredList<>(observableList, _ -> true);
         listView.setItems(filteredList);
         setPositionsAndTeams(players);
 
@@ -108,7 +108,7 @@ public class PlayersViewController {
         setTeamItems(GraphicalUserInterface.getLeagueList().getFirst());
         teamSelector.setValue(teamSelector.getItems().getFirst());
 
-        leagueSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
+        leagueSelector.valueProperty().addListener((_, oldVal, newVal) -> {
             if (Objects.equals(newVal, "Create")) {
                 try {
                     teamSelector.getSelectionModel().clearSelection();
@@ -129,7 +129,7 @@ public class PlayersViewController {
             }
         });
 
-        teamSelector.valueProperty().addListener((obs, oldVal, newVal) -> {
+        teamSelector.valueProperty().addListener((_, oldVal, newVal) -> {
             if (oldVal != null && !oldVal.equals("Create") && !oldVal.isBlank()) {
                 previousTeamString = oldVal;
             }
@@ -208,7 +208,7 @@ public class PlayersViewController {
 
         ArrayList<Position> teamPositions = new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K));
 
-        createButton.setOnAction(e -> setLeagueCoefficients(nameField.getText(), teamPositions, creator));
+        createButton.setOnAction(_ -> setLeagueCoefficients(nameField.getText(), teamPositions, creator));
 
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
@@ -222,14 +222,14 @@ public class PlayersViewController {
             }
         });
 
-        cancelButton.setOnAction(e ->{
+        cancelButton.setOnAction(_ ->{
             leagueSelector.setValue(previousLeagueString);
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
         });
 
-        creator.setOnCloseRequest(event ->{
+        creator.setOnCloseRequest(_ ->{
             leagueSelector.setValue(previousLeagueString);
             teamSelector.setValue(previousTeamString);
             setDisable(false);
@@ -253,7 +253,7 @@ public class PlayersViewController {
         Button createButton = (Button) root.lookup("#createButton");
         TextField nameField = (TextField) root.lookup("#nameField");
 
-        createButton.setOnAction(e -> {
+        createButton.setOnAction(_ -> {
             if (!nameField.getText().isBlank()){
                 createTeam(nameField.getText(), creator, league);
             }
@@ -270,13 +270,13 @@ public class PlayersViewController {
             }
         });
 
-        cancelButton.setOnAction(e ->{
+        cancelButton.setOnAction(_ ->{
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
         });
 
-        creator.setOnCloseRequest(event ->{
+        creator.setOnCloseRequest(_ ->{
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
@@ -325,17 +325,15 @@ public class PlayersViewController {
             }
         });
 
-        createButton.setOnAction(e -> {
-            createLeague(name, teamPositions, stage, finalRoot);
-        });
+        createButton.setOnAction(_ -> createLeague(name, teamPositions, stage, finalRoot));
 
-        stage.setOnCloseRequest(event ->{
+        stage.setOnCloseRequest(_ ->{
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             stage.close();
         });
 
-        cancelButton.setOnAction(e ->{
+        cancelButton.setOnAction(_ ->{
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             stage.close();
