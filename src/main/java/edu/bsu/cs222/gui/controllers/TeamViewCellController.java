@@ -55,8 +55,8 @@ public class TeamViewCellController {
             seasonScoreBuilder.append("0pts");
             lastMatchLbl.setText("NA");
         } else{
-            lastWeekSoreBuilder.append(player.getWeekScore()).append("pts");
-            seasonScoreBuilder.append(player.getSeasonScore()).append("pts");
+            lastWeekSoreBuilder.append(player.getWeekScore(parent.getCurrentTeam().getCoefficientMap())).append("pts");
+            seasonScoreBuilder.append(player.getSeasonScore(parent.getCurrentTeam().getCoefficientMap())).append("pts");
             lastMatchLbl.setText(player.getLastGame());
         }
 

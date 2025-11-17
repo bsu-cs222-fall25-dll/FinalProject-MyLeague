@@ -51,7 +51,7 @@ public class TeamViewController {
                 networkError = player.setStatsWithAPI();
                 if (networkError){
                     break;}
-                score += player.getWeekScore();
+                score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
             }
             teamScore.setText(String.format("%.1fpts", score));
         }
@@ -138,7 +138,7 @@ public class TeamViewController {
             boolean networkError = player.setStatsWithAPI();
             if (networkError){
                 return;}
-            score += player.getWeekScore();
+            score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
         }
         teamScore.setText(String.format("%.1fpts", score));
     }

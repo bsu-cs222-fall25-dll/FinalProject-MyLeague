@@ -15,6 +15,22 @@ import java.util.Objects;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayerTest {
+    HashMap<String, Double> getDefaultCoefficientMap(){
+        HashMap<String, Double> defaultCoefficientMap = new HashMap<>();
+        defaultCoefficientMap.put("rushYards", .1);
+        defaultCoefficientMap.put("recYards", .1);
+        defaultCoefficientMap.put("passYards", .04);
+        defaultCoefficientMap.put("rushTds", 7.0);
+        defaultCoefficientMap.put("recTds", 7.0);
+        defaultCoefficientMap.put("passTds", 4.0);
+        defaultCoefficientMap.put("receptions", 1.0);
+        defaultCoefficientMap.put("interceptions", -2.0);
+        defaultCoefficientMap.put("fumbles", -2.0);
+        defaultCoefficientMap.put("xpMade", 2.0);
+        defaultCoefficientMap.put("fgMade", 4.0);
+        return defaultCoefficientMap;
+    }
+
     @Test
     void getWeekScoreTest() {
         Player burrow = new Player();
@@ -36,7 +52,7 @@ public class PlayerTest {
         playerStats.put("weekXpAttempts", 0);
 
         burrow.setPlayerStats(playerStats);
-        Assertions.assertEquals(33, burrow.getWeekScore());
+        Assertions.assertEquals(33, burrow.getWeekScore(getDefaultCoefficientMap()));
     }
     @Test
     void getCompletionPCTTest(){
@@ -80,7 +96,7 @@ public class PlayerTest {
         playerStats.put("weekFumbles", 0);
 
         youngHoe_Koo.setPlayerStats(playerStats);
-        Assertions.assertEquals(9, youngHoe_Koo.getWeekScore());
+        Assertions.assertEquals(9, youngHoe_Koo.getWeekScore(getDefaultCoefficientMap()));
     }
 
     @Test

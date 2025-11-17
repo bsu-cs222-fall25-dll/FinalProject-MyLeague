@@ -133,22 +133,32 @@ public class Player {
         return  (Math.round(compPCT *1000) / 1000.0);
     }
 
-    public double getWeekScore() {
-        return ((playerStats.get("weekRushYds")+playerStats.get("weekRecYds")) * 0.1 +
-                (playerStats.get("weekRushTD")+playerStats.get("weekRecTD"))*7
-                + playerStats.get("weekPassTD") * 4 + playerStats.get("weekPassYds") *0.04 +
-                playerStats.get("weekReceptions") - playerStats.get("weekInterceptions")*2 - playerStats.get("weekFumbles")*2
-        - playerStats.get("weekXpAttempts") + playerStats.get("weekXpMade")*2 -
-                playerStats.get("weekFgAttempts") + playerStats.get("weekFgMade")*4);
+    public double getWeekScore(HashMap<String, Double> coefficientMap) {
+        return (playerStats.get("weekRushYds") * coefficientMap.get("rushYards") +
+                playerStats.get("weekRecYds") * coefficientMap.get("recYards") +
+                playerStats.get("weekRushTD") * coefficientMap.get("rushTds") +
+                playerStats.get("weekRecTD") * coefficientMap.get("recTds") +
+                playerStats.get("weekPassTD") * coefficientMap.get("passTds") +
+                playerStats.get("weekPassYds") * coefficientMap.get("passYards") +
+                playerStats.get("weekReceptions") * coefficientMap.get("receptions") +
+                playerStats.get("weekInterceptions") * coefficientMap.get("interceptions") +
+                playerStats.get("weekFumbles") * coefficientMap.get("fumbles") -
+                playerStats.get("weekXpAttempts") + playerStats.get("weekXpMade") * coefficientMap.get("xpMade") -
+                playerStats.get("weekFgAttempts") + playerStats.get("weekFgMade") * coefficientMap.get("fgMade"));
     }
 
-    public double getSeasonScore() {
-        return ((playerStats.get("seasonRushYds")+playerStats.get("seasonRecYds")) * 0.1 +
-                (playerStats.get("seasonRushTD")+playerStats.get("seasonRecTD"))*7
-                + playerStats.get("seasonPassTD") * 4 + playerStats.get("seasonPassYds") *0.04 +
-                playerStats.get("seasonReceptions") - playerStats.get("seasonInterceptions")*2 - playerStats.get("seasonFumbles")*2
-                - playerStats.get("seasonXpAttempts") + playerStats.get("seasonXpMade")*2 -
-                playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade")*4);
+    public double getSeasonScore(HashMap<String, Double> coefficientMap) {
+        return (playerStats.get("seasonRushYds") * coefficientMap.get("rushYards") +
+                playerStats.get("seasonRecYds") * coefficientMap.get("recYards") +
+                playerStats.get("seasonRushTD") * coefficientMap.get("rushTds") +
+                playerStats.get("seasonRecTD") * coefficientMap.get("recTds") +
+                playerStats.get("seasonPassTD") * coefficientMap.get("passTds") +
+                playerStats.get("seasonPassYds") * coefficientMap.get("passYards") +
+                playerStats.get("seasonReceptions") * coefficientMap.get("receptions") +
+                playerStats.get("seasonInterceptions") * coefficientMap.get("interceptions") +
+                playerStats.get("seasonFumbles") * coefficientMap.get("fumbles") -
+                playerStats.get("seasonXpAttempts") + playerStats.get("seasonXpMade") * coefficientMap.get("xpMade") -
+                playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade") * coefficientMap.get("fgMade"));
     }
 
     public String getShortName() {

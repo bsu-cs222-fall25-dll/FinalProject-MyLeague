@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <Label text="Set Scoring Coefficients" BorderPane.alignment="CENTER_LEFT">
+            <font>
+                <Font name="System Bold" size="16" />
+            </font>
+            <padding>
+                <Insets bottom="5" left="20" top="15" />
+            </padding>
+            <textFill>#e0e0e0</textFill>
+        </Label>
+    </top>
+
+    <center>
+        <HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <HBox>
+                    <Label text="Rush Yards" textFill="WHITE"/>
+                    <TextField fx:id="rushYards" prefWidth="37.0" text=".1"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0">
+                    <Label text="Rec Yards" textFill="WHITE"/>
+                    <TextField fx:id="recYards" prefWidth="37.0" text=".1"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="36.0">
+                    <Label text="Pass Yards" textFill="WHITE"/>
+                    <TextField fx:id="passYards" prefWidth="37.0" text=".04"/>
+                </HBox>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                <HBox>
+                    <Label text="Rush TDs" textFill="WHITE"/>
+                    <TextField fx:id="rushTds" prefWidth="37.0" text="7"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0">
+                    <Label text="Rec TDs" textFill="WHITE"/>
+                    <TextField fx:id="recTds" prefWidth="37.0" text="7"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="36.0">
+                    <Label text="Pass TDs" textFill="WHITE"/>
+                    <TextField fx:id="passTds" prefWidth="37.0" text="4"/>
+                </HBox>
+            </VBox>
+            <VBox layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                <HBox>
+                    <Label text="Receptions" textFill="WHITE"/>
+                    <TextField fx:id="receptions" prefWidth="37.0" text="1"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0">
+                    <Label text="Interceptions" textFill="WHITE"/>
+                    <TextField fx:id="interceptions" prefWidth="37.0" text="-2"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="36.0">
+                    <Label text="Fumbles" textFill="WHITE"/>
+                    <TextField fx:id="fumbles" prefWidth="37.0" text="-2"/>
+                </HBox>
+            </VBox>
+            <VBox layoutX="210.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                <HBox>
+                    <Label text="XP Made" textFill="WHITE"/>
+                    <TextField prefWidth="37.0" text="2" fx:id="xpMade"/>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0">
+                    <Label text="FG Made" textFill="WHITE"/>
+                    <TextField fx:id="fgMade" prefWidth="37.0" text="4"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="15" top="10" />
+            </padding>
+            <Button fx:id="createLeague" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Create League">
+            <tooltip>
+                <Tooltip text="Set your fantasy league scoring coefficients" />
+            </tooltip>
+            </Button>
+
+            <Button fx:id="cancelButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Cancel">
+            <tooltip>
+                <Tooltip text="Close popup" />
+            </tooltip>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -8,14 +8,16 @@ public class League {
     private final ArrayList<Team> teams = new ArrayList<>();
     private final ArrayList<Position> teamPositions;
     private final String name;
+    private final HashMap<String, Double> coefficientMap;
 
-    public League(String name, ArrayList<Position> teamPositions){
+    public League(String name, ArrayList<Position> teamPositions, HashMap<String, Double> coefficientMap){
         this.name = name;
         this.teamPositions = teamPositions;
+        this.coefficientMap = coefficientMap;
     }
 
     public void addTeam(String teamName){
-        teams.add(new Team(teamName, teamPositions));
+        teams.add(new Team(teamName, teamPositions, coefficientMap));
     }
 
     public  ArrayList<Position> getTeamPositions() {
@@ -49,11 +51,17 @@ public class League {
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;
         private final ArrayList<String> playerNameList = new ArrayList<>();
+        private final HashMap<String, Double> coefficientMap;
         private double calculatedScore = -1;
 
-        private Team(String teamName, ArrayList<Position> positions) {
+        private Team(String teamName, ArrayList<Position> positions, HashMap<String, Double> coefficientMap) {
             this.teamName = teamName;
             this.freePositions = new ArrayList<>(positions);
+            this.coefficientMap = coefficientMap;
+        }
+
+        public HashMap<String, Double> getCoefficientMap() {
+            return coefficientMap;
         }
 
         public void addPlayer(Player player, Position position){
