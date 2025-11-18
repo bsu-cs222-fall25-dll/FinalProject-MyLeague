@@ -5,10 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class League {
-    private final ArrayList<Team> teams = new ArrayList<>();
-    private final ArrayList<Position> teamPositions;
     private final String name;
+    private final ArrayList<Position> teamPositions;
     private final HashMap<String, Double> coefficientMap;
+
+    private final ArrayList<Team> teams = new ArrayList<>();
+
 
     public League(String name, ArrayList<Position> teamPositions, HashMap<String, Double> coefficientMap){
         this.name = name;
@@ -20,6 +22,8 @@ public class League {
         teams.add(new Team(teamName, teamPositions, coefficientMap));
     }
 
+
+    //Getters
     public  ArrayList<Position> getTeamPositions() {
         Collections.sort(teamPositions);
         return teamPositions;
@@ -46,12 +50,14 @@ public class League {
         return name;
     }
 
+    //Internal team class
     public static class Team {
         private final String teamName;
-        private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<Position> freePositions;
-        private final ArrayList<String> playerNameList = new ArrayList<>();
         private final HashMap<String, Double> coefficientMap;
+
+        private final HashMap<Player, Position> playerMap = new HashMap<>();
+        private final ArrayList<String> playerNameList = new ArrayList<>();
         private double calculatedScore = -1;
 
         private Team(String teamName, ArrayList<Position> positions, HashMap<String, Double> coefficientMap) {
@@ -60,19 +66,12 @@ public class League {
             this.coefficientMap = coefficientMap;
         }
 
-        public HashMap<String, Double> getCoefficientMap() {
-            return coefficientMap;
-        }
 
+        //Player Functions
         public void addPlayer(Player player, Position position){
             playerMap.put(player, position);
             freePositions.remove(position);
             playerNameList.add(player.getName());
-        }
-
-        public ArrayList<Position> getFreePositions(){
-            Collections.sort(freePositions);
-            return freePositions;
         }
 
         public void removePlayer(Player player){
@@ -81,8 +80,10 @@ public class League {
             playerNameList.remove(player.getName());
         }
 
-        public String getName(){
-            return teamName;
+
+        //Getters
+        public double getCalculatedScore() {
+            return calculatedScore;
         }
 
         public HashMap<Player, Position> getPlayerMap(){
@@ -93,10 +94,21 @@ public class League {
             return playerNameList;
         }
 
-        public double getCalculatedScore() {
-            return calculatedScore;
+        public ArrayList<Position> getFreePositions(){
+            Collections.sort(freePositions);
+            return freePositions;
         }
 
+        public HashMap<String, Double> getCoefficientMap() {
+            return coefficientMap;
+        }
+
+        public String getName(){
+            return teamName;
+        }
+
+
+        //Setter for tests
         public void setCalculatedScore(double calculatedScore) {
             this.calculatedScore = calculatedScore;
         }

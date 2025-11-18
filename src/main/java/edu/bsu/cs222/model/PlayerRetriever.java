@@ -162,7 +162,6 @@ public class PlayerRetriever {
             jsonObject.put("espnHeadshot", player.getHeadshot());
             jsonObject.put("school", player.getSchool());
             jsonObject.put("playerID", player.getPlayerID());
-            jsonObject.put("teamID", player.getTeamID());
             jsonObject.put("exp", player.getExperience());
             playersJsonArray.put(jsonObject);
         }

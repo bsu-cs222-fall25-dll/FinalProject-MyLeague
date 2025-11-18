@@ -33,7 +33,7 @@ public class PlayerTest {
 
     @Test
     void getWeekScoreTest() {
-        Player burrow = new Player();
+        Player burrow = new Player("Burrow", null);
         burrow.setLastScoreDate(LocalDate.now())
 ;
         HashMap<String, Integer> playerStats = new HashMap<>();
@@ -54,31 +54,11 @@ public class PlayerTest {
         burrow.setPlayerStats(playerStats);
         Assertions.assertEquals(33, burrow.getWeekScore(getDefaultCoefficientMap()));
     }
-    @Test
-    void getCompletionPCTTest(){
-        Player burrow = new Player();
-        burrow.setCompletions(25);
-        burrow.setPassAtt(40);
-        Assertions.assertEquals(0.625, burrow.getCompletionPCT());
-    }
-    @Test
-    void getCompletionPCTRoundDownTest(){
-        Player burrow = new Player();
-        burrow.setCompletions(25);
-        burrow.setPassAtt(39);
-        Assertions.assertEquals(0.641, burrow.getCompletionPCT());
-    }
-    @Test
-    void getCompletionPCTRoundUpTest(){
-        Player burrow = new Player();
-        burrow.setCompletions(25);
-        burrow.setPassAtt(37);
-        Assertions.assertEquals(0.676, burrow.getCompletionPCT());
-    }
+
     @Test
     void testKickerPoints() {
-        Player youngHoe_Koo = new Player();
-        youngHoe_Koo.setLastScoreDate(LocalDate.now());
+        Player younghoeKoo = new Player("Younghoe Koo", null);
+        younghoeKoo.setLastScoreDate(LocalDate.now());
 
         HashMap<String, Integer> playerStats = new HashMap<>();
         playerStats.put("weekXpAttempts", 3);
@@ -95,15 +75,8 @@ public class PlayerTest {
         playerStats.put("weekInterceptions", 0);
         playerStats.put("weekFumbles", 0);
 
-        youngHoe_Koo.setPlayerStats(playerStats);
-        Assertions.assertEquals(9, youngHoe_Koo.getWeekScore(getDefaultCoefficientMap()));
-    }
-
-    @Test
-    void testShortNameConstructing(){
-        Player chris = new Player("Chris Burke");
-        Assertions.assertEquals("C. Burke", chris.getShortName());
-
+        younghoeKoo.setPlayerStats(playerStats);
+        Assertions.assertEquals(9, younghoeKoo.getWeekScore(getDefaultCoefficientMap()));
     }
 
     @Test
@@ -148,7 +121,7 @@ public class PlayerTest {
 
     @Test
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
-        Player brandon = new Player();
+        Player brandon = new Player("Brandon", null);
         brandon.setPlayerStats(readSampleFileAsString());
         Assertions.assertEquals(17, brandon.getPlayerStats().get("seasonFgMade"));
     }

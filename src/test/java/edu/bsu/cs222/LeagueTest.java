@@ -78,7 +78,7 @@ public class LeagueTest {
     void testGetTeamPlayerMapReflectsAddedPlayer(){
         League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)), getDefaultCoefficientMap());
         league.addTeam("Test");
-        Player player = new Player("Chris Burke");
+        Player player = new Player("Chris Burke", null);
         league.getTeamByName("Test").addPlayer(player, QB);
         Assertions.assertEquals(QB, league.getTeamByName("Test").getPlayerMap().get(player));
     }
@@ -87,7 +87,7 @@ public class LeagueTest {
     void testGetFreePositionsReturnsFreePositions(){
         League league = new League("Default", new ArrayList<>(List.of(QB, FLEX)), getDefaultCoefficientMap());
         league.addTeam("Test");
-        league.getTeamByName("Test").addPlayer(new Player("Chris Burke"), QB);
+        league.getTeamByName("Test").addPlayer(new Player("Chris Burke", null), QB);
         Assertions.assertEquals(FLEX, league.getTeamByName("Test").getFreePositions().getFirst());
     }
 
@@ -95,7 +95,7 @@ public class LeagueTest {
     void testPlayerIsRemoved(){
         League league = new League("Default", new ArrayList<>(List.of(QB, FLEX)), getDefaultCoefficientMap());
         league.addTeam("Test");
-        Player player = new Player("Chris Burke");
+        Player player = new Player("Chris Burke", null);
         league.getTeamByName("Test").addPlayer(player, QB);
         league.getTeamByName("Test").removePlayer(player);
         Assertions.assertTrue(league.getTeamByName("Test").getPlayerMap().isEmpty());
@@ -105,7 +105,7 @@ public class LeagueTest {
     void testGetTeamNameListReflectsAddedPlayer(){
         League league = new League("Default", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)), getDefaultCoefficientMap());
         league.addTeam("Test");
-        Player player = new Player("Chris Burke");
+        Player player = new Player("Chris Burke", null);
         league.getTeamByName("Test").addPlayer(player, QB);
         Assertions.assertEquals("Chris Burke", league.getTeamByName("Test").getPlayerNameList().getFirst());
     }

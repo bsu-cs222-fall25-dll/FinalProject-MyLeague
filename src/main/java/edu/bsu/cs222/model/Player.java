@@ -20,8 +20,8 @@ import java.time.temporal.TemporalAdjusters;
 
 public class Player {
     private static final String API_KEY = Dotenv.load().get("API_KEY");
+
     private String name;
-    private String shortName;
     private Position position;
     private String team;
     private String jerseyNumber;
@@ -31,15 +31,12 @@ public class Player {
     private String headshot;
     private String school;
     private String playerID;
-    private String teamID;
     private String experience;
     private String bDay;
     //Above are stats shown from player list, below are stats which require a deeper API call.
-    private int passAtt;
-    private int completions;
+    private HashMap <String, Integer> playerStats = new HashMap<>();
     private String lastGame;
     private LocalDate lastScoreDate;
-    private HashMap <String, Integer> playerStats = new HashMap<>();
 
 
     public Player(HashMap<String, String> playerInfo) {
@@ -54,85 +51,11 @@ public class Player {
         this.headshot = playerInfo.get("headshot");
         this.school = playerInfo.get("school");
         this.playerID = playerInfo.get("playerID");
-        this.teamID = playerInfo.get("teamID");
         this.experience = playerInfo.get("experience");
-
-        this.shortName = this.name.charAt(0) + ". " + this.name.split(" ")[1];
     }
 
-    public Player(String name){
-        this.name = name;
-        this.shortName = name.charAt(0) + ". " + name.split(" ")[1];
-    }
 
-    public Player (String name, String playerID) {
-        this.name = name;
-        this.playerID = playerID;
-    }
-
-    public Player(){}
-
-    public String getName() {
-        return name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public String getJerseyNumber() {
-        return jerseyNumber;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public String getHeadshot() {
-        return headshot;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public String getPlayerID() {
-        return playerID;
-    }
-
-    public String getTeamID() {
-        return teamID;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setPassAtt(int passAtt) {
-        this.passAtt = passAtt;
-    }
-
-    public void setCompletions(int completions) {
-        this.completions = completions;
-    }
-
-    public double getCompletionPCT(){
-        double compPCT = (double)this.completions / this.passAtt;
-        return  (Math.round(compPCT *1000) / 1000.0);
-    }
-
+    //Scoring methods
     public double getWeekScore(HashMap<String, Double> coefficientMap) {
         return (playerStats.get("weekRushYds") * coefficientMap.get("rushYards") +
                 playerStats.get("weekRecYds") * coefficientMap.get("recYards") +
@@ -161,33 +84,16 @@ public class Player {
                 playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade") * coefficientMap.get("fgMade"));
     }
 
-    public String getShortName() {
-        return shortName;
-    }
-
-    public String getbDay() {
-        return bDay;
-    }
-
-    private String getStatsFromAPI() throws InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=20"))
-                .header("x-rapidapi-key", API_KEY)
-                .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        try {
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
+    public boolean setStatsWithAPI() throws InterruptedException {
+        if (!lastScoreDateIsToday()){
+            String response = getStatsFromAPI();
+            if (response.equals("Network Error")){
+                //Can't be tested
+                return true;
+            }
+            setPlayerStats(response);
         }
-        catch (IOException e){
-            //Can't truly be tested
-            return "Network Error";
-        }
-    }
-
-    public void setPlayerStats(HashMap<String, Integer> playerStats){
-        this.playerStats = playerStats;
+        return false;
     }
 
     public void setPlayerStats(String jsonData){
@@ -326,30 +232,98 @@ public class Player {
         playerStats.put("seasonFumbles", seasonFumbles);
     }
 
-    public boolean setStatsWithAPI() throws InterruptedException {
-        if (!lastScoreDateIsToday()){
-            String response = getStatsFromAPI();
-            if (response.equals("Network Error")){
-                //Can't be tested
-                return true;
-            }
-            setPlayerStats(response);
+    private String getStatsFromAPI() throws InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=20"))
+                .header("x-rapidapi-key", API_KEY)
+                .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
         }
-        return false;
-    }
-
-    public HashMap<String, Integer> getPlayerStats() {
-        return playerStats;
+        catch (IOException e){
+            //Can't truly be tested
+            return "Network Error";
+        }
     }
 
     private boolean lastScoreDateIsToday(){
         return lastScoreDate != null && lastScoreDate.equals(LocalDate.now());
     }
 
+    // Get
+    // ters
+    public HashMap<String, Integer> getPlayerStats() {
+        return playerStats;
+    }
+
     public String getLastGame() {
         return lastGame;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public String getJerseyNumber() {
+        return jerseyNumber;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getHeadshot() {
+        return headshot;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public String getbDay() {
+        return bDay;
+    }
+
+
+    //Constructors and Setters for tests
+    public Player (String name, String playerID) {
+        this.name = name;
+        this.playerID = playerID;
+    }
+
+    public void setPlayerStats(HashMap<String, Integer> playerStats){
+        this.playerStats = playerStats;
+    }
+
+    public void setLastScoreDate(LocalDate lastScoreDate) {
+        this.lastScoreDate = lastScoreDate;
+    }
+
+
+    //Functions to set player equality by id
     @Override
     public boolean equals(Object object){
         if (this == object) {return true;}
@@ -362,9 +336,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(playerID);
-    }
-
-    public void setLastScoreDate(LocalDate lastScoreDate) {
-        this.lastScoreDate = lastScoreDate;
     }
 }
