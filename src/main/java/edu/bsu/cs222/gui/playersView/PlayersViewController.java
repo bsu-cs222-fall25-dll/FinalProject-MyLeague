@@ -324,7 +324,6 @@ public class PlayersViewController {
             }
         }
 
-        System.out.println(coefficientMap);
         League league = new League(name, teamPositions, coefficientMap);
         GraphicalUserInterface.addLeague(league);
         setLeagueItems();
