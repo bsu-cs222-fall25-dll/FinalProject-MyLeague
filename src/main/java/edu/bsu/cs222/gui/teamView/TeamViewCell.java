@@ -37,18 +37,13 @@ public class TeamViewCell extends ListCell<Player> {
                 view = loader.load();
                 controller = loader.getController();
                 controller.setParentController(parent);
-            } catch (IOException e) {
-                setText("Failed to load cell");
-                setGraphic(null);
-                return;
+            } catch (IOException _) {
+                System.err.println("TeamViewCell.fxml not found");
+                System.exit(1);
             }
         }
 
-        try {
-            controller.setData(player, networkError);
-        } catch (InterruptedException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        controller.setData(player, networkError);
         setGraphic(view);
     }
 }

@@ -17,43 +17,31 @@ public class PlayerRetriever {
     private static ArrayList<Player> playerArrayList;
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
-    public static boolean createAndSavePlayerListFromApi() throws InterruptedException, IOException {
+    public static void createAndSavePlayerListFromApi() throws Exception {
         String response = getPlayersFromApi();
-        if (response.equals("Network Error")){
-            //Can't be tested
-            return true;
-        }
-        createPlayerList(response);
-        savePlayerListToJson();
-        return false;
-    }
-
-    public static boolean getPlayersFromJsonOrApi() throws IOException, InterruptedException {
-        File jsonFile = new File("src/main/resources/PlayerList.json");
-        if (jsonFile.exists()){
-            createPlayerList(getPlayersFromJson());
-            return false;
-        }
-        else {
-            return createAndSavePlayerListFromApi();
+        if (response != null && !response.isBlank()){
+            createPlayerList(response);
+            savePlayerListToJson();
         }
     }
 
-    public static String getPlayersFromApi() throws InterruptedException {
+    public static void getPlayersFromJsonOrApi() throws Exception {
+        try {
+            getPlayersFromJson();
+        } catch (IOException _) {
+            createAndSavePlayerListFromApi();
+        }
+    }
+
+    public static String getPlayersFromApi() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLPlayerList"))
                 .header("x-rapidapi-key", API_KEY)
                 .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        try {
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        }
-        catch (IOException e){
-            //Can't be tested
-            return "Network Error";
-        }
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 
     public static String getPlayersFromJson() throws IOException {
@@ -114,7 +102,7 @@ public class PlayerRetriever {
 
                 try {
                     age = player.getString("age");
-                } catch (JSONException e) {
+                } catch (JSONException _) {
                     age = "not found";
                 }
                 playerInfo.put("age", age);
@@ -122,7 +110,7 @@ public class PlayerRetriever {
                 String bDay;
                 try {
                     bDay = player.getString("bDay");
-                } catch (JSONException e) {
+                } catch (JSONException _) {
                     bDay = "not found";
                 }
                 playerInfo.put("bDay", bDay);
@@ -130,7 +118,7 @@ public class PlayerRetriever {
                 String headshot;
                 try {
                     headshot = player.getString("espnHeadshot");
-                } catch (JSONException e) {
+                } catch (JSONException _) {
                     headshot = "not found";
                 }
                 playerInfo.put("headshot", headshot);
@@ -146,7 +134,7 @@ public class PlayerRetriever {
         return playerArrayList;
     }
 
-    private static void savePlayerListToJson() throws IOException {
+    private static void savePlayerListToJson() {
         JSONArray playersJsonArray = new JSONArray();
 
         for (Player player: getPlayerArrayList()){
@@ -173,6 +161,9 @@ public class PlayerRetriever {
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/PlayerList.json"))){
             writer.write(jsonData);
+        } catch (IOException _) {
+            System.err.println("Couldn't write to file");
+            System.exit(1);
         }
     }
 }

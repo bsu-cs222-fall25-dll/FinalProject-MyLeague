@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
 
-import java.io.IOException;
 import java.util.*;
 
 public class PlayerStatsModalController {
@@ -57,28 +56,28 @@ public class PlayerStatsModalController {
         managePlayerCompareView(players);
     }
 
-    public void setPlayer(Player player) throws InterruptedException, IOException {
+    public void setPlayer(Player player) {
         this.player = player;
 
-        boolean networkError = player.setStatsWithAPI();
-        if (networkError){
-            ErrorModal.throwErrorModal("Network Error", null);
-            return;
+        try {
+            player.setStatsWithAPI();
+            updateStatsLabels();
         }
-
-        updateStatsLabels();
+        catch (Exception _) {
+            ErrorModal.throwErrorModal("Network Error", null);
+        }
     }
 
-    private void updateStatsLabels() throws InterruptedException, IOException {
+    private void updateStatsLabels() {
         if (player == null) return;
 
         playerLabel.setText(player.getName());
         tabLbl.setText(currentStatView);
 
-        boolean networkError = player.setStatsWithAPI();
-        if (networkError){
+        try {
+            player.setStatsWithAPI();
+        } catch (Exception _) {
             ErrorModal.throwErrorModal("Network Error", null);
-            return;
         }
 
         Map<String, Integer> stats = player.getPlayerStats();
@@ -160,13 +159,13 @@ public class PlayerStatsModalController {
     }
 
     @FXML
-    private void setSeasonStatView() throws IOException, InterruptedException {
+    private void setSeasonStatView() {
         currentStatView = "Season Stats";
         updateStatsLabels();
     }
 
     @FXML
-    private void setWeeklyStatView() throws IOException, InterruptedException {
+    private void setWeeklyStatView() {
         currentStatView = "Weekly Stats";
         updateStatsLabels();
     }
@@ -180,7 +179,7 @@ public class PlayerStatsModalController {
         compareButton.setText(isComparePanelVisible ? "Hide" : "Compare");
     }
 
-    public void showComparePlayer(Player playerToCompare) throws InterruptedException, IOException {
+    public void showComparePlayer(Player playerToCompare) {
         if (playerToCompare == null) return;
 
         setPlayer(playerToCompare);

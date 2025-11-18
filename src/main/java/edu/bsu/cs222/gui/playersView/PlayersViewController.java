@@ -98,13 +98,9 @@ public class PlayersViewController {
 
         leagueSelector.valueProperty().addListener((_, oldVal, newVal) -> {
             if (Objects.equals(newVal, "Create")) {
-                try {
-                    teamSelector.getSelectionModel().clearSelection();
-                    setDisable(true);
-                    leagueCreator();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                teamSelector.getSelectionModel().clearSelection();
+                setDisable(true);
+                leagueCreator();
             } else {
                 if (!Objects.equals(oldVal, "Create")) {previousLeagueString = oldVal;}
                 setTeamItems(Objects.requireNonNull(getLeagueByName(newVal)));
@@ -123,12 +119,8 @@ public class PlayersViewController {
             }
             if (newVal != null && !newVal.equals("None")) {
                 if (Objects.equals(newVal, "Create")) {
-                    try {
-                        setDisable(true);
-                        teamCreator(getLeagueByName(leagueSelector.getValue()));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    setDisable(true);
+                    teamCreator(getLeagueByName(leagueSelector.getValue()));
                 } else {
                     currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
                 }
@@ -136,25 +128,33 @@ public class PlayersViewController {
         });
     }
 
-    private void leagueCreator() throws IOException {
+    private void leagueCreator() {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
+        Parent root = null;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/LeagueCreatorModal.fxml"));
-        Parent root = loader.load();
+        try {
+            root = loader.load();
+        }
+        catch (IOException _) {
+            System.err.println("LeagueCreatorModal.fxml not found");
+            System.exit(1);
+        }
 
         creator.setScene(new Scene(root));
 
         Button cancelButton = (Button) root.lookup("#cancelButton");
         Button createButton = (Button) root.lookup("#createButton");
 
-        createButton.setOnAction(_ -> getLeaguePositions(root, creator));
+        Parent finalRoot = root;
+        createButton.setOnAction(_ -> getLeaguePositions(finalRoot, creator));
 
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
                 event.consume();
-                getLeaguePositions(root, creator);
+                getLeaguePositions(finalRoot, creator);
             } else if (event.getCode() == KeyCode.ESCAPE) {
                 event.consume();
                 leagueSelector.setValue(previousLeagueString);
@@ -185,22 +185,12 @@ public class PlayersViewController {
         TextField nameField = (TextField) root.lookup("#nameField");
         String name = nameField.getText();
         if (name.isBlank()){
-            try {
-                ErrorModal.throwErrorModal("Please enter a name", null);
-            } catch (IOException _){
-                System.err.println("File not found");
-                System.exit(1);
-            }
+            ErrorModal.throwErrorModal("Please enter a name", null);
             return;
         }
 
         if (getLeagueByName(name) != null){
-            try {
-                ErrorModal.throwErrorModal("Please enter a unique name", null);
-            } catch (IOException _){
-                System.err.println("File not found");
-                System.exit(1);
-            }
+            ErrorModal.throwErrorModal("Please enter a unique name", null);
             return;
         }
 
@@ -219,12 +209,7 @@ public class PlayersViewController {
             boolean validPositions = true;
             for (Position key : positonFieldMap.keySet()){
                 if (positonFieldMap.get(key).getText().isBlank()){
-                    try {
-                        ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
-                    } catch (IOException e) {
-                        System.err.println("File not found");
-                        System.exit(1);
-                    }
+                    ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
                     validPositions = false;
                     break;
                 }
@@ -233,12 +218,7 @@ public class PlayersViewController {
                         teamPositions.add(key);
                     }
                 } catch (NumberFormatException _){
-                    try {
-                        ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
-                    } catch (IOException _) {
-                        System.err.println("File not found");
-                        System.exit(1);
-                    }
+                    ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
                     validPositions = false;
                     break;
                 }
@@ -252,8 +232,8 @@ public class PlayersViewController {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/SetScoringModal.fxml")));
             stage.getScene().setRoot(root);
-        } catch (IOException e){
-            System.err.println("File not found");
+        } catch (IOException _){
+            System.err.println("SetScoringModal.fxml not found");
             System.exit(1);
         }
 
@@ -301,26 +281,16 @@ public class PlayersViewController {
 
         for (TextField coefficientTextField : coefficientTextFields){
             if (coefficientTextField.getText().isBlank()){
-                try {
-                    ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
-                    return;
+                ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
+                return;
 
-                } catch (IOException err){
-                    System.err.println("File not found");
-                    System.exit(1);
-                }
             }
             try {
                 coefficientMap.put(coefficientTextField.getId(), Double.parseDouble(coefficientTextField.getText()));
-            } catch (NumberFormatException e) {
-                try {
-                    ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
-                    return;
+            } catch (NumberFormatException _) {
+                ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
+                return;
 
-                } catch (IOException err){
-                    System.err.println("File not found");
-                    System.exit(1);
-                }
             }
         }
 
@@ -334,13 +304,20 @@ public class PlayersViewController {
         stage.close();
     }
 
-    private void teamCreator(League league) throws IOException {
+    private void teamCreator(League league) {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("Team Creator");
+        Parent root = null;
 
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/TeamCreatorModal.fxml")));
-        Parent root = loader.load();
+        try {
+            root = loader.load();
+        }
+        catch (IOException _){
+            System.err.println("TeamCreatorModal.fxml not found");
+            System.exit(1);
+        }
 
         creator.setScene(new Scene(root));
 
@@ -379,22 +356,12 @@ public class PlayersViewController {
 
     private void createTeam(String text, Stage stage, League league){
         if (text.isBlank()){
-            try {
-                ErrorModal.throwErrorModal("Please enter a name", null);
-            } catch (IOException _){
-                System.err.println("File not found");
-                System.exit(1);
-            }
+            ErrorModal.throwErrorModal("Please enter a name", null);
             return;
         }
 
         if (league.getTeamNames().contains(text)){
-            try {
-                ErrorModal.throwErrorModal("Please enter a unique name", null);
-            } catch (IOException _){
-                System.err.println("File not found");
-                System.exit(1);
-            }
+            ErrorModal.throwErrorModal("Please enter a unique name", null);
             return;
         }
 
@@ -406,18 +373,18 @@ public class PlayersViewController {
         stage.close();
     }
 
-    public void reloadPlayerList() throws IOException, InterruptedException {
-        boolean networkError = PlayerRetriever.createAndSavePlayerListFromApi();
+    public void reloadPlayerList() {
 
-        if (networkError){
-            ErrorModal.throwErrorModal("Network Error", null);
-        }
-        else {
+        try{
+            PlayerRetriever.createAndSavePlayerListFromApi();
             GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
+        }
+        catch (Exception _){
+            ErrorModal.throwErrorModal("Network Error", null);
         }
     }
 
-    public void openTeamView() throws IOException {
+    public void openTeamView() {
         GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
     }
 

@@ -15,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.IOException;
 import java.util.*;
 
 public class TeamViewController {
@@ -35,9 +34,7 @@ public class TeamViewController {
 
 
     @FXML
-    public void initialize() throws InterruptedException, IOException {
-
-
+    public void initialize() {
         setLeagueItems();
         leagueSelector.setValue(GraphicalUserInterface.getLeagueList().getFirst().getName());
 
@@ -47,21 +44,20 @@ public class TeamViewController {
         if (!teamSelector.getValue().equals("None")){
             double score = 0;
             for (Player player : getCurrentTeam().getPlayerMap().keySet()){
-                networkError = player.setStatsWithAPI();
-                if (networkError){
-                    break;}
-                score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
+                try {
+                    player.setStatsWithAPI();
+                    score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
+                } catch (Exception _){
+                    ErrorModal.throwErrorModal("Network Error", null);
+                    networkError = true;
+                    break;
+                }
             }
             teamScore.setText(String.format("%.1fpts", score));
         }
 
-        boolean finalNetworkError = networkError;
-
-        if (finalNetworkError){
-            ErrorModal.throwErrorModal("Network Error", null);
-        }
-
         listView.setFixedCellSize(70);
+        boolean finalNetworkError = networkError;
         listView.setCellFactory(_ -> new TeamViewCell(this, finalNetworkError));
         listView.setItems(filteredList);
         logoImageView.setImage(logoImage);
@@ -103,7 +99,7 @@ public class TeamViewController {
             if (getCurrentTeam() != null){
                 try {
                     calculateScore();
-                } catch (InterruptedException e) {
+                } catch (Exception _) {
                     teamScore.setText("0.0pts");
                 }
             }
@@ -123,7 +119,7 @@ public class TeamViewController {
             if (getCurrentTeam() != null){
                 try {
                     calculateScore();
-                } catch (InterruptedException e) {
+                } catch (Exception _) {
                     teamScore.setText("0.0pts");
                 }
             }
@@ -131,13 +127,15 @@ public class TeamViewController {
     }
 
 
-    private void calculateScore() throws InterruptedException {
+    private void calculateScore() {
         double score = 0;
         for (Player player : getCurrentTeam().getPlayerMap().keySet()){
-            boolean networkError = player.setStatsWithAPI();
-            if (networkError){
-                return;}
-            score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
+            try {
+                player.setStatsWithAPI();
+                score += player.getWeekScore(getCurrentTeam().getCoefficientMap());
+            } catch (Exception _) {
+                ErrorModal.throwErrorModal("Network Error", null);
+            }
         }
         teamScore.setText(String.format("%.1fpts", score));
     }
@@ -195,7 +193,7 @@ public class TeamViewController {
         teamSelector.setItems(FXCollections.observableList(teamItemList));
     }
 
-    public void openPlayersView() throws IOException {
+    public void openPlayersView() {
         GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
     }
 

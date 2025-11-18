@@ -40,7 +40,7 @@ public class TeamViewCellController {
         headshot.setSmooth(true);
     }
 
-    public void setData(Player player, boolean networkError) throws InterruptedException, IOException {
+    public void setData(Player player, boolean networkError) {
         currentPlayer = player;
         String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
         String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
@@ -106,13 +106,20 @@ public class TeamViewCellController {
         this.parent = parent;
     }
 
-    public void viewPlayerStats() throws IOException, InterruptedException {
+    public void viewPlayerStats() {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("View Player Stats");
+        Parent root = null;
 
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/playerStats/PlayerStatsModal.fxml")));
-        Parent root = loader.load();
+        try {
+            root = loader.load();
+        }
+        catch (IOException _){
+            System.err.println("PlayerStatsModal.fxml not found");
+            System.exit(1);
+        }
 
         creator.setScene(new Scene(root));
 

@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -54,7 +53,6 @@ public class Player {
         this.experience = playerInfo.get("experience");
     }
 
-
     //Scoring methods
     public double getWeekScore(HashMap<String, Double> coefficientMap) {
         return (playerStats.get("weekRushYds") * coefficientMap.get("rushYards") +
@@ -84,16 +82,13 @@ public class Player {
                 playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade") * coefficientMap.get("fgMade"));
     }
 
-    public boolean setStatsWithAPI() throws InterruptedException {
+    public void setStatsWithAPI() throws Exception {
         if (!lastScoreDateIsToday()){
             String response = getStatsFromAPI();
-            if (response.equals("Network Error")){
-                //Can't be tested
-                return true;
+            if (response != null && !response.isBlank()){
+                setPlayerStats(response);
             }
-            setPlayerStats(response);
         }
-        return false;
     }
 
     public void setPlayerStats(String jsonData){
@@ -232,21 +227,15 @@ public class Player {
         playerStats.put("seasonFumbles", seasonFumbles);
     }
 
-    private String getStatsFromAPI() throws InterruptedException {
+    private String getStatsFromAPI() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=20"))
                 .header("x-rapidapi-key", API_KEY)
                 .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        try {
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        }
-        catch (IOException e){
-            //Can't truly be tested
-            return "Network Error";
-        }
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 
     private boolean lastScoreDateIsToday(){

@@ -20,24 +20,30 @@ public class GraphicalUserInterface extends Application {
     private static final ArrayList<League> leagueList = new ArrayList<>();
     
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
-        boolean networkError = PlayerRetriever.getPlayersFromJsonOrApi();
-        if (networkError){
-            ErrorModal.throwErrorModal("Network Error", null);
-        }
-        else {
+    public void start(Stage stage) {
+        try {
+            PlayerRetriever.getPlayersFromJsonOrApi();
+
             HashMap<String, Double> defaultCoefficientMap = getDefaultCoefficientMap();
 
 
             leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
             FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
-            scene = new Scene(playersViewLoader.load(), 700, 500);
+            try {
+                scene = new Scene(playersViewLoader.load(), 700, 500);
+            } catch (IOException _) {
+                System.err.println("PlayersView.fxml not found");
+                System.exit(1);
+            }
 
             stage.setTitle("MyLeague");
             stage.setScene(scene);
             stage.show();
 
             stage.setOnCloseRequest(_ -> stage.close());
+        }
+        catch (Exception _){
+            ErrorModal.throwErrorModal("Network Error", null);
         }
     }
 
@@ -57,9 +63,15 @@ public class GraphicalUserInterface extends Application {
         return defaultCoefficientMap;
     }
 
-    public static void setRoot(String fxmlFile) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(GraphicalUserInterface.class.getResource(fxmlFile)));
-        scene.setRoot(root);
+    public static void setRoot(String fxmlFile) {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(GraphicalUserInterface.class.getResource(fxmlFile)));
+            scene.setRoot(root);
+        }
+        catch (IOException _){
+            System.err.printf("%s not found", fxmlFile);
+            System.exit(1);
+        }
     }
 
     public static ArrayList<League> getLeagueList(){

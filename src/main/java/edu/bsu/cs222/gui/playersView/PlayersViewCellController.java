@@ -93,11 +93,12 @@ public class PlayersViewCellController {
         catch (IllegalArgumentException ignored){}
     }
 
-    public void playerAdder() throws IOException {
+    public void playerAdder() {
         parent.setDisable(true);
         League.Team team = parent.getCurrentTeam();
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
+        Parent root = null;
 
         if (team == null){
             ErrorModal.throwErrorModal("Please select a team before attempting to add a player", parent);
@@ -106,7 +107,14 @@ public class PlayersViewCellController {
             creator.setTitle("Player Adder");
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/PlayerAdderModal.fxml")));
-            Parent root = loader.load();
+
+            try {
+                root = loader.load();
+            }
+            catch (IOException _){
+                System.out.println("PlayerAdderModal.fxml not found");
+                System.exit(1);
+            }
 
             creator.setScene(new Scene(root));
 
@@ -193,14 +201,21 @@ public class PlayersViewCellController {
         addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getName()));
     }
 
-    public void viewPlayerStats() throws IOException, InterruptedException {
+    public void viewPlayerStats() {
             parent.setDisable(true);
             Stage creator = new Stage();
             creator.initModality(Modality.APPLICATION_MODAL);
             creator.setTitle("View Player Stats");
+            Parent root = null;
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/playerStats/PlayerStatsModal.fxml")));
-            Parent root = loader.load();
+
+            try {
+                root = loader.load();
+            } catch (IOException _) {
+                System.err.println("PlayerStatsModal.fxml not found");
+                System.exit(1);
+            }
 
             creator.setScene(new Scene(root));
 
