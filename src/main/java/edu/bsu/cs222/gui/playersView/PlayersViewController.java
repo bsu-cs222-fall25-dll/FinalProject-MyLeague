@@ -42,24 +42,13 @@ public class PlayersViewController {
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
 
+    private String previousLeagueString = "Default";
+    private String previousTeamString = "None";
+
     private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
 
     private final ImageView reloadIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/reload_icon.png"))), 20, 20, true, true));
     private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
-
-    public ReadOnlyObjectProperty<League.Team> currentTeamProperty() {
-        return currentTeam.getReadOnlyProperty();
-    }
-
-    public League.Team getCurrentTeam() {
-        if (teamSelector.getValue().equals("None")){
-            return null;
-        }
-        return Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamSelector.getValue());
-    }
-
-    private String previousLeagueString = "Default";
-    private String previousTeamString = "None";
 
     @FXML
     public void initialize() {
@@ -147,48 +136,47 @@ public class PlayersViewController {
         });
     }
 
-    private boolean runSearch(ArrayList<String> queries, Player player){
-        if (player == null) {return false;}
-        boolean match = true;
-        for (String query : queries){
-            if (!player.getName().toLowerCase().contains(query)) {
-                match = false;
-                break;
+    private void leagueCreator() throws IOException {
+        Stage creator = new Stage();
+        creator.initModality(Modality.APPLICATION_MODAL);
+        creator.setTitle("League Creator");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/LeagueCreatorModal.fxml"));
+        Parent root = loader.load();
+
+        creator.setScene(new Scene(root));
+
+        Button cancelButton = (Button) root.lookup("#cancelButton");
+        Button createButton = (Button) root.lookup("#createButton");
+
+        createButton.setOnAction(_ -> getLeaguePositions(root, creator));
+
+        createButton.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                getLeaguePositions(root, creator);
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                leagueSelector.setValue(previousLeagueString);
+                teamSelector.setValue(previousTeamString);
+                setDisable(false);
+                creator.close();
             }
-        }
-        return match;
-    }
+        });
 
-    public void setPositionsAndTeams(ArrayList<Player> players) {
-        Set<String> teams = new TreeSet<>();
-        for (Player player : players){
-            String team = player.getTeam();
-            teams.add(team);
-        }
+        cancelButton.setOnAction(_ ->{
+            leagueSelector.setValue(previousLeagueString);
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
 
-        positionFilter.getItems().add("All");
-        teamFilter.getItems().add("All");
+        creator.setOnCloseRequest(_ ->{
+            leagueSelector.setValue(previousLeagueString);
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
 
-        for (Position position: values()){
-            positionFilter.getItems().add(position.toString());
-        }
-        positionFilter.getItems().remove("FLEX");
-
-        teamFilter.getItems().addAll(teams);
-    }
-
-    public void openTeamView() throws IOException {
-        GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
-    }
-
-    public void setDisable(boolean disable){
-        leagueSelector.setDisable(disable);
-        teamSelector.setDisable(disable);
-        positionFilter.setDisable(disable);
-        teamFilter.setDisable(disable);
-        searchField.setDisable(disable);
-        teamViewButton.setDisable(disable);
-        reloadButton.setDisable(disable);
+        creator.showAndWait();
     }
 
     private void getLeaguePositions(Parent root, Stage creator){
@@ -234,116 +222,6 @@ public class PlayersViewController {
             }
             if (validPositions){setLeagueCoefficients(nameField.getText(), teamPositions, creator);}
         }
-    }
-
-    private void leagueCreator() throws IOException {
-        Stage creator = new Stage();
-        creator.initModality(Modality.APPLICATION_MODAL);
-        creator.setTitle("League Creator");
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/LeagueCreatorModal.fxml"));
-        Parent root = loader.load();
-
-        creator.setScene(new Scene(root));
-
-        Button cancelButton = (Button) root.lookup("#cancelButton");
-        Button createButton = (Button) root.lookup("#createButton");
-
-        createButton.setOnAction(_ -> getLeaguePositions(root, creator));
-
-        createButton.getScene().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER){
-                getLeaguePositions(root, creator);
-            } else if (event.getCode() == KeyCode.ESCAPE) {
-                leagueSelector.setValue(previousLeagueString);
-                teamSelector.setValue(previousTeamString);
-                setDisable(false);
-                creator.close();
-            }
-        });
-
-        cancelButton.setOnAction(_ ->{
-            leagueSelector.setValue(previousLeagueString);
-            teamSelector.setValue(previousTeamString);
-            setDisable(false);
-            creator.close();
-        });
-
-        creator.setOnCloseRequest(_ ->{
-            leagueSelector.setValue(previousLeagueString);
-            teamSelector.setValue(previousTeamString);
-            setDisable(false);
-            creator.close();
-        });
-
-        creator.showAndWait();
-    }
-
-    private void teamCreator(League league) throws IOException {
-        Stage creator = new Stage();
-        creator.initModality(Modality.APPLICATION_MODAL);
-        creator.setTitle("Team Creator");
-
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/TeamCreatorModal.fxml")));
-        Parent root = loader.load();
-
-        creator.setScene(new Scene(root));
-
-        Button cancelButton = (Button) root.lookup("#cancelButton");
-        Button createButton = (Button) root.lookup("#createButton");
-        TextField nameField = (TextField) root.lookup("#nameField");
-
-        createButton.setOnAction(_ -> {
-            if (!nameField.getText().isBlank()){
-                createTeam(nameField.getText(), creator, league);
-            }
-        });
-
-        creator.getScene().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER && !nameField.getText().isBlank()){
-                createTeam(nameField.getText(), creator, league);
-                event.consume();
-            } else if (event.getCode() == KeyCode.ESCAPE) {
-                teamSelector.setValue(previousTeamString);
-                setDisable(false);
-                creator.close();
-            }
-        });
-
-        cancelButton.setOnAction(_ ->{
-            teamSelector.setValue(previousTeamString);
-            setDisable(false);
-            creator.close();
-        });
-
-        creator.setOnCloseRequest(_ ->{
-            teamSelector.setValue(previousTeamString);
-            setDisable(false);
-            creator.close();
-        });
-
-        creator.showAndWait();
-    }
-
-    private void setLeagueItems(){
-        ArrayList<String> leagueItemList = new ArrayList<>();
-        for (League league: GraphicalUserInterface.getLeagueList()){
-            leagueItemList.add(league.getName());
-        }
-        leagueItemList.add("Create");
-        leagueSelector.setItems(FXCollections.observableList(leagueItemList));
-    }
-
-    private void setTeamItems(League league){
-        ArrayList<String> teamItemList = new ArrayList<>();
-        if(league.getTeamNames().isEmpty()){
-            teamItemList.add("None");
-        }
-        else {
-            teamItemList.addAll(league.getTeamNames());
-        }
-        teamItemList.add("Create");
-        teamSelector.setItems(FXCollections.observableList(teamItemList));
     }
 
     private void setLeagueCoefficients(String name, ArrayList<Position> teamPositions, Stage stage) {
@@ -433,6 +311,52 @@ public class PlayersViewController {
         stage.close();
     }
 
+    private void teamCreator(League league) throws IOException {
+        Stage creator = new Stage();
+        creator.initModality(Modality.APPLICATION_MODAL);
+        creator.setTitle("Team Creator");
+
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/TeamCreatorModal.fxml")));
+        Parent root = loader.load();
+
+        creator.setScene(new Scene(root));
+
+        Button cancelButton = (Button) root.lookup("#cancelButton");
+        Button createButton = (Button) root.lookup("#createButton");
+        TextField nameField = (TextField) root.lookup("#nameField");
+
+        createButton.setOnAction(_ -> {
+            if (!nameField.getText().isBlank()){
+                createTeam(nameField.getText(), creator, league);
+            }
+        });
+
+        creator.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER && !nameField.getText().isBlank()){
+                createTeam(nameField.getText(), creator, league);
+                event.consume();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                teamSelector.setValue(previousTeamString);
+                setDisable(false);
+                creator.close();
+            }
+        });
+
+        cancelButton.setOnAction(_ ->{
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.setOnCloseRequest(_ ->{
+            teamSelector.setValue(previousTeamString);
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.showAndWait();
+    }
+
     private void createTeam(String text, Stage stage, League league){
         if (!text.isBlank()){
             league.addTeam(text);
@@ -441,15 +365,6 @@ public class PlayersViewController {
             setDisable(false);
             stage.close();
         }
-    }
-
-    private League getLeagueByName(String leagueName){
-        for (League league: GraphicalUserInterface.getLeagueList()){
-            if (leagueName.equals(league.getName())){
-                return league;
-            }
-        }
-        return null;
     }
 
     public void reloadPlayerList() throws IOException, InterruptedException {
@@ -461,5 +376,90 @@ public class PlayersViewController {
         else {
             GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
         }
+    }
+
+    public void openTeamView() throws IOException {
+        GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
+    }
+
+    public void setDisable(boolean disable){
+        leagueSelector.setDisable(disable);
+        teamSelector.setDisable(disable);
+        positionFilter.setDisable(disable);
+        teamFilter.setDisable(disable);
+        searchField.setDisable(disable);
+        teamViewButton.setDisable(disable);
+        reloadButton.setDisable(disable);
+    }
+
+    private boolean runSearch(ArrayList<String> queries, Player player){
+        if (player == null) {return false;}
+        boolean match = true;
+        for (String query : queries){
+            if (!player.getName().toLowerCase().contains(query)) {
+                match = false;
+                break;
+            }
+        }
+        return match;
+    }
+
+    private void setPositionsAndTeams(ArrayList<Player> players) {
+        Set<String> teams = new TreeSet<>();
+        for (Player player : players){
+            String team = player.getTeam();
+            teams.add(team);
+        }
+
+        positionFilter.getItems().add("All");
+        teamFilter.getItems().add("All");
+
+        for (Position position: values()){
+            positionFilter.getItems().add(position.toString());
+        }
+        positionFilter.getItems().remove("FLEX");
+
+        teamFilter.getItems().addAll(teams);
+    }
+
+    private void setLeagueItems(){
+        ArrayList<String> leagueItemList = new ArrayList<>();
+        for (League league: GraphicalUserInterface.getLeagueList()){
+            leagueItemList.add(league.getName());
+        }
+        leagueItemList.add("Create");
+        leagueSelector.setItems(FXCollections.observableList(leagueItemList));
+    }
+
+    private void setTeamItems(League league){
+        ArrayList<String> teamItemList = new ArrayList<>();
+        if(league.getTeamNames().isEmpty()){
+            teamItemList.add("None");
+        }
+        else {
+            teamItemList.addAll(league.getTeamNames());
+        }
+        teamItemList.add("Create");
+        teamSelector.setItems(FXCollections.observableList(teamItemList));
+    }
+
+    private League getLeagueByName(String leagueName){
+        for (League league: GraphicalUserInterface.getLeagueList()){
+            if (leagueName.equals(league.getName())){
+                return league;
+            }
+        }
+        return null;
+    }
+
+    public League.Team getCurrentTeam() {
+        if (teamSelector.getValue().equals("None")){
+            return null;
+        }
+        return Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(teamSelector.getValue());
+    }
+
+    public ReadOnlyObjectProperty<League.Team> currentTeamProperty() {
+        return currentTeam.getReadOnlyProperty();
     }
 }
