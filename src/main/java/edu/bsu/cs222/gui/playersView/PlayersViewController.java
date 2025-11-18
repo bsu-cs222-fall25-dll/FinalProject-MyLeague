@@ -153,8 +153,10 @@ public class PlayersViewController {
 
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
+                event.consume();
                 getLeaguePositions(root, creator);
             } else if (event.getCode() == KeyCode.ESCAPE) {
+                event.consume();
                 leagueSelector.setValue(previousLeagueString);
                 teamSelector.setValue(previousTeamString);
                 setDisable(false);
@@ -180,6 +182,28 @@ public class PlayersViewController {
     }
 
     private void getLeaguePositions(Parent root, Stage creator){
+        TextField nameField = (TextField) root.lookup("#nameField");
+        String name = nameField.getText();
+        if (name.isBlank()){
+            try {
+                ErrorModal.throwErrorModal("Please enter a name", null);
+            } catch (IOException _){
+                System.err.println("File not found");
+                System.exit(1);
+            }
+            return;
+        }
+
+        if (getLeagueByName(name) != null){
+            try {
+                ErrorModal.throwErrorModal("Please enter a unique name", null);
+            } catch (IOException _){
+                System.err.println("File not found");
+                System.exit(1);
+            }
+            return;
+        }
+
         ArrayList<Position> teamPositions = new ArrayList<>();
         HashMap<Position, TextField> positonFieldMap = new HashMap<>();
         positonFieldMap.put(QB, (TextField) root.lookup("#qbField"));
@@ -189,7 +213,6 @@ public class PlayersViewController {
         positonFieldMap.put(K, (TextField) root.lookup("#kField"));
         positonFieldMap.put(FLEX, (TextField) root.lookup("#flexField"));
 
-        TextField nameField = (TextField) root.lookup("#nameField");
 
 
         if (!nameField.getText().isBlank()){
@@ -240,6 +263,7 @@ public class PlayersViewController {
         Parent finalRoot = root;
         stage.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
+                event.consume();
                 createLeague(name, teamPositions, stage, finalRoot);
             }
         });
@@ -325,17 +349,14 @@ public class PlayersViewController {
         Button createButton = (Button) root.lookup("#createButton");
         TextField nameField = (TextField) root.lookup("#nameField");
 
-        createButton.setOnAction(_ -> {
-            if (!nameField.getText().isBlank()){
-                createTeam(nameField.getText(), creator, league);
-            }
-        });
+        createButton.setOnAction(_ -> createTeam(nameField.getText(), creator, league));
 
         creator.getScene().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER && !nameField.getText().isBlank()){
-                createTeam(nameField.getText(), creator, league);
+            if (event.getCode() == KeyCode.ENTER){
                 event.consume();
+                createTeam(nameField.getText(), creator, league);
             } else if (event.getCode() == KeyCode.ESCAPE) {
+                event.consume();
                 teamSelector.setValue(previousTeamString);
                 setDisable(false);
                 creator.close();
@@ -358,13 +379,32 @@ public class PlayersViewController {
     }
 
     private void createTeam(String text, Stage stage, League league){
-        if (!text.isBlank()){
-            league.addTeam(text);
-            setTeamItems(league);
-            teamSelector.setValue(text);
-            setDisable(false);
-            stage.close();
+        if (text.isBlank()){
+            try {
+                ErrorModal.throwErrorModal("Please enter a name", null);
+            } catch (IOException _){
+                System.err.println("File not found");
+                System.exit(1);
+            }
+            return;
         }
+
+        if (league.getTeamNames().contains(text)){
+            try {
+                ErrorModal.throwErrorModal("Please enter a unique name", null);
+            } catch (IOException _){
+                System.err.println("File not found");
+                System.exit(1);
+            }
+            return;
+        }
+
+
+        league.addTeam(text);
+        setTeamItems(league);
+        teamSelector.setValue(text);
+        setDisable(false);
+        stage.close();
     }
 
     public void reloadPlayerList() throws IOException, InterruptedException {
