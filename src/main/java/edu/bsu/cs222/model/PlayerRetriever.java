@@ -5,10 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.http.*;
 import java.nio.charset.Charset;
@@ -60,9 +57,9 @@ public class PlayerRetriever {
     }
 
     public static String getPlayersFromJson() throws IOException {
-        InputStream sampleFile = Thread.currentThread().getContextClassLoader()
+        InputStream jsonFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("PlayerList.json");
-        return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
+        return new String(Objects.requireNonNull(jsonFile).readAllBytes(), Charset.defaultCharset());
     }
 
     public static void createPlayerList(String jsonData) {
@@ -175,8 +172,8 @@ public class PlayerRetriever {
 
         String jsonData = playersJsonObject.toString();
 
-        try(FileWriter file = new FileWriter("src/main/resources/PlayerList.json")){
-            file.write(jsonData);
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/PlayerList.json"))){
+            writer.write(jsonData);
         }
     }
 }
