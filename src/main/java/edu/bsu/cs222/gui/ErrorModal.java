@@ -27,14 +27,14 @@ public class ErrorModal {
         Label errorLbl = (Label) root.lookup("#errorLbl");
         errorLbl.setText(errorMessage);
 
-        stage.setOnCloseRequest(event ->{
+        stage.setOnCloseRequest(_ ->{
             stage.close();
             if (playersView) {((PlayersViewController) parent).setDisable(false);}
         });
 
         Button closeButton = (Button) root.lookup("#closeButton");
 
-        closeButton.setOnAction(e -> {
+        closeButton.setOnAction(_ -> {
             stage.close();
             if (playersView) {
                 ((PlayersViewController) parent).setDisable(false);

@@ -48,7 +48,7 @@ public class PlayerStatsModalController {
     @FXML
     private void initialize() {
         listView.setFixedCellSize(25);
-        listView.setCellFactory(lv -> new PlayerCompareCell(this));
+        listView.setCellFactory(_ -> new PlayerCompareCell(this));
 
         positionFilter.setValue("All");
         teamFilter.setValue("All");
@@ -107,7 +107,7 @@ public class PlayerStatsModalController {
         players.remove(player);
 
         ObservableList<Player> observableList = FXCollections.observableList(players);
-        FilteredList<Player> filteredList = new FilteredList<>(observableList, p -> true);
+        FilteredList<Player> filteredList = new FilteredList<>(observableList, _ -> true);
         listView.setItems(filteredList);
 
         setPositionAndTeams(players);
