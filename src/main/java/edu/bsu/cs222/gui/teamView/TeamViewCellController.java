@@ -127,6 +127,7 @@ public class TeamViewCellController {
 
         creator.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE){
+                event.consume();
                 creator.close();
             }
         });

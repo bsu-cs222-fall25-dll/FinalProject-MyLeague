@@ -161,6 +161,7 @@ public class PlayersViewCellController {
 
             creator.getScene().setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ESCAPE){
+                    event.consume();
                     parent.setDisable(false);
                     creator.close();
                 }
@@ -220,6 +221,7 @@ public class PlayersViewCellController {
 
             creator.getScene().setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ESCAPE){
+                    event.consume();
                     parent.setDisable(false);
                     creator.close();
                 }
