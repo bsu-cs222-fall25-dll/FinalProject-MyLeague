@@ -29,7 +29,7 @@ public class PlayersViewCell extends ListCell<Player> {
         }
 
         if (loader == null){
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayersViewCell.fxml")));
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersViewCell.fxml")));
 
             try {
                 view = loader.load();

@@ -29,7 +29,7 @@ public class PlayerCompareCell extends ListCell<Player> {
         }
 
         if (loader == null){
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerCompareCell.fxml")));
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/playerStats/PlayerCompareCell.fxml")));
 
             try {
                 view = loader.load();

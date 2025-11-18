@@ -109,7 +109,7 @@ public class TeamViewCellController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("View Player Stats");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerStatsModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/playerStats/PlayerStatsModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));

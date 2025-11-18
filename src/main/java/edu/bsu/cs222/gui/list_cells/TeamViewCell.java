@@ -33,7 +33,7 @@ public class TeamViewCell extends ListCell<Player> {
         }
 
         if (loader == null){
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/TeamViewCell.fxml")));
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/teamView/TeamViewCell.fxml")));
 
             try {
                 view = loader.load();

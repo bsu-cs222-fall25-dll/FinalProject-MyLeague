@@ -104,7 +104,7 @@ public class PlayersViewCellController {
         else {
             creator.setTitle("Player Adder");
 
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerAdderModal.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/PlayerAdderModal.fxml")));
             Parent root = loader.load();
 
             creator.setScene(new Scene(root));
@@ -197,7 +197,7 @@ public class PlayersViewCellController {
             creator.initModality(Modality.APPLICATION_MODAL);
             creator.setTitle("View Player Stats");
 
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayerStatsModal.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/playerStats/PlayerStatsModal.fxml")));
             Parent root = loader.load();
 
             creator.setScene(new Scene(root));

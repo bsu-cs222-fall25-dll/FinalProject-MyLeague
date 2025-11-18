@@ -179,7 +179,7 @@ public class PlayersViewController {
     }
 
     public void openTeamView() throws IOException {
-        GraphicalUserInterface.setRoot("/fxml_files/TeamView.fxml");
+        GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
     }
 
     public void setDisable(boolean disable){
@@ -197,7 +197,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/LeagueCreatorModal.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/LeagueCreatorModal.fxml"));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -244,7 +244,7 @@ public class PlayersViewController {
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("Team Creator");
 
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/TeamCreatorModal.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/TeamCreatorModal.fxml")));
         Parent root = loader.load();
 
         creator.setScene(new Scene(root));
@@ -308,7 +308,7 @@ public class PlayersViewController {
     private void setLeagueCoefficients(String name, ArrayList<Position> teamPositions, Stage stage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml_files/SetScoringModal.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/SetScoringModal.fxml")));
             stage.getScene().setRoot(root);
         } catch (IOException e){
             System.err.println("File not found");
@@ -417,7 +417,7 @@ public class PlayersViewController {
             ErrorModal.throwErrorModal("Network Error", null);
         }
         else {
-            GraphicalUserInterface.setRoot("/fxml_files/PlayersView.fxml");
+            GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
         }
     }
 }

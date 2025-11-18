@@ -30,7 +30,7 @@ public class GraphicalUserInterface extends Application {
 
 
             leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
-            FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/PlayersView.fxml")));
+            FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
             scene = new Scene(playersViewLoader.load(), 700, 500);
 
             stage.setTitle("MyLeague");
