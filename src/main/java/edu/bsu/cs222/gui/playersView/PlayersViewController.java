@@ -191,6 +191,51 @@ public class PlayersViewController {
         reloadButton.setDisable(disable);
     }
 
+    private void getLeaguePositions(Parent root, Stage creator){
+        ArrayList<Position> teamPositions = new ArrayList<>();
+        HashMap<Position, TextField> positonFieldMap = new HashMap<>();
+        positonFieldMap.put(QB, (TextField) root.lookup("#qbField"));
+        positonFieldMap.put(RB, (TextField) root.lookup("#rbField"));
+        positonFieldMap.put(TE, (TextField) root.lookup("#teField"));
+        positonFieldMap.put(WR, (TextField) root.lookup("#wrField"));
+        positonFieldMap.put(K, (TextField) root.lookup("#kField"));
+        positonFieldMap.put(FLEX, (TextField) root.lookup("#flexField"));
+
+        TextField nameField = (TextField) root.lookup("#nameField");
+
+
+        if (!nameField.getText().isBlank()){
+            boolean validPositions = true;
+            for (Position key : positonFieldMap.keySet()){
+                if (positonFieldMap.get(key).getText().isBlank()){
+                    try {
+                        ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
+                    } catch (IOException e) {
+                        System.err.println("File not found");
+                        System.exit(1);
+                    }
+                    validPositions = false;
+                    break;
+                }
+                try {
+                    for (int i = 0; i < Integer.parseInt(positonFieldMap.get(key).getText()); ++i){
+                        teamPositions.add(key);
+                    }
+                } catch (NumberFormatException _){
+                    try {
+                        ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
+                    } catch (IOException _) {
+                        System.err.println("File not found");
+                        System.exit(1);
+                    }
+                    validPositions = false;
+                    break;
+                }
+            }
+            if (validPositions){setLeagueCoefficients(nameField.getText(), teamPositions, creator);}
+        }
+    }
+
     private void leagueCreator() throws IOException {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
@@ -203,16 +248,12 @@ public class PlayersViewController {
 
         Button cancelButton = (Button) root.lookup("#cancelButton");
         Button createButton = (Button) root.lookup("#createButton");
-        TextField nameField = (TextField) root.lookup("#nameField");
 
-        ArrayList<Position> teamPositions = new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K));
-
-        createButton.setOnAction(_ -> setLeagueCoefficients(nameField.getText(), teamPositions, creator));
+        createButton.setOnAction(_ -> getLeaguePositions(root, creator));
 
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
-                setLeagueCoefficients(nameField.getText(), teamPositions, creator);
-                event.consume();
+                getLeaguePositions(root, creator);
             } else if (event.getCode() == KeyCode.ESCAPE) {
                 leagueSelector.setValue(previousLeagueString);
                 teamSelector.setValue(previousTeamString);
@@ -283,6 +324,7 @@ public class PlayersViewController {
 
         creator.showAndWait();
     }
+
     private void setLeagueItems(){
         ArrayList<String> leagueItemList = new ArrayList<>();
         for (League league: GraphicalUserInterface.getLeagueList()){
@@ -380,6 +422,7 @@ public class PlayersViewController {
             }
         }
 
+        System.out.println(coefficientMap);
         League league = new League(name, teamPositions, coefficientMap);
         GraphicalUserInterface.addLeague(league);
         setLeagueItems();

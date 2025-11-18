@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            prefWidth="360" prefHeight="180"
-            style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;">
+<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <Label text="Create League" BorderPane.alignment="CENTER_LEFT">
             <font>
-                <Font name="System Bold" size="16"/>
+                <Font name="System Bold" size="16" />
             </font>
             <padding>
-                <Insets top="15" left="20" bottom="5"/>
+                <Insets bottom="5" left="20" top="15" />
             </padding>
             <textFill>#e0e0e0</textFill>
         </Label>
@@ -23,39 +21,63 @@
     <center>
         <VBox alignment="CENTER" spacing="10">
             <padding>
-                <Insets top="10"/>
+                <Insets top="10" />
             </padding>
-            <TextField fx:id="nameField"
-                       promptText="Enter fantasy league name"
-                       maxWidth="200"
-                       style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 6; -fx-border-radius: 6;">
-            <tooltip>
-                <Tooltip text="Enter a name for your fantasy league"/>
-            </tooltip>
-            </TextField>
+            <HBox>
+                <Label text="Name:" textFill="WHITE"/>
+                <TextField fx:id="nameField" maxWidth="200" promptText="Enter fantasy league name"
+                           style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 6; -fx-border-radius: 6;">
+                    <tooltip>
+                        <Tooltip text="Enter a name for your fantasy league"/>
+                    </tooltip>
+                </TextField>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <padding>
+                    <Insets left="10.0" right="10.0"/>
+                </padding>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="QB" textFill="WHITE"/>
+                    <TextField fx:id="qbField" text="1"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="RB" textFill="WHITE"/>
+                    <TextField fx:id="rbField" promptText="2" text="2"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="WR" textFill="WHITE"/>
+                    <TextField fx:id="wrField" text="2"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="TE" textFill="WHITE"/>
+                    <TextField fx:id="teField" text="1"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="279.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="K" textFill="WHITE"/>
+                    <TextField fx:id="kField" text="1"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="297.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                    <Label text="FLEX" textFill="WHITE"/>
+                    <TextField fx:id="flexField" text="1"/>
+                </VBox>
+            </HBox>
         </VBox>
     </center>
 
     <bottom>
         <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="10" bottom="15"/>
+                <Insets bottom="15" top="10" />
             </padding>
-            <Button fx:id="createButton"
-                    text="Add"
-                    prefWidth="100"
-                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;">
+            <Button fx:id="createButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Add">
             <tooltip>
-                <Tooltip text="Create your fantasy league"/>
+                <Tooltip text="Create your fantasy league" />
             </tooltip>
             </Button>
 
-            <Button fx:id="cancelButton"
-                    text="Cancel"
-                    prefWidth="100"
-                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;">
+            <Button fx:id="cancelButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Cancel">
             <tooltip>
-                <Tooltip text="Close popup"/>
+                <Tooltip text="Close popup" />
             </tooltip>
             </Button>
         </HBox>
