@@ -21,7 +21,7 @@ import java.time.temporal.TemporalAdjusters;
 public class Player {
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
-    private String name;
+    private final String name;
     private Position position;
     private String team;
     private String jerseyNumber;
@@ -30,7 +30,7 @@ public class Player {
     private String age;
     private String headshot;
     private String school;
-    private String playerID;
+    private final String playerID;
     private String experience;
     private String bDay;
     //Above are stats shown from player list, below are stats which require a deeper API call.
@@ -253,8 +253,8 @@ public class Player {
         return lastScoreDate != null && lastScoreDate.equals(LocalDate.now());
     }
 
-    // Get
-    // ters
+
+    // Getters
     public HashMap<String, Integer> getPlayerStats() {
         return playerStats;
     }
@@ -306,7 +306,9 @@ public class Player {
     public String getbDay() {
         return bDay;
     }
-
+    public String getPlayerID() {
+        return playerID;
+    }
 
     //Constructors and Setters for tests
     public Player (String name, String playerID) {
