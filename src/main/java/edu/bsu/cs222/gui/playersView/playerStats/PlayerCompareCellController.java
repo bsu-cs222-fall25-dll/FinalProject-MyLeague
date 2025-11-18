@@ -1,4 +1,4 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222.gui.playersView.playerStats;
 
 import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXML;

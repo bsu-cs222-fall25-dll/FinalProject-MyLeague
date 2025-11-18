@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER_LEFT" onMouseClicked="#viewPlayerStats" prefHeight="70" prefWidth="400" spacing="12" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.TeamViewCellController">
+<HBox alignment="CENTER_LEFT" onMouseClicked="#viewPlayerStats" prefHeight="70" prefWidth="400" spacing="12" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.teamView.TeamViewCellController">
 
 <padding>
     <Insets bottom="8" left="10" right="10" top="8" />

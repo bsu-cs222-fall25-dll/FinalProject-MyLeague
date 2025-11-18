@@ -1,5 +1,6 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222.gui.playersView;
 
+import edu.bsu.cs222.gui.playersView.playerStats.PlayerStatsModalController;
 import edu.bsu.cs222.model.League;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.Position;

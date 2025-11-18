@@ -1,8 +1,6 @@
-package edu.bsu.cs222.gui.list_cells;
+package edu.bsu.cs222.gui.teamView;
 
 import edu.bsu.cs222.model.Player;
-import edu.bsu.cs222.gui.controllers.PlayersViewCellController;
-import edu.bsu.cs222.gui.controllers.PlayersViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
@@ -10,13 +8,17 @@ import javafx.scene.control.ListCell;
 import java.io.IOException;
 import java.util.Objects;
 
-public class PlayersViewCell extends ListCell<Player> {
-    private PlayersViewCellController controller;
+public class TeamViewCell extends ListCell<Player> {
+    private TeamViewCellController controller;
+    private final TeamViewController parent;
     private Node view;
     private FXMLLoader loader;
-    private final PlayersViewController parent;
+    private final boolean networkError;
 
-    public PlayersViewCell(PlayersViewController parent) {this.parent = parent;}
+    public TeamViewCell(TeamViewController parent, boolean networkError) {
+        this.parent = parent;
+        this.networkError = networkError;
+    }
 
     @Override
     protected void updateItem(Player player, boolean empty) {
@@ -29,7 +31,7 @@ public class PlayersViewCell extends ListCell<Player> {
         }
 
         if (loader == null){
-            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersViewCell.fxml")));
+            loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/teamView/TeamViewCell.fxml")));
 
             try {
                 view = loader.load();
@@ -42,7 +44,11 @@ public class PlayersViewCell extends ListCell<Player> {
             }
         }
 
-        controller.setData(player);
+        try {
+            controller.setData(player, networkError);
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
         setGraphic(view);
     }
 }

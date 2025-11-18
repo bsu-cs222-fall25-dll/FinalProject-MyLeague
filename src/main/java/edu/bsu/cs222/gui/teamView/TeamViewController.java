@@ -1,11 +1,10 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222.gui.teamView;
 
 import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.GraphicalUserInterface;
 import edu.bsu.cs222.model.League;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.Position;
-import edu.bsu.cs222.gui.list_cells.TeamViewCell;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

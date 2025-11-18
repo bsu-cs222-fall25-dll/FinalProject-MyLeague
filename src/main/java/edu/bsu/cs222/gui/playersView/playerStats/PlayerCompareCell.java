@@ -1,7 +1,5 @@
-package edu.bsu.cs222.gui.list_cells;
+package edu.bsu.cs222.gui.playersView.playerStats;
 
-import edu.bsu.cs222.gui.controllers.PlayerCompareCellController;
-import edu.bsu.cs222.gui.controllers.PlayerStatsModalController;
 import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

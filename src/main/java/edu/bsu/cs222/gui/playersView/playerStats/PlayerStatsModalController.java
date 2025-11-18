@@ -1,7 +1,6 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222.gui.playersView.playerStats;
 
 import edu.bsu.cs222.gui.ErrorModal;
-import edu.bsu.cs222.gui.list_cells.PlayerCompareCell;
 import edu.bsu.cs222.model.Player;
 import edu.bsu.cs222.model.PlayerRetriever;
 import edu.bsu.cs222.model.Position;

@@ -1,6 +1,6 @@
 package edu.bsu.cs222.gui;
 
-import edu.bsu.cs222.gui.controllers.PlayersViewController;
+import edu.bsu.cs222.gui.playersView.PlayersViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

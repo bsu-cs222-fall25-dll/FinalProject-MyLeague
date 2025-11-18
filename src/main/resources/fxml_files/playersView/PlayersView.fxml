@@ -5,7 +5,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.shape.Circle?>
-<GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.controllers.PlayersViewController">
+<GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.playersView.PlayersViewController">
 
     <columnConstraints>
         <ColumnConstraints />

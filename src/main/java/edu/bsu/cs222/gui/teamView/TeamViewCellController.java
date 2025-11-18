@@ -1,5 +1,7 @@
-package edu.bsu.cs222.gui.controllers;
+package edu.bsu.cs222.gui.teamView;
 
+import edu.bsu.cs222.gui.playersView.PlayersViewCellController;
+import edu.bsu.cs222.gui.playersView.playerStats.PlayerStatsModalController;
 import edu.bsu.cs222.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
