@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class League {
     private final String name;
-    private final ArrayList<Position> teamPositions;
-    private final HashMap<String, Double> coefficientMap;
+    private ArrayList<Position> teamPositions;
+    private HashMap<String, Double> coefficientMap;
 
     private final ArrayList<Team> teams = new ArrayList<>();
 
@@ -20,6 +20,14 @@ public class League {
 
     public void addTeam(String teamName){
         teams.add(new Team(teamName, teamPositions, coefficientMap));
+    }
+
+    public void setTeamPositions(ArrayList<Position> teamPositions){
+        this.teamPositions = teamPositions;
+    }
+
+    public void setCoefficientMap(HashMap<String, Double> coefficientMap){
+        this.coefficientMap = coefficientMap;
     }
 
 
