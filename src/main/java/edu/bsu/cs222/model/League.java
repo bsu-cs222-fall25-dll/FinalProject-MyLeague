@@ -3,6 +3,9 @@ package edu.bsu.cs222.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
+
+import static edu.bsu.cs222.model.Position.*;
 
 public class League {
     private final String name;
@@ -35,6 +38,50 @@ public class League {
     public  ArrayList<Position> getTeamPositions() {
         Collections.sort(teamPositions);
         return teamPositions;
+    }
+
+    public HashMap<Position, Integer> getPositionCountMap() {
+        int currentQb = 0;
+        int currentRb = 0;
+        int currentTe = 0;
+        int currentWr = 0;
+        int currentK = 0;
+        int currentFlex = 0;
+        for (Position position : teamPositions) {
+            switch (position) {
+                case QB:
+                    ++currentQb;
+                    break;
+                case RB:
+                    ++currentRb;
+                    break;
+                case TE:
+                    ++currentTe;
+                    break;
+                case WR:
+                    ++currentWr;
+                    break;
+                case K:
+                    ++currentK;
+                    break;
+                default:
+                    ++currentFlex;
+                    break;
+            }
+        }
+
+        HashMap<Position, Integer> positionCountMap = new HashMap<>();
+        positionCountMap.put(QB, currentQb);
+        positionCountMap.put(RB, currentRb);
+        positionCountMap.put(TE, currentTe);
+        positionCountMap.put(WR, currentWr);
+        positionCountMap.put(K, currentK);
+        positionCountMap.put(FLEX, currentFlex);
+        return positionCountMap;
+    }
+
+    public HashMap<String, Double> getCoefficientMap() {
+        return coefficientMap;
     }
 
     public Team getTeamByName(String name){
