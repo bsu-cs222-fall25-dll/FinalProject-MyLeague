@@ -35,7 +35,7 @@ public class Player {
     //Above are stats shown from player list, below are stats which require a deeper API call.
     private HashMap <String, Integer> playerStats = new HashMap<>();
     private String lastGame;
-    private LocalDate lastScoreDate;
+    private LocalDate lastStatDate;
 
 
     public Player(HashMap<String, String> playerInfo) {
@@ -96,7 +96,7 @@ public class Player {
         JSONObject currentStats;
 
         LocalDate today = LocalDate.now();
-        lastScoreDate = today;
+        lastStatDate = today;
         int seasonYear = today.getMonthValue() >= Month.SEPTEMBER.getValue() ? today.getYear() : today.getYear() - 1;
         LocalDate seasonStart = LocalDate.of(seasonYear, Month.SEPTEMBER, 1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
         LocalDate weekStart = today.getDayOfWeek() == DayOfWeek.TUESDAY ? today : today.with(TemporalAdjusters.previous(DayOfWeek.TUESDAY));
@@ -239,7 +239,7 @@ public class Player {
     }
 
     private boolean lastScoreDateIsToday(){
-        return lastScoreDate != null && lastScoreDate.equals(LocalDate.now());
+        return lastStatDate != null && lastStatDate.equals(LocalDate.now());
     }
 
 
@@ -309,8 +309,8 @@ public class Player {
         this.playerStats = playerStats;
     }
 
-    public void setLastScoreDate(LocalDate lastScoreDate) {
-        this.lastScoreDate = lastScoreDate;
+    public void setLastStatDate(LocalDate lastStatDate) {
+        this.lastStatDate = lastStatDate;
     }
 
 

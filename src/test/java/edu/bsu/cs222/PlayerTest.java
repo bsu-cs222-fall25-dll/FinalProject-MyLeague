@@ -34,7 +34,7 @@ public class PlayerTest {
     @Test
     void getWeekScoreTest() {
         Player burrow = new Player("Burrow", null);
-        burrow.setLastScoreDate(LocalDate.now())
+        burrow.setLastStatDate(LocalDate.now())
 ;
         HashMap<String, Integer> playerStats = new HashMap<>();
         playerStats.put("weekRushYds", 30);
@@ -58,7 +58,7 @@ public class PlayerTest {
     @Test
     void testKickerPoints() {
         Player younghoeKoo = new Player("Younghoe Koo", null);
-        younghoeKoo.setLastScoreDate(LocalDate.now());
+        younghoeKoo.setLastStatDate(LocalDate.now());
 
         HashMap<String, Integer> playerStats = new HashMap<>();
         playerStats.put("weekXpAttempts", 3);
