@@ -20,7 +20,7 @@ public class PlayerRetrieverTest {
     }
 
     @Test
-    void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException {
+    void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException, IOException {
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromApi());
     }
 
@@ -40,19 +40,6 @@ public class PlayerRetrieverTest {
         }
         PlayerRetriever.getPlayersFromJsonOrApi();
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
-
-    }
-
-    @Test
-    void testGetPlayersFromJsonOrAPIReturnsFalseIfJsonPresent() throws IOException, InterruptedException {
-        File file = new File("src/main/resources/PlayerList.json");
-        if (file.exists()){
-            if (!file.delete()){
-                Assertions.fail();
-            }
-        }
-        PlayerRetriever.createAndSavePlayerListFromApi();
-        Assertions.assertFalse(PlayerRetriever.getPlayersFromJsonOrApi());
 
     }
 

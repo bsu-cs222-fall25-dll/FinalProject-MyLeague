@@ -23,9 +23,7 @@ public class GraphicalUserInterface extends Application {
     public void start(Stage stage) {
         try {
             PlayerRetriever.getPlayersFromJsonOrApi();
-
             HashMap<String, Double> defaultCoefficientMap = getDefaultCoefficientMap();
-
 
             leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
             FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
@@ -42,8 +40,12 @@ public class GraphicalUserInterface extends Application {
 
             stage.setOnCloseRequest(_ -> stage.close());
         }
-        catch (Exception _){
+        catch (InterruptedException _){
             ErrorModal.throwErrorModal("Network Error", null);
+        }
+        catch (IOException _) {
+            System.err.println("API Error");
+            System.exit(1);
         }
     }
 
