@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.shape.Circle?>
-<GridPane minHeight="500" prefHeight="500.0" minWidth="700" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.playersView.PlayersViewController">
+<GridPane minHeight="500" minWidth="700" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #333;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.bsu.cs222.gui.playersView.PlayersViewController">
 
     <columnConstraints>
         <ColumnConstraints />
@@ -71,11 +72,24 @@
             <Tooltip text="View your team's roaster and manage players" />
         </tooltip>
         </Button>
-
-        <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadPlayerList">
-        <tooltip>
-            <Tooltip text="Reload" />
-        </tooltip>
-        </Button>
+        <HBox alignment="TOP_CENTER">
+            <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadPlayerList">
+                <tooltip>
+                    <Tooltip text="Reload"/>
+                </tooltip>
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="editButton" layoutX="65.0" layoutY="10.0" mnemonicParsing="false"
+                    onAction="#editLeague">
+                <tooltip>
+                    <Tooltip text="Reload"/>
+                </tooltip>
+                <HBox.margin>
+                    <Insets left="10.0"/>
+                </HBox.margin>
+            </Button>
+        </HBox>
     </VBox>
 </GridPane>

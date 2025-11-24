@@ -17,7 +17,7 @@ public class PlayerRetriever {
     private static ArrayList<Player> playerArrayList;
     private static final String API_KEY = Dotenv.load().get("API_KEY");
 
-    public static void createAndSavePlayerListFromApi() throws Exception {
+    public static void createAndSavePlayerListFromApi() throws IOException, InterruptedException {
         String response = getPlayersFromApi();
         if (response != null && !response.isBlank()){
             createPlayerList(response);
@@ -25,15 +25,15 @@ public class PlayerRetriever {
         }
     }
 
-    public static void getPlayersFromJsonOrApi() throws Exception {
+    public static void getPlayersFromJsonOrApi() throws IOException, InterruptedException {
         try {
-            getPlayersFromJson();
+            createPlayerList(getPlayersFromJson());
         } catch (IOException _) {
             createAndSavePlayerListFromApi();
         }
     }
 
-    public static String getPlayersFromApi() throws Exception {
+    public static String getPlayersFromApi() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLPlayerList"))
                 .header("x-rapidapi-key", API_KEY)

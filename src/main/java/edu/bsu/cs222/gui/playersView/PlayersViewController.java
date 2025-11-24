@@ -1,5 +1,6 @@
 package edu.bsu.cs222.gui.playersView;
 
+import edu.bsu.cs222.gui.ConfirmationModal;
 import edu.bsu.cs222.gui.ErrorModal;
 import edu.bsu.cs222.gui.GraphicalUserInterface;
 import edu.bsu.cs222.model.League;
@@ -14,12 +15,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
@@ -32,6 +31,7 @@ import java.util.*;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private Button editButton;
     @FXML private ImageView logoImageView;
     @FXML private Button reloadButton;
     @FXML private Button teamViewButton;
@@ -48,6 +48,7 @@ public class PlayersViewController {
     private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
 
     private final ImageView reloadIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/reload_icon.png"))), 20, 20, true, true));
+    private final ImageView editIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/edit_icon.png"))), 20, 20, true, true));
     private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
 
     @FXML
@@ -59,6 +60,7 @@ public class PlayersViewController {
         leagueSelector.setValue("Default");
 
         reloadButton.setGraphic(reloadIcon);
+        editButton.setGraphic(editIcon);
         logoImageView.setImage(logoImage);
 
         managePlayersView(PlayerRetriever.getPlayerArrayList());
@@ -149,12 +151,12 @@ public class PlayersViewController {
         Button createButton = (Button) root.lookup("#createButton");
 
         Parent finalRoot = root;
-        createButton.setOnAction(_ -> getLeaguePositions(finalRoot, creator));
+        createButton.setOnAction(_ -> setLeaguePositions(finalRoot, creator));
 
         createButton.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
                 event.consume();
-                getLeaguePositions(finalRoot, creator);
+                setLeaguePositions(finalRoot, creator);
             } else if (event.getCode() == KeyCode.ESCAPE) {
                 event.consume();
                 leagueSelector.setValue(previousLeagueString);
@@ -181,17 +183,19 @@ public class PlayersViewController {
         creator.showAndWait();
     }
 
-    private void getLeaguePositions(Parent root, Stage creator){
+    private void setLeaguePositions(Parent root, Stage creator){
         TextField nameField = (TextField) root.lookup("#nameField");
-        String name = nameField.getText();
-        if (name.isBlank()){
-            ErrorModal.throwErrorModal("Please enter a name", null);
-            return;
-        }
+        if (nameField != null){
+            String name = nameField.getText();
+            if (name.isBlank()){
+                ErrorModal.throwErrorModal("Please enter a name", null);
+                return;
+            }
 
-        if (getLeagueByName(name) != null){
-            ErrorModal.throwErrorModal("Please enter a unique name", null);
-            return;
+            if (getLeagueByName(name) != null){
+                ErrorModal.throwErrorModal("Please enter a unique name", null);
+                return;
+            }
         }
 
         ArrayList<Position> teamPositions = new ArrayList<>();
@@ -203,27 +207,30 @@ public class PlayersViewController {
         positonFieldMap.put(K, (TextField) root.lookup("#kField"));
         positonFieldMap.put(FLEX, (TextField) root.lookup("#flexField"));
 
-
-
-        if (!nameField.getText().isBlank()){
-            boolean validPositions = true;
-            for (Position key : positonFieldMap.keySet()){
-                if (positonFieldMap.get(key).getText().isBlank()){
-                    ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
-                    validPositions = false;
-                    break;
-                }
-                try {
-                    for (int i = 0; i < Integer.parseInt(positonFieldMap.get(key).getText()); ++i){
-                        teamPositions.add(key);
-                    }
-                } catch (NumberFormatException _){
-                    ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
-                    validPositions = false;
-                    break;
-                }
+        boolean validPositions = true;
+        for (Position key : positonFieldMap.keySet()){
+            if (positonFieldMap.get(key).getText().isBlank()){
+                ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
+                validPositions = false;
+                break;
             }
-            if (validPositions){setLeagueCoefficients(nameField.getText(), teamPositions, creator);}
+            try {
+                for (int i = 0; i < Integer.parseInt(positonFieldMap.get(key).getText()); ++i){
+                    teamPositions.add(key);
+                }
+            } catch (NumberFormatException _){
+                ErrorModal.throwErrorModal("Please ensure all field have valid position numbers", null);
+                validPositions = false;
+                break;
+            }
+        }
+        if (validPositions){
+            if (nameField == null){
+                setLeagueCoefficients(null, teamPositions, creator);
+            }
+            else {
+                setLeagueCoefficients(nameField.getText(), teamPositions, creator);
+            }
         }
     }
 
@@ -240,15 +247,38 @@ public class PlayersViewController {
         Button cancelButton = (Button) root.lookup("#cancelButton");
         Button createButton = (Button) root.lookup("#createLeague");
 
+        if (name == null){
+            createButton.setText("Edit");
+            ArrayList<TextField> coefficientTextFields = new ArrayList<>();
+
+            coefficientTextFields.add((TextField) root.lookup("#rushYards"));
+            coefficientTextFields.add((TextField) root.lookup("#recYards"));
+            coefficientTextFields.add((TextField) root.lookup("#passYards"));
+            coefficientTextFields.add((TextField) root.lookup("#rushTds"));
+            coefficientTextFields.add((TextField) root.lookup("#recTds"));
+            coefficientTextFields.add((TextField) root.lookup("#passTds"));
+            coefficientTextFields.add((TextField) root.lookup("#receptions"));
+            coefficientTextFields.add((TextField) root.lookup("#interceptions"));
+            coefficientTextFields.add((TextField) root.lookup("#fumbles"));
+            coefficientTextFields.add((TextField) root.lookup("#xpMade"));
+            coefficientTextFields.add((TextField) root.lookup("#fgMade"));
+
+            for (TextField textField : coefficientTextFields){
+                textField.setText(String.valueOf(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getCoefficientMap().get(textField.getId())));
+            }
+        }
+
+
+
         Parent finalRoot = root;
         stage.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER){
                 event.consume();
-                createLeague(name, teamPositions, stage, finalRoot);
+                createOrEditLeague(name, teamPositions, stage, finalRoot);
             }
         });
 
-        createButton.setOnAction(_ -> createLeague(name, teamPositions, stage, finalRoot));
+        createButton.setOnAction(_ -> createOrEditLeague(name, teamPositions, stage, finalRoot));
 
         stage.setOnCloseRequest(_ ->{
             teamSelector.setValue(previousTeamString);
@@ -263,7 +293,7 @@ public class PlayersViewController {
         });
     }
 
-    private void createLeague(String name, ArrayList<Position> teamPositions, Stage stage, Parent root) {
+    private void createOrEditLeague(String name, ArrayList<Position> teamPositions, Stage stage, Parent root) {
         HashMap<String, Double> coefficientMap = new HashMap<>();
         ArrayList<TextField> coefficientTextFields = new ArrayList<>();
 
@@ -283,25 +313,107 @@ public class PlayersViewController {
             if (coefficientTextField.getText().isBlank()){
                 ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
                 return;
-
             }
             try {
                 coefficientMap.put(coefficientTextField.getId(), Double.parseDouble(coefficientTextField.getText()));
             } catch (NumberFormatException _) {
                 ErrorModal.throwErrorModal("Please ensure all fields have valid coefficients", null);
                 return;
-
             }
         }
 
-        League league = new League(name, teamPositions, coefficientMap);
-        GraphicalUserInterface.addLeague(league);
-        setLeagueItems();
-        leagueSelector.setValue(name);
-        setTeamItems(league);
-        teamSelector.setValue(league.getTeamNames().isEmpty() ? "None" : league.getTeamNames().getFirst());
+        if (name != null){
+            League league = new League(name, teamPositions, coefficientMap);
+            GraphicalUserInterface.addLeague(league);
+            setLeagueItems();
+            leagueSelector.setValue(name);
+            setTeamItems(league);
+            teamSelector.setValue("None");
+        }
+        else {
+            boolean lessPositions = false;
+            ArrayList<Position> tempList = new ArrayList<>(teamPositions);
+            League league = Objects.requireNonNull(getLeagueByName(leagueSelector.getValue()));
+            for (Position position: league.getTeamPositions()){
+               if(!tempList.remove(position)) {
+                   lessPositions = true;
+                   break;
+               }
+            }
+
+            boolean confirmed = true;
+            if (lessPositions){
+                confirmed = ConfirmationModal.throwConfirmationModal("Due to lowering the number of positons some players from teams may be removed.\n Are you sure?\n(Score coefficients will be kept)");
+            }
+
+            if (confirmed){
+                league.setTeamPositions(teamPositions, lessPositions);
+            }
+            league.setCoefficientMap(coefficientMap);
+
+        }
         setDisable(false);
         stage.close();
+    }
+
+    @FXML private void editLeague(){
+        Stage creator = new Stage();
+        creator.initModality(Modality.APPLICATION_MODAL);
+        creator.setTitle("League Editor");
+        Parent root = null;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/LeagueEditorModal.fxml"));
+        try {
+            root = loader.load();
+        }
+        catch (IOException _) {
+            System.err.println("LeagueEditorModal.fxml not found");
+            System.exit(1);
+        }
+
+        Label leagueLabel = (Label) root.lookup("#leagueLbl");
+        leagueLabel.setText("Editing League: " + leagueSelector.getValue());
+
+        Button cancelButton = (Button) root.lookup("#cancelButton");
+        Button createButton = (Button) root.lookup("#createButton");
+
+        HashMap<Position, Integer> positionMap = Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getPositionCountMap();
+
+        ((TextField) root.lookup("#qbField")).setText(String.valueOf(positionMap.get(QB)));
+        ((TextField) root.lookup("#rbField")).setText(String.valueOf(positionMap.get(RB)));
+        ((TextField) root.lookup("#teField")).setText(String.valueOf(positionMap.get(TE)));
+        ((TextField) root.lookup("#wrField")).setText(String.valueOf(positionMap.get(WR)));
+        ((TextField) root.lookup("#kField")).setText(String.valueOf(positionMap.get(K)));
+        ((TextField) root.lookup("#flexField")).setText(String.valueOf(positionMap.get(FLEX)));
+
+        creator.setScene(new Scene(root));
+
+        Parent finalRoot = root;
+
+        createButton.setOnAction(_ -> setLeaguePositions(finalRoot, creator));
+
+        createButton.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                event.consume();
+                setLeaguePositions(finalRoot, creator);
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                event.consume();
+                setDisable(false);
+                creator.close();
+            }
+        });
+
+        cancelButton.setOnAction(_ ->{
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.setOnCloseRequest(_ ->{
+            setDisable(false);
+            creator.close();
+        });
+
+        creator.showAndWait();
     }
 
     private void teamCreator(League league) {
@@ -373,7 +485,7 @@ public class PlayersViewController {
         stage.close();
     }
 
-    public void reloadPlayerList() {
+    @FXML private void reloadPlayerList() {
 
         try{
             PlayerRetriever.createAndSavePlayerListFromApi();
@@ -384,7 +496,7 @@ public class PlayersViewController {
         }
     }
 
-    public void openTeamView() {
+    @FXML private void openTeamView() {
         GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
     }
 

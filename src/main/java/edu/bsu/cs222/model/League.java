@@ -3,7 +3,6 @@ package edu.bsu.cs222.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 
 import static edu.bsu.cs222.model.Position.*;
 
@@ -25,8 +24,14 @@ public class League {
         teams.add(new Team(teamName, teamPositions, coefficientMap));
     }
 
-    public void setTeamPositions(ArrayList<Position> teamPositions){
+    public void setTeamPositions(ArrayList<Position> teamPositions, boolean lessPositions){
         this.teamPositions = teamPositions;
+
+        if(lessPositions){
+            for (Team team: teams){
+                team.removeExtraPlayers(teamPositions);
+            }
+        }
     }
 
     public void setCoefficientMap(HashMap<String, Double> coefficientMap){
@@ -108,7 +113,7 @@ public class League {
     //Internal team class
     public static class Team {
         private final String teamName;
-        private final ArrayList<Position> freePositions;
+        private ArrayList<Position> freePositions;
         private final HashMap<String, Double> coefficientMap;
 
         private final HashMap<Player, Position> playerMap = new HashMap<>();
@@ -133,6 +138,19 @@ public class League {
             freePositions.add(playerMap.get(player));
             playerMap.remove(player);
             playerNameList.remove(player.getName());
+        }
+
+        private void removeExtraPlayers(ArrayList<Position> newPositions){
+            freePositions = newPositions;
+            ArrayList<Player> playersToRemove = new ArrayList<>();
+            for(Player key: playerMap.keySet()){
+                if(!freePositions.remove(playerMap.get(key))){
+                    playersToRemove.add(key);
+                }
+            }
+            for(Player player: playersToRemove){
+                playerMap.remove(player);
+            }
         }
 
 
@@ -161,7 +179,6 @@ public class League {
         public String getName(){
             return teamName;
         }
-
 
         //Setter for tests
         public void setCalculatedScore(double calculatedScore) {
