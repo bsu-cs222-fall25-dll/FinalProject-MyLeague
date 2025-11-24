@@ -31,11 +31,18 @@ public class League {
             for (Team team: teams){
                 team.removeExtraPlayers(teamPositions);
             }
+        }else {
+            for (Team team: teams){
+                team.setFreePositions(teamPositions);
+            }
         }
     }
 
     public void setCoefficientMap(HashMap<String, Double> coefficientMap){
         this.coefficientMap = coefficientMap;
+        for (Team team: teams){
+            team.setCoefficientMap(coefficientMap);
+        }
     }
 
 
@@ -114,7 +121,7 @@ public class League {
     public static class Team {
         private final String teamName;
         private ArrayList<Position> freePositions;
-        private final HashMap<String, Double> coefficientMap;
+        private HashMap<String, Double> coefficientMap;
 
         private final HashMap<Player, Position> playerMap = new HashMap<>();
         private final ArrayList<String> playerNameList = new ArrayList<>();
@@ -140,8 +147,8 @@ public class League {
             playerNameList.remove(player.getName());
         }
 
-        private void removeExtraPlayers(ArrayList<Position> newPositions){
-            freePositions = newPositions;
+        private void removeExtraPlayers(ArrayList<Position> freePositions){
+            this.freePositions = freePositions;
             ArrayList<Player> playersToRemove = new ArrayList<>();
             for(Player key: playerMap.keySet()){
                 if(!freePositions.remove(playerMap.get(key))){
@@ -153,6 +160,19 @@ public class League {
             }
         }
 
+
+        //Setters
+        private void setFreePositions(ArrayList<Position> freePositions){
+            this.freePositions = freePositions;
+
+            for (Player key: playerMap.keySet()){
+                freePositions.remove(playerMap.get(key));
+            }
+        }
+
+        private void setCoefficientMap(HashMap<String, Double> coefficientMap){
+            this.coefficientMap = coefficientMap;
+        }
 
         //Getters
         public double getCalculatedScore() {
