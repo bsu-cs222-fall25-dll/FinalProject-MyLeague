@@ -1,6 +1,7 @@
 package edu.bsu.cs222.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,17 @@ import java.util.Objects;
 
 public class PlayerRetriever {
     private static ArrayList<Player> playerArrayList;
-    private static final String API_KEY = Dotenv.load().get("API_KEY");
+    private static String API_KEY;
+    private static boolean keyLoaded = true;
+
+    static {
+        try {
+            API_KEY = Dotenv.load().get("API_KEY");
+        } catch (DotenvException _) {
+            System.out.println("Add your API key to .env.example, and rename file to .env");
+            keyLoaded = false;
+        }
+    }
 
     public static void createAndSavePlayerListFromApi() throws IOException, InterruptedException {
         String response = getPlayersFromApi();
@@ -26,10 +37,11 @@ public class PlayerRetriever {
     }
 
     public static void getPlayersFromJsonOrApi() throws IOException, InterruptedException {
-        try {
-            createPlayerList(getPlayersFromJson());
-        } catch (IOException _) {
+        String jsonData = getPlayersFromJson();
+        if (jsonData == null){
             createAndSavePlayerListFromApi();
+        } else {
+            createPlayerList(jsonData);
         }
     }
 
@@ -44,10 +56,17 @@ public class PlayerRetriever {
         return response.body();
     }
 
-    public static String getPlayersFromJson() throws IOException {
+    public static String getPlayersFromJson()  {
         InputStream jsonFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("PlayerList.json");
-        return new String(Objects.requireNonNull(jsonFile).readAllBytes(), Charset.defaultCharset());
+        if (jsonFile == null){
+            return null;
+        }
+        try {
+            return new String(Objects.requireNonNull(jsonFile).readAllBytes(), Charset.defaultCharset());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void createPlayerList(String jsonData) {
@@ -91,7 +110,6 @@ public class PlayerRetriever {
                 playerInfo.put("weight", player.getString("weight"));
                 playerInfo.put("school", player.getString("school"));
                 playerInfo.put("playerID", player.getString("playerID"));
-                playerInfo.put("teamID", player.getString("teamID"));
                 String exp = player.getString("exp");
                 if (exp.equals("R")){
                     exp = "0";
@@ -165,5 +183,9 @@ public class PlayerRetriever {
             System.err.println("Couldn't write to file");
             System.exit(1);
         }
+    }
+
+    public static boolean getKeyLoaded(){
+        return keyLoaded;
     }
 }

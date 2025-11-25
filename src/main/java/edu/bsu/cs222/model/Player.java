@@ -1,6 +1,7 @@
 package edu.bsu.cs222.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 public class Player {
-    private static final String API_KEY = Dotenv.load().get("API_KEY");
+    private static String API_KEY = Dotenv.load().get("API_KEY");
+
+    static {
+        try {
+            API_KEY = Dotenv.load().get("API_KEY");
+        } catch (DotenvException _) {
+            System.out.println("Add your API key to .env.example, and rename file to .env");
+        }
+    }
 
     private final String name;
     private Position position;

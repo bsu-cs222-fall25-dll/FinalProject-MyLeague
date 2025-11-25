@@ -21,31 +21,35 @@ public class GraphicalUserInterface extends Application {
     
     @Override
     public void start(Stage stage) {
-        try {
-            PlayerRetriever.getPlayersFromJsonOrApi();
-            HashMap<String, Double> defaultCoefficientMap = getDefaultCoefficientMap();
-
-            leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
-            FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
+        if (PlayerRetriever.getKeyLoaded()){
             try {
-                scene = new Scene(playersViewLoader.load(), 700, 500);
-            } catch (IOException _) {
-                System.err.println("PlayersView.fxml not found");
+                PlayerRetriever.getPlayersFromJsonOrApi();
+                HashMap<String, Double> defaultCoefficientMap = getDefaultCoefficientMap();
+
+                leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
+                FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
+                try {
+                    scene = new Scene(playersViewLoader.load(), 700, 500);
+                } catch (IOException _) {
+                    System.err.println("PlayersView.fxml not found");
+                    System.exit(1);
+                }
+
+                stage.setTitle("MyLeague");
+                stage.setScene(scene);
+                stage.show();
+
+                stage.setOnCloseRequest(_ -> stage.close());
+            }
+            catch (InterruptedException _){
+                ErrorModal.throwErrorModal("Network Error", null);
+            }
+            catch (IOException _) {
+                System.err.println("API Error");
                 System.exit(1);
             }
-
-            stage.setTitle("MyLeague");
-            stage.setScene(scene);
-            stage.show();
-
-            stage.setOnCloseRequest(_ -> stage.close());
-        }
-        catch (InterruptedException _){
-            ErrorModal.throwErrorModal("Network Error", null);
-        }
-        catch (IOException _) {
-            System.err.println("API Error");
-            System.exit(1);
+        } else {
+            ErrorModal.throwErrorModal("Add your API key to .env.example, and rename file to .env", null);
         }
     }
 
