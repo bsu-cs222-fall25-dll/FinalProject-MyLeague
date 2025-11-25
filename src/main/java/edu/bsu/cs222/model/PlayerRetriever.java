@@ -9,10 +9,11 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URI;
 import java.net.http.*;
-import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class PlayerRetriever {
     private static ArrayList<Player> playerArrayList;
@@ -37,11 +38,11 @@ public class PlayerRetriever {
     }
 
     public static void getPlayersFromJsonOrApi() throws IOException, InterruptedException {
-        String jsonData = getPlayersFromJson();
-        if (jsonData == null){
+        try{
+            createPlayerList(getPlayersFromJson());
+        }
+        catch (IOException _){
             createAndSavePlayerListFromApi();
-        } else {
-            createPlayerList(jsonData);
         }
     }
 
@@ -56,17 +57,9 @@ public class PlayerRetriever {
         return response.body();
     }
 
-    public static String getPlayersFromJson()  {
-        InputStream jsonFile = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("PlayerList.json");
-        if (jsonFile == null){
-            return null;
-        }
-        try {
-            return new String(Objects.requireNonNull(jsonFile).readAllBytes(), Charset.defaultCharset());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public static String getPlayersFromJson() throws IOException {
+        Path jsonPath = Path.of("SavedFiles/PlayerList.json");
+        return Files.readString(jsonPath);
     }
 
     public static void createPlayerList(String jsonData) {
@@ -177,7 +170,16 @@ public class PlayerRetriever {
 
         String jsonData = playersJsonObject.toString();
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/PlayerList.json"))){
+        Path savedFilesDir = Paths.get("SavedFiles");
+        if(Files.notExists(savedFilesDir)){
+            try {
+                Files.createDirectory(savedFilesDir);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("SavedFiles/PlayerList.json"))){
             writer.write(jsonData);
         } catch (IOException _) {
             System.err.println("Couldn't write to file");

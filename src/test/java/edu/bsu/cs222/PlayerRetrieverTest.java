@@ -31,7 +31,8 @@ public class PlayerRetrieverTest {
     }
 
     @Test
-    void testGetPlayersFromJsonOrAPIDoesNotReturnNullAfterDeletingJson() throws IOException, InterruptedException {
+    void testGetPlayersFromJsonOrAPISavesJsonAfterDeletingJson() throws IOException, InterruptedException {
+
         File file = new File("src/main/resources/PlayerList.json");
         if (file.exists()) {
             if (!file.delete()){
@@ -40,7 +41,6 @@ public class PlayerRetrieverTest {
         }
         PlayerRetriever.getPlayersFromJsonOrApi();
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
-
     }
 
     @Test
