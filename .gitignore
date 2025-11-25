@@ -7,8 +7,8 @@ build/
 ### API KEY ###
 .env
 
-### Player List ###
-src/main/resources/PlayerList.json
+### SavedFiles ###
+SavedFiles/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
