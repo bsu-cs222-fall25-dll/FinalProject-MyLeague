@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 public class Player {
-    private static String API_KEY = Dotenv.load().get("API_KEY");
+    private static String API_KEY;
 
     static {
         try {
