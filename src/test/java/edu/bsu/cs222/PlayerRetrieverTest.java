@@ -19,17 +19,20 @@ public class PlayerRetrieverTest {
         Assertions.assertEquals("Ty'Son Williams", PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
+    // Fails without API_KEY in .env
     @Test
     void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException, IOException {
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromApi());
     }
 
+    // Fails without API_KEY in .env
     @Test
     void testGetPlayersFromJsonDoesNotReturnNullAfterSaving() throws IOException, InterruptedException {
         PlayerRetriever.createAndSavePlayerListFromApi();
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
     }
 
+    // Fails without API_KEY in .env
     @Test
     void testGetPlayersFromJsonOrAPISavesJsonAfterDeletingJson() throws IOException, InterruptedException {
 
@@ -43,6 +46,7 @@ public class PlayerRetrieverTest {
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
     }
 
+    // Fails without API_KEY in .env
     @Test
     void testGetPlayersFromJsonEqualsPlayerListAfterSaving() throws IOException, InterruptedException {
         PlayerRetriever.createAndSavePlayerListFromApi();
@@ -51,6 +55,7 @@ public class PlayerRetrieverTest {
         Assertions.assertEquals(originalPlayerList.getFirst().getName(), PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
+    // Fails without API_KEY in .env
     @Test
     void testCreateAndSavePlayerListFromApiCreatesPlayerList() throws InterruptedException, IOException {
         PlayerRetriever.createAndSavePlayerListFromApi();

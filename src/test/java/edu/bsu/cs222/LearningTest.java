@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.util.Objects;
 
 public class LearningTest {
-
+    // Fails without API_KEY in .env
     @Test
     void testAccessToAPIKey(){
         final String API_KEY = Dotenv.load().get("API_KEY");
