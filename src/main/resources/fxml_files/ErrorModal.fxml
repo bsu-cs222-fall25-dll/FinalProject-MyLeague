@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <Label text="Error" BorderPane.alignment="CENTER_LEFT">
             <font>
@@ -22,7 +22,7 @@
             <padding>
                 <Insets bottom="10" left="20" right="20" top="15" />
             </padding>
-            <Label fx:id="errorLbl" maxWidth="250.0" style="-fx-text-fill: #ff6b6b; -fx-font-size: 13px;" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="errorLbl" alignment="CENTER" contentDisplay="CENTER" maxWidth="250.0" style="-fx-text-fill: #ff6b6b; -fx-font-size: 13px;" textAlignment="CENTER" wrapText="true">
             <font>
                <Font size="15.0" />
             </font></Label>

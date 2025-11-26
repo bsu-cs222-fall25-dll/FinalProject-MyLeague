@@ -22,7 +22,7 @@
             <padding>
                 <Insets bottom="10" left="20" right="20" top="15" />
             </padding>
-            <Label fx:id="messageLbl" maxWidth="250.0" style="-fx-text-fill: #ff6b6b; -fx-font-size: 13px;" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="messageLbl" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="275.0" style="-fx-text-fill: #ff6b6b; -fx-font-size: 13px;" textAlignment="CENTER" wrapText="true">
             <font>
                <Font size="15.0" />
             </font></Label>
@@ -35,12 +35,12 @@
             </padding>
             <Button fx:id="yesButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Yes">
                 <tooltip>
-                    <Tooltip text="Close error pop-up" />
+                    <Tooltip text="Confirms action" />
                 </tooltip>
             </Button>
          <Button fx:id="noButton" layoutX="140.0" layoutY="20.0" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="No">
             <tooltip>
-               <Tooltip text="Close error pop-up" />
+               <Tooltip text="Cancels action" />
             </tooltip>
          </Button>
         </HBox>
