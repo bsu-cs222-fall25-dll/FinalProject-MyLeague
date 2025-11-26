@@ -30,6 +30,7 @@ import java.util.*;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private Button deleteLeagueButton;
     @FXML private Button saveButton;
     @FXML private Button deleteTeamButton;
     @FXML private Button editButton;
@@ -545,7 +546,7 @@ public class PlayersViewController {
             GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
         }
         catch (Exception _){
-            ErrorModal.throwErrorModal("Network Error", null);
+            ErrorModal.throwErrorModal("Network ddError", null);
         }
     }
 
@@ -562,6 +563,15 @@ public class PlayersViewController {
         searchField.setDisable(disable);
         teamViewButton.setDisable(disable);
         reloadButton.setDisable(disable);
+        editButton.setDisable(disable);
+        saveButton.setDisable(disable);
+        deleteLeagueButton.setDisable(disable);
+
+        if (!disable){
+            if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
+                deleteTeamButton.setDisable(true);
+            }
+        }
     }
 
     private boolean runSearch(ArrayList<String> queries, Player player){
