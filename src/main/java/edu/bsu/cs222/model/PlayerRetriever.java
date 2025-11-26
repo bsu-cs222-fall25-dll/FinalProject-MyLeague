@@ -168,8 +168,6 @@ public class PlayerRetriever {
         JSONObject playersJsonObject = new JSONObject();
         playersJsonObject.put("body", playersJsonArray);
 
-        String jsonData = playersJsonObject.toString();
-
         Path savedFilesDir = Paths.get("SavedFiles");
         if(Files.notExists(savedFilesDir)){
             try {
@@ -180,7 +178,7 @@ public class PlayerRetriever {
         }
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("SavedFiles/PlayerList.json"))){
-            writer.write(jsonData);
+            writer.write(playersJsonObject.toString(4));
         } catch (IOException _) {
             System.err.println("Couldn't write to file");
             System.exit(1);
