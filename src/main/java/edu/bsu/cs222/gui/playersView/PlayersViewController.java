@@ -546,7 +546,7 @@ public class PlayersViewController {
             GraphicalUserInterface.setRoot("/fxml_files/playersView/PlayersView.fxml");
         }
         catch (Exception _){
-            ErrorModal.throwErrorModal("Network ddError", null);
+            ErrorModal.throwErrorModal("Network Error", null);
         }
     }
 
