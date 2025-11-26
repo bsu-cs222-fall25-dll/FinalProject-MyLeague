@@ -95,7 +95,7 @@ public class PlayerRetriever {
             }
 
             if (posObject != null) {
-                playerInfo.put("name", name);
+                playerInfo.put("playerName", name);
                 playerInfo.put("position", posString);
                 playerInfo.put("team", player.getString("team"));
                 playerInfo.put("jerseyNumber", player.getString("jerseyNum"));
@@ -117,14 +117,6 @@ public class PlayerRetriever {
                     age = "not found";
                 }
                 playerInfo.put("age", age);
-
-                String bDay;
-                try {
-                    bDay = player.getString("bDay");
-                } catch (JSONException _) {
-                    bDay = "not found";
-                }
-                playerInfo.put("bDay", bDay);
 
                 String headshot;
                 try {
@@ -157,7 +149,6 @@ public class PlayerRetriever {
             jsonObject.put(("height"), player.getHeight());
             jsonObject.put("weight", player.getWeight());
             jsonObject.put("age", player.getAge());
-            jsonObject.put("bDay", player.getbDay());
             jsonObject.put("espnHeadshot", player.getHeadshot());
             jsonObject.put("school", player.getSchool());
             jsonObject.put("playerID", player.getPlayerID());

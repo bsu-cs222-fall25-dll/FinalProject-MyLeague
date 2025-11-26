@@ -8,10 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 import static edu.bsu.cs222.model.Position.*;
 
@@ -26,7 +27,22 @@ public class GraphicalUserInterface extends Application {
                 PlayerRetriever.getPlayersFromJsonOrApi();
                 HashMap<String, Double> defaultCoefficientMap = getDefaultCoefficientMap();
 
-                leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
+                Path savedLeaguesPath = Paths.get("SavedFiles/SavedLeagues");
+
+                try (DirectoryStream<Path> stream = Files.newDirectoryStream(savedLeaguesPath)){
+                    boolean found = false;
+                    for (Path file: stream) {
+                        String jsonData = Files.readString(file);
+                        leagueList.add(new League(jsonData));
+                        found = true;
+                    }
+                    if (!found) {
+                        throw new IOException();
+                    }
+                } catch (IOException _){
+                    leagueList.add(new League("Default", new ArrayList<>(List.of(QB, WR, WR, RB, RB, TE, FLEX, K)), defaultCoefficientMap));
+                }
+
                 FXMLLoader playersViewLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/PlayersView.fxml")));
                 try {
                     scene = new Scene(playersViewLoader.load(), 700, 500);

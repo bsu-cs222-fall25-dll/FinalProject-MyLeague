@@ -40,7 +40,6 @@ public class Player {
     private String school;
     private final String playerID;
     private String experience;
-    private String bDay;
     //Above are stats shown from player list, below are stats which require a deeper API call.
     private HashMap <String, Integer> playerStats = new HashMap<>();
     private String lastGame;
@@ -48,14 +47,13 @@ public class Player {
 
 
     public Player(HashMap<String, String> playerInfo) {
-        this.name = playerInfo.get("name");
+        this.name = playerInfo.get("playerName");
         this.position = Position.valueOf(playerInfo.get("position"));
         this.team = playerInfo.get("team");
         this.jerseyNumber = playerInfo.get("jerseyNumber");
         this.height = playerInfo.get("height");
         this.weight = playerInfo.get("weight");
         this.age = playerInfo.get("age");
-        this.bDay = playerInfo.get("bDay");
         this.headshot = playerInfo.get("headshot");
         this.school = playerInfo.get("school");
         this.playerID = playerInfo.get("playerID");
@@ -301,9 +299,6 @@ public class Player {
         return experience;
     }
 
-    public String getbDay() {
-        return bDay;
-    }
     public String getPlayerID() {
         return playerID;
     }

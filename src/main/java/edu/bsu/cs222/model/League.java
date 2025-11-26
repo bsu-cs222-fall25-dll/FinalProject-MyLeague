@@ -1,5 +1,14 @@
 package edu.bsu.cs222.model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +20,8 @@ public class League {
     private ArrayList<Position> teamPositions;
     private HashMap<String, Double> coefficientMap;
 
+    private boolean saved = false;
+
     private final ArrayList<Team> teams = new ArrayList<>();
 
 
@@ -20,8 +31,48 @@ public class League {
         this.coefficientMap = coefficientMap;
     }
 
+    public League(String jsonData){
+        JSONObject leagueObject = new JSONObject(jsonData);
+        name = leagueObject.getString("leagueName");
+
+        teamPositions = new ArrayList<>();
+        JSONObject positionsObject = leagueObject.getJSONObject("positions");
+        for(String key : positionsObject.keySet()){
+            for (int i = 0; i < positionsObject.getInt(key); ++i){
+                teamPositions.add(valueOf(key));
+            }
+        }
+
+        coefficientMap = new HashMap<>();
+        JSONObject scoringObject = new JSONObject();
+        for (String key: scoringObject.keySet()){
+            coefficientMap.put(key, scoringObject.getDouble(key));
+        }
+
+        JSONArray teamsArray = leagueObject.getJSONArray("teams");
+        for (int i = 0; i < teamsArray.length(); ++i){
+            JSONObject teamObject = teamsArray.getJSONObject(i);
+            Team team = new Team(teamObject.getString("teamName"), teamPositions, coefficientMap);
+
+            JSONArray playersArray = teamObject.getJSONArray("players");
+            for (int j = 0; j < playersArray.length(); ++j){
+                JSONObject playerObject = playersArray.getJSONObject(j);
+                HashMap<String, String> playerInfo = new HashMap<>();
+                for (String key: playerObject.keySet()){
+                    playerInfo.put(key, playerObject.getString(key));
+                }
+                team.addPlayer(new Player(playerInfo), Position.valueOf(playerInfo.get("position")));
+            }
+            this.addTeam(team);
+        }
+    }
+
     public void addTeam(String teamName){
         teams.add(new Team(teamName, teamPositions, coefficientMap));
+    }
+
+    private void addTeam(Team team){
+        teams.add(team);
     }
 
     public void removeTeam(Team team) {
@@ -49,6 +100,68 @@ public class League {
         }
     }
 
+    public void saveLeague(){
+        JSONObject leagueObject = new JSONObject();
+        leagueObject.put("leagueName", name);
+
+        JSONArray teamsArray = new JSONArray();
+
+        for (Team team: teams){
+            JSONObject teamObject = new JSONObject();
+            teamObject.put("teamName", team.getName());
+
+            JSONArray playersArray = new JSONArray();
+
+            for (Player player: team.getPlayerMap().keySet()){
+                JSONObject playerObject = new JSONObject();
+
+                playerObject.put("playerID", player.getPlayerID());
+                playerObject.put("playerName", player.getName());
+                playerObject.put("position", team.getPlayerMap().get(player).toString());
+                playerObject.put("team", player.getTeam());
+                playerObject.put("school", player.getSchool());
+                playerObject.put("jerseyNumber", player.getJerseyNumber());
+                playerObject.put("experience", player.getExperience());
+                playerObject.put("weight", player.getWeight());
+                playerObject.put("height", player.getHeight());
+                playerObject.put("headshot", player.getHeadshot());
+
+                playersArray.put(playerObject);
+            }
+
+            teamObject.put("players", playersArray);
+            teamsArray.put(teamObject);
+        }
+        leagueObject.put("teams", teamsArray);
+
+        HashMap<Position, Integer> positionCountMap = getPositionCountMap();
+        JSONObject positionsObject = new JSONObject();
+        for (Position position: positionCountMap.keySet()){
+            positionsObject.put(position.toString(), positionCountMap.get(position));
+        }
+        leagueObject.put("positions", positionsObject);
+
+        JSONObject scoringObject = new JSONObject();
+        for (String key: coefficientMap.keySet()){
+            scoringObject.put(key, coefficientMap.get(key));
+        }
+        leagueObject.put("scoring", scoringObject);
+
+        Path savedLeaguesDir = Paths.get("SavedFiles/SavedLeagues");
+        if(Files.notExists(savedLeaguesDir)){
+            try {
+                Files.createDirectories(savedLeaguesDir);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        String filePath = String.format("SavedFiles/SavedLeagues/%s.json", getFileSafeName());
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
+            writer.write(leagueObject.toString(4));
+        } catch (IOException e) {
+            System.err.println("Couldn't write to file");
+        }
+    }
 
     //Getters
     public  ArrayList<Position> getTeamPositions() {
@@ -121,6 +234,11 @@ public class League {
         return name;
     }
 
+    public String getFileSafeName(){
+        String INVALID_CHARACTERS = "[/:*?\"<>|\\\\ ]";
+        return name.trim().replaceAll(INVALID_CHARACTERS, "_");
+    }
+
     //Internal team class
     public static class Team {
         private final String teamName;
@@ -136,7 +254,6 @@ public class League {
             this.freePositions = new ArrayList<>(positions);
             this.coefficientMap = coefficientMap;
         }
-
 
         //Player Functions
         public void addPlayer(Player player, Position position){

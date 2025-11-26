@@ -30,6 +30,7 @@ import java.util.*;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private Button saveButton;
     @FXML private Button deleteTeamButton;
     @FXML private Button editButton;
     @FXML private ImageView logoImageView;
@@ -49,6 +50,8 @@ public class PlayersViewController {
 
     private final ImageView reloadIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/reload_icon.png"))), 20, 20, true, true));
     private final ImageView editIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/edit_icon.png"))), 20, 20, true, true));
+    private final ImageView saveIcon = new ImageView(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/save_icon.png"))), 20, 20, true, true));
+
     private final Image logoImage = new Image((Objects.requireNonNull(getClass().getResourceAsStream("/images/myLeague_logo.png"))));
 
     @FXML
@@ -60,6 +63,8 @@ public class PlayersViewController {
 
         reloadButton.setGraphic(reloadIcon);
         editButton.setGraphic(editIcon);
+        saveButton.setGraphic(saveIcon);
+
         logoImageView.setImage(logoImage);
 
         managePlayersView(PlayerRetriever.getPlayerArrayList());
@@ -509,6 +514,7 @@ public class PlayersViewController {
             ErrorModal.throwErrorModal("Ensure there's at least two leagues,\nbefore attempting to delete one", null);
         }
     }
+
     @FXML private void deleteTeam(){
         boolean delete = ConfirmationModal.throwConfirmationModal("Confirming will delete this team\nAre you sure?");
         if (delete){
@@ -519,7 +525,14 @@ public class PlayersViewController {
         }
     }
 
-    // OnActions unrelated to leagues and teams
+    // Other OnAction methods
+    @FXML private void saveLeague() {
+        boolean save = ConfirmationModal.throwConfirmationModal("Saving this league will override previously saved leagues with the same name.\nAre you sure?");
+        if (save){
+            Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).saveLeague();
+        }
+    }
+
     @FXML private void reloadPlayerList() {
 
         try{

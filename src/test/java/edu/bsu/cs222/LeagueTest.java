@@ -117,4 +117,10 @@ public class LeagueTest {
         league.getTeamByName("Test").setCalculatedScore(10);
         Assertions.assertEquals(10, league.getTeamByName("Test").getCalculatedScore());
     }
+
+    @Test
+    void testGetFileSafeNameReturnsCleanedName(){
+        League league = new League("  [New] League\\/:*\"<>|  ", new ArrayList<>(List.of(QB, QB, RB, TE, K, FLEX)), getDefaultCoefficientMap());
+        Assertions.assertEquals("[New]_League________", league.getFileSafeName());
+    }
 }
