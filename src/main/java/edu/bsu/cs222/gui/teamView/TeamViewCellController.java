@@ -42,6 +42,7 @@ public class TeamViewCellController {
 
     public void setData(Player player, boolean networkError) {
         currentPlayer = player;
+        if (player == null) {return;}
         String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
         String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
         String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
