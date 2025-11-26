@@ -87,4 +87,8 @@ public class GraphicalUserInterface extends Application {
     public static void addLeague(League league){
         leagueList.add(league);
     }
+
+    public static void removeLeague(League league){
+        leagueList.remove(league);
+    }
 }

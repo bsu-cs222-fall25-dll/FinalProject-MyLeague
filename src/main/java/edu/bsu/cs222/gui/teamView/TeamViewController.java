@@ -36,7 +36,7 @@ public class TeamViewController {
     @FXML
     public void initialize() {
         setLeagueItems();
-        leagueSelector.setValue(GraphicalUserInterface.getLeagueList().getFirst().getName());
+        leagueSelector.setValue(leagueSelector.getItems().getFirst());
 
         setTeamItems(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())));
         teamSelector.setValue(teamSelector.getItems().contains("None") ? "None" : teamSelector.getItems().getFirst());
@@ -68,9 +68,8 @@ public class TeamViewController {
         }
         positionFilter.setValue("All");
 
-        League defaultLeague = getLeagueByName("Default");
-        assert defaultLeague != null;
-        String selectedTeam = defaultLeague.getTeamNames().isEmpty() ? "None" : defaultLeague.getTeamNames().getFirst();
+        League leagueOnStart = Objects.requireNonNull(getLeagueByName(leagueSelector.getValue()));
+        String selectedTeam = leagueOnStart.getTeamNames().isEmpty() ? "None" : leagueOnStart.getTeamNames().getFirst();
         teamSelector.setValue(selectedTeam);
 
         filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> (Player player) -> {

@@ -20,6 +20,7 @@
         <RowConstraints prefHeight="70.0" />
         <RowConstraints prefHeight="40.0" />
         <RowConstraints prefHeight="315.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="ALWAYS" />
     </rowConstraints>
 
     <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
@@ -52,7 +53,7 @@
     </tooltip>
     </ComboBox>
 
-    <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+    <ListView fx:id="listView" prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS" />
 
     <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <ComboBox fx:id="leagueSelector" prefHeight="26.0" prefWidth="90.0">
@@ -75,21 +76,29 @@
         <HBox alignment="TOP_CENTER">
             <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#reloadPlayerList">
                 <tooltip>
-                    <Tooltip text="Reload"/>
+                    <Tooltip text="Reload" />
                 </tooltip>
                 <HBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" />
                 </HBox.margin>
             </Button>
-            <Button fx:id="editButton" layoutX="65.0" layoutY="10.0" mnemonicParsing="false"
-                    onAction="#editLeague">
+            <Button fx:id="editButton" layoutX="65.0" layoutY="10.0" mnemonicParsing="false" onAction="#editLeague">
                 <tooltip>
-                    <Tooltip text="Reload"/>
+                    <Tooltip text="Reload" />
                 </tooltip>
                 <HBox.margin>
-                    <Insets left="10.0"/>
+                    <Insets left="10.0" />
                 </HBox.margin>
             </Button>
         </HBox>
+    </VBox>
+    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Button mnemonicParsing="false" onAction="#deleteLeague" text="Delete League"/>
+        <Button fx:id="deleteTeamButton" layoutX="47.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteTeam"
+                text="Delete Team">
+           <VBox.margin>
+               <Insets top="10.0"/>
+           </VBox.margin>
+        </Button>
     </VBox>
 </GridPane>

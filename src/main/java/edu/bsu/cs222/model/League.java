@@ -24,6 +24,10 @@ public class League {
         teams.add(new Team(teamName, teamPositions, coefficientMap));
     }
 
+    public void removeTeam(Team team) {
+        teams.remove(team);
+    }
+
     public void setTeamPositions(ArrayList<Position> teamPositions, boolean lessPositions){
         this.teamPositions = teamPositions;
 

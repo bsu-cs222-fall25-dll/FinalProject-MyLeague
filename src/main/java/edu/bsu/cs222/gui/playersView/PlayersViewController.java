@@ -30,6 +30,7 @@ import java.util.*;
 import static edu.bsu.cs222.model.Position.*;
 
 public class PlayersViewController {
+    @FXML private Button deleteTeamButton;
     @FXML private Button editButton;
     @FXML private ImageView logoImageView;
     @FXML private Button reloadButton;
@@ -41,8 +42,8 @@ public class PlayersViewController {
     @FXML private ComboBox<String> teamFilter;
     @FXML private ComboBox<String> positionFilter;
 
-    private String previousLeagueString = "Default";
-    private String previousTeamString = "None";
+    private String previousLeagueString;
+    private String previousTeamString;
 
     private final ReadOnlyObjectWrapper<League.Team> currentTeam = new ReadOnlyObjectWrapper<>();
 
@@ -56,7 +57,6 @@ public class PlayersViewController {
         listView.setCellFactory(_ -> new PlayersViewCell(this));
         positionFilter.setValue("All");
         teamFilter.setValue("All");
-        leagueSelector.setValue("Default");
 
         reloadButton.setGraphic(reloadIcon);
         editButton.setGraphic(editIcon);
@@ -93,10 +93,15 @@ public class PlayersViewController {
                 ));
 
         setLeagueItems();
+        leagueSelector.setValue(leagueSelector.getItems().getFirst());
+        previousLeagueString = leagueSelector.getValue();
 
-        setTeamItems(GraphicalUserInterface.getLeagueList().getFirst());
+        setTeamItems(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())));
         teamSelector.setValue(teamSelector.getItems().getFirst());
+        previousTeamString = leagueSelector.getValue();
+
         if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
+            deleteTeamButton.setDisable(true);
             currentTeam.set(null);
         }
 
@@ -127,13 +132,16 @@ public class PlayersViewController {
                     teamCreator(getLeagueByName(leagueSelector.getValue()));
                 } else {
                     currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
+                    deleteTeamButton.setDisable(false);
                 }
             }else {
+                deleteTeamButton.setDisable(true);
                 currentTeam.set(null);
             }
         });
     }
 
+    // League creation and editing
     private void leagueCreator() {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
@@ -346,7 +354,7 @@ public class PlayersViewController {
 
             boolean confirmed = true;
             if (lessPositions){
-                confirmed = ConfirmationModal.throwConfirmationModal("Due to lowering the number of positons some players from teams may be removed.\n Are you sure?\n(Score coefficients will be kept)");
+                confirmed = ConfirmationModal.throwConfirmationModal("Due to lowering the number of positons some players from teams may be removed.\n Are you sure? (Score coefficients will be kept)");
             }
 
             if (confirmed){
@@ -419,6 +427,7 @@ public class PlayersViewController {
         creator.showAndWait();
     }
 
+    // Team creation
     private void teamCreator(League league) {
         Stage creator = new Stage();
         creator.initModality(Modality.APPLICATION_MODAL);
@@ -488,6 +497,29 @@ public class PlayersViewController {
         stage.close();
     }
 
+    // League and Team Deletion
+    @FXML private void deleteLeague() {
+        if (GraphicalUserInterface.getLeagueList().size() > 1){
+            boolean delete = ConfirmationModal.throwConfirmationModal("Confirming will delete this league\nand all of its teams.\nAre you sure?");
+            if (delete){
+                GraphicalUserInterface.removeLeague(getLeagueByName(leagueSelector.getValue()));
+                leagueSelector.setValue(previousLeagueString);
+            }
+        } else {
+            ErrorModal.throwErrorModal("Ensure there's at least two leagues,\nbefore attempting to delete one", null);
+        }
+    }
+    @FXML private void deleteTeam(){
+        boolean delete = ConfirmationModal.throwConfirmationModal("Confirming will delete this team\nAre you sure?");
+        if (delete){
+            League currentLeague = Objects.requireNonNull(getLeagueByName(leagueSelector.getValue()));
+            currentLeague.removeTeam(getCurrentTeam());
+            setTeamItems(currentLeague);
+            teamSelector.setValue(teamSelector.getItems().getFirst());
+        }
+    }
+
+    // OnActions unrelated to leagues and teams
     @FXML private void reloadPlayerList() {
 
         try{
@@ -503,6 +535,7 @@ public class PlayersViewController {
         GraphicalUserInterface.setRoot("/fxml_files/teamView/TeamView.fxml");
     }
 
+    // Helper methods
     public void setDisable(boolean disable){
         leagueSelector.setDisable(disable);
         teamSelector.setDisable(disable);
@@ -525,6 +558,7 @@ public class PlayersViewController {
         return match;
     }
 
+    // Setters
     private void setPositionsAndTeams(ArrayList<Player> players) {
         Set<String> teams = new TreeSet<>();
         for (Player player : players){
@@ -573,6 +607,7 @@ public class PlayersViewController {
         return null;
     }
 
+    // Current Team Listener methods
     public League.Team getCurrentTeam() {
         if (teamSelector.getValue().equals("None")){
             return null;
