@@ -24,7 +24,6 @@ public class League {
 
     private final ArrayList<Team> teams = new ArrayList<>();
 
-
     public League(String name, ArrayList<Position> teamPositions, HashMap<String, Double> coefficientMap){
         this.name = name;
         this.teamPositions = teamPositions;
@@ -32,6 +31,7 @@ public class League {
     }
 
     public League(String jsonData){
+        saved = true;
         JSONObject leagueObject = new JSONObject(jsonData);
         name = leagueObject.getString("leagueName");
 
@@ -101,6 +101,7 @@ public class League {
     }
 
     public void saveLeague(){
+        saved = true;
         JSONObject leagueObject = new JSONObject();
         leagueObject.put("leagueName", name);
 
@@ -160,6 +161,15 @@ public class League {
             writer.write(leagueObject.toString(4));
         } catch (IOException e) {
             System.err.println("Couldn't write to file");
+        }
+    }
+
+    public void deleteLeague() {
+        String filePath = String.format("SavedFiles/SavedLeagues/%s.json", getFileSafeName());
+        try {
+            Files.delete(Path.of(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -230,6 +240,8 @@ public class League {
         return teamNames;
     }
 
+    public boolean getSaved(){return saved;}
+
     public String getName() {
         return name;
     }
@@ -238,6 +250,7 @@ public class League {
         String INVALID_CHARACTERS = "[/:*?\"<>|\\\\ ]";
         return name.trim().replaceAll(INVALID_CHARACTERS, "_");
     }
+
 
     //Internal team class
     public static class Team {

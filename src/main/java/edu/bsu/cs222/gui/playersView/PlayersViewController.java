@@ -507,7 +507,12 @@ public class PlayersViewController {
         if (GraphicalUserInterface.getLeagueList().size() > 1){
             boolean delete = ConfirmationModal.throwConfirmationModal("Confirming will delete this league\nand all of its teams.\nAre you sure?");
             if (delete){
-                GraphicalUserInterface.removeLeague(getLeagueByName(leagueSelector.getValue()));
+                League league = Objects.requireNonNull(getLeagueByName(leagueSelector.getValue()));
+                if (league.getSaved()){
+                    league.deleteLeague();
+                }
+
+                GraphicalUserInterface.removeLeague(league);
                 leagueSelector.setValue(previousLeagueString);
             }
         } else {
