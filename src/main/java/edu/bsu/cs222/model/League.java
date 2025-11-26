@@ -44,7 +44,7 @@ public class League {
         }
 
         coefficientMap = new HashMap<>();
-        JSONObject scoringObject = new JSONObject();
+        JSONObject scoringObject = leagueObject.getJSONObject("scoring");
         for (String key: scoringObject.keySet()){
             coefficientMap.put(key, scoringObject.getDouble(key));
         }
