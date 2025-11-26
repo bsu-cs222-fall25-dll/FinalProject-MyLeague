@@ -96,6 +96,9 @@ public class PlayersViewController {
 
         setTeamItems(GraphicalUserInterface.getLeagueList().getFirst());
         teamSelector.setValue(teamSelector.getItems().getFirst());
+        if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
+            currentTeam.set(null);
+        }
 
         leagueSelector.valueProperty().addListener((_, oldVal, newVal) -> {
             if (Objects.equals(newVal, "Create")) {
@@ -125,6 +128,8 @@ public class PlayersViewController {
                 } else {
                     currentTeam.set(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())).getTeamByName(newVal));
                 }
+            }else {
+                currentTeam.set(null);
             }
         });
     }
@@ -190,7 +195,6 @@ public class PlayersViewController {
                 ErrorModal.throwErrorModal("Please enter a name", null);
                 return;
             }
-
             if (getLeagueByName(name) != null){
                 ErrorModal.throwErrorModal("Please enter a unique name", null);
                 return;
@@ -371,7 +375,7 @@ public class PlayersViewController {
         }
 
         Label leagueLabel = (Label) root.lookup("#leagueLbl");
-        leagueLabel.setText("Editing League: " + leagueSelector.getValue());
+        leagueLabel.setText(String.format("Editing League: %s", leagueSelector.getValue()));
 
         Button cancelButton = (Button) root.lookup("#cancelButton");
         Button createButton = (Button) root.lookup("#createButton");

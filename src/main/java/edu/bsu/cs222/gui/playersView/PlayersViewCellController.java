@@ -60,6 +60,7 @@ public class PlayersViewCellController {
         String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
 
         League.Team currentTeam = parent.getCurrentTeam();
+        if (currentTeam == null) {addPlayerButton.setDisable(true);}
 
         if (currentTeam != null ) {
             addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getName()));
