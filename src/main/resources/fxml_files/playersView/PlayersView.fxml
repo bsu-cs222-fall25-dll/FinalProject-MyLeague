@@ -101,11 +101,19 @@
         </HBox>
     </VBox>
     <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <Button fx:id="deleteLeagueButton" mnemonicParsing="false" onAction="#deleteLeague" text="Delete League" />
+        <Button fx:id="deleteLeagueButton" mnemonicParsing="false" onAction="#deleteLeague" text="Delete League">
+            <tooltip>
+                <Tooltip text="Delete a league" />
+            </tooltip>
+        </Button>
         <Button fx:id="deleteTeamButton" layoutX="47.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteTeam" text="Delete Team">
            <VBox.margin>
                <Insets top="10.0" />
            </VBox.margin>
+
+            <tooltip>
+                <Tooltip text="Delete a team" />
+            </tooltip>
         </Button>
     </VBox>
 </GridPane>

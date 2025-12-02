@@ -19,46 +19,103 @@ public class PlayerRetrieverTest {
         Assertions.assertEquals("Ty'Son Williams", PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
-    // Fails without API_KEY in .env
+    // Fails without API_KEY in .env or without a network connection
     @Test
-    void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException, IOException {
-        Assertions.assertNotNull(PlayerRetriever.getPlayersFromApi());
+    void testGetPlayersFromApiDoesNotReturnNull() throws InterruptedException {
+        if (!PlayerRetriever.getKeyLoaded()){
+            Assertions.fail("Requires API_KEY in .env");
+            return;
+        }
+
+        String players;
+        try {
+            players = PlayerRetriever.getPlayersFromApi();
+        } catch (IOException _){
+            Assertions.fail("Requires network connection");
+            return;
+        }
+
+        Assertions.assertNotNull(players);
     }
 
-    // Fails without API_KEY in .env
+    // Fails without API_KEY in .env or without a network connection
     @Test
-    void testGetPlayersFromJsonDoesNotReturnNullAfterSaving() throws IOException, InterruptedException {
-        PlayerRetriever.createAndSavePlayerListFromApi();
+    void testGetPlayersFromJsonDoesNotReturnNullAfterSaving() throws InterruptedException, IOException {
+        if (!PlayerRetriever.getKeyLoaded()){
+            Assertions.fail("Requires API_KEY in .env");
+            return;
+        }
+
+        try {
+            PlayerRetriever.createAndSavePlayerListFromApi();
+        } catch (IOException _) {
+            Assertions.fail("Requires network connection");
+            return;
+        }
+
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
     }
 
-    // Fails without API_KEY in .env
+    // Fails without API_KEY in .env or without a network connection
     @Test
-    void testGetPlayersFromJsonOrAPISavesJsonAfterDeletingJson() throws IOException, InterruptedException {
+    void testGetPlayersFromJsonOrAPISavesJsonAfterDeletingJson() throws InterruptedException, IOException {
+        if (!PlayerRetriever.getKeyLoaded()){
+            Assertions.fail("Requires API_KEY in .env");
+            return;
+        }
 
         File file = new File("src/main/resources/PlayerList.json");
         if (file.exists()) {
             if (!file.delete()){
-                Assertions.fail();
+                Assertions.fail("File failed to delete");
             }
         }
-        PlayerRetriever.getPlayersFromJsonOrApi();
+
+        try {
+            PlayerRetriever.getPlayersFromJsonOrApi();
+        } catch (IOException _) {
+            Assertions.fail("Requires network connection");
+            return;
+        }
+
         Assertions.assertNotNull(PlayerRetriever.getPlayersFromJson());
     }
 
-    // Fails without API_KEY in .env
+    // Fails without API_KEY in .env or without a network connection
     @Test
-    void testGetPlayersFromJsonEqualsPlayerListAfterSaving() throws IOException, InterruptedException {
-        PlayerRetriever.createAndSavePlayerListFromApi();
+    void testGetPlayersFromJsonEqualsPlayerListAfterSaving() throws InterruptedException, IOException {
+        if (!PlayerRetriever.getKeyLoaded()){
+            Assertions.fail("Requires API_KEY in .env");
+            return;
+        }
+
+        try {
+            PlayerRetriever.createAndSavePlayerListFromApi();
+        } catch (IOException _) {
+            Assertions.fail("Requires network connection");
+            return;
+        }
+
         ArrayList<Player> originalPlayerList = PlayerRetriever.getPlayerArrayList();
         PlayerRetriever.createPlayerList(PlayerRetriever.getPlayersFromJson());
         Assertions.assertEquals(originalPlayerList.getFirst().getName(), PlayerRetriever.getPlayerArrayList().getFirst().getName());
     }
 
-    // Fails without API_KEY in .env
+    // Fails without API_KEY in .env or without a network connection
     @Test
-    void testCreateAndSavePlayerListFromApiCreatesPlayerList() throws InterruptedException, IOException {
-        PlayerRetriever.createAndSavePlayerListFromApi();
+    void testCreateAndSavePlayerListFromApiCreatesPlayerList() throws InterruptedException {
+        if (!PlayerRetriever.getKeyLoaded()){
+            Assertions.fail("Requires API_KEY in .env");
+            return;
+        }
+
+        try {
+            PlayerRetriever.createAndSavePlayerListFromApi();
+        } catch (IOException _) {
+            Assertions.fail("Requires network connection");
+            return;
+        }
+
         Assertions.assertNotNull(PlayerRetriever.getPlayerArrayList());
     }
 

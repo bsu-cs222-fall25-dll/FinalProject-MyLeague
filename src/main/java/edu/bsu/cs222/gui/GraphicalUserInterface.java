@@ -57,11 +57,11 @@ public class GraphicalUserInterface extends Application {
 
                 stage.setOnCloseRequest(_ -> stage.close());
             }
-            catch (InterruptedException _){
+            catch (IOException _){
                 ErrorModal.throwErrorModal("Network Error", null);
             }
-            catch (IOException _) {
-                System.err.println("API Error");
+            catch (InterruptedException _) {
+                System.err.println("Program Interrupted");
                 System.exit(1);
             }
         } else {
