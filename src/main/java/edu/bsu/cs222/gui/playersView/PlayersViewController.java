@@ -566,11 +566,12 @@ public class PlayersViewController {
         editButton.setDisable(disable);
         saveButton.setDisable(disable);
         deleteLeagueButton.setDisable(disable);
+        deleteTeamButton.setDisable(disable);
 
-        if (!disable){
-            if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
-                deleteTeamButton.setDisable(true);
-            }
+        if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
+            deleteTeamButton.setDisable(true);
+        } else {
+            deleteTeamButton.setDisable(disable);
         }
     }
 
