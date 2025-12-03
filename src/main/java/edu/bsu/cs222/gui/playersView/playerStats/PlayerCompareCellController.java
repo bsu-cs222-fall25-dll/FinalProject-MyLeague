@@ -19,8 +19,8 @@ public class PlayerCompareCellController {
         this.player = player;
 
         // Basic info
-        nameLbl.setText(player.getName());
-        detailsLbl.setText(player.getPosition().toString() + " • " + player.getTeam());
+        nameLbl.setText(player.getNonScoringStats().get("name"));
+        detailsLbl.setText(player.getPosition().toString() + " • " + player.getNonScoringStats().get("team"));
     }
 
     // Link back to the main stats modal controller

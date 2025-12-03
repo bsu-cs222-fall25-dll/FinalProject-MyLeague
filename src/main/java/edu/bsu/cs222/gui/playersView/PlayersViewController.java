@@ -89,7 +89,7 @@ public class PlayersViewController {
 
             String team = teamFilter.getValue();
             if (!team.isBlank() && !team.equals("All")){
-                return team.equals(player.getTeam());
+                return team.equals(player.getNonScoringStats().get("team"));
             }
             return true;
         },
@@ -579,7 +579,7 @@ public class PlayersViewController {
         if (player == null) {return false;}
         boolean match = true;
         for (String query : queries){
-            if (!player.getName().toLowerCase().contains(query)) {
+            if (!player.getNonScoringStats().get("name").toLowerCase().contains(query)) {
                 match = false;
                 break;
             }
@@ -591,7 +591,7 @@ public class PlayersViewController {
     private void setPositionsAndTeams(ArrayList<Player> players) {
         Set<String> teams = new TreeSet<>();
         for (Player player : players){
-            String team = player.getTeam();
+            String team = player.getNonScoringStats().get("team");
             teams.add(team);
         }
 

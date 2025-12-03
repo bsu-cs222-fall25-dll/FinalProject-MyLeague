@@ -71,7 +71,7 @@ public class PlayerStatsModalController {
     private void updateStatsLabels() {
         if (player == null) return;
 
-        playerLabel.setText(player.getName());
+        playerLabel.setText(player.getNonScoringStats().get("name"));
         tabLbl.setText(currentStatView);
 
         try {
@@ -131,7 +131,7 @@ public class PlayerStatsModalController {
             // Team filter
             String teamString = teamFilter.getValue();
             if (!teamString.equals("All") && !teamString.isBlank()) {
-                return teamString.equals(p.getTeam());
+                return teamString.equals(p.getNonScoringStats().get("name"));
             }
 
             return true;
@@ -140,14 +140,14 @@ public class PlayerStatsModalController {
 
     private boolean runSearch(ArrayList<String> queries, Player player) {
         for (String query : queries) {
-            if (!player.getName().toLowerCase().contains(query)) return false;
+            if (!player.getNonScoringStats().get("name").toLowerCase().contains(query)) return false;
         }
         return true;
     }
 
     private void setPositionAndTeams(ArrayList<Player> players) {
         Set<String> teams = new TreeSet<>();
-        for (Player p : players) teams.add(p.getTeam());
+        for (Player p : players) teams.add(p.getNonScoringStats().get("team"));
 
         positionFilter.getItems().setAll("All");
         for (Position position : Position.values()) {

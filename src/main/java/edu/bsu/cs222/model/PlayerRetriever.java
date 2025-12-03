@@ -142,17 +142,17 @@ public class PlayerRetriever {
 
         for (Player player: getPlayerArrayList()){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("espnName", player.getName());
+            jsonObject.put("espnName", player.getNonScoringStats().get("name"));
             jsonObject.put("pos", player.getPosition());
-            jsonObject.put("team", player.getTeam());
-            jsonObject.put("jerseyNum", player.getJerseyNumber());
-            jsonObject.put(("height"), player.getHeight());
-            jsonObject.put("weight", player.getWeight());
-            jsonObject.put("age", player.getAge());
-            jsonObject.put("espnHeadshot", player.getHeadshot());
-            jsonObject.put("school", player.getSchool());
+            jsonObject.put("team", player.getNonScoringStats().get("team"));
+            jsonObject.put("jerseyNum", player.getNonScoringStats().get("jerseyNumber"));
+            jsonObject.put(("height"), player.getNonScoringStats().get("height"));
+            jsonObject.put("weight", player.getNonScoringStats().get("weight"));
+            jsonObject.put("age", player.getNonScoringStats().get("age"));
+            jsonObject.put("espnHeadshot", player.getNonScoringStats().get("headshot"));
+            jsonObject.put("school", player.getNonScoringStats().get("school"));
             jsonObject.put("playerID", player.getPlayerID());
-            jsonObject.put("exp", player.getExperience());
+            jsonObject.put("exp", player.getNonScoringStats().get("experience"));
             playersJsonArray.put(jsonObject);
         }
 

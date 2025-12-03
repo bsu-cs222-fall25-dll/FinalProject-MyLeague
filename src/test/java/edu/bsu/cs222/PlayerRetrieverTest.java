@@ -16,7 +16,7 @@ public class PlayerRetrieverTest {
     @Test
     void testFirstPlayerNameInListIsTysonWilliams() throws IOException {
         PlayerRetriever.createPlayerList(readSampleFileAsString());
-        Assertions.assertEquals("Ty'Son Williams", PlayerRetriever.getPlayerArrayList().getFirst().getName());
+        Assertions.assertEquals("Ty'Son Williams", PlayerRetriever.getPlayerArrayList().getFirst().getNonScoringStats().get("name"));
     }
 
     // Fails without API_KEY in .env or without a network connection
@@ -98,7 +98,7 @@ public class PlayerRetrieverTest {
 
         ArrayList<Player> originalPlayerList = PlayerRetriever.getPlayerArrayList();
         PlayerRetriever.createPlayerList(PlayerRetriever.getPlayersFromJson());
-        Assertions.assertEquals(originalPlayerList.getFirst().getName(), PlayerRetriever.getPlayerArrayList().getFirst().getName());
+        Assertions.assertEquals(originalPlayerList.getFirst().getNonScoringStats().get("name"), PlayerRetriever.getPlayerArrayList().getFirst().getNonScoringStats().get("name"));
     }
 
     // Fails without API_KEY in .env or without a network connection

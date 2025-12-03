@@ -45,25 +45,25 @@ public class PlayersViewCellController {
 
     public void setData(Player player){
         currentPlayer = player;
-        String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
+        String playerTeam = (player.getNonScoringStats().get("team") == null ? "NA" : player.getNonScoringStats().get("team"));
         String playerPosition = (player.getPosition() == null ? "NA" : player.getPosition().toString());
-        String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
-        String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
-        String playerHeight = (player.getHeight() == null ? "NA" : player.getHeight());
-        String playerWeight = (player.getWeight() == null ? "NA" : player.getWeight());
-        String playerSchool = (player.getSchool() == null ? "NA" : player.getSchool());
+        String playerNumber = (player.getNonScoringStats().get("jerseyNumber") == null ? "NA" : player.getNonScoringStats().get("jerseyNumber"));
+        String playerExp = (player.getNonScoringStats().get("experience") == null ? "NA" : player.getNonScoringStats().get("experience"));
+        String playerHeight = (player.getNonScoringStats().get("height") == null ? "NA" : player.getNonScoringStats().get("height"));
+        String playerWeight = (player.getNonScoringStats().get("weight") == null ? "NA" : player.getNonScoringStats().get("weight"));
+        String playerSchool = (player.getNonScoringStats().get("school") == null ? "NA" : player.getNonScoringStats().get("school"));
 
-        nameLbl.setText(String.format("%s #%s", player.getName(), playerNumber));
+        nameLbl.setText(String.format("%s #%s", player.getNonScoringStats().get("name"), playerNumber));
         detailsLbl.setText(String.format("%s | %s | %s", playerTeam, playerPosition, playerSchool));
         statsLbl.setText(String.format("Exp: %syr | %s %slbs", playerExp, playerHeight, playerWeight));
 
-        String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
+        String imageUrl = (player.getNonScoringStats().get("headshot") == null ? "" : player.getNonScoringStats().get("headshot"));
 
         League.Team currentTeam = parent.getCurrentTeam();
         if (currentTeam == null) {addPlayerButton.setDisable(true);}
 
         if (currentTeam != null ) {
-            addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getName()));
+            addPlayerButton.setDisable(currentTeam.getPlayerNameList().contains(player.getNonScoringStats().get("name")));
         }
 
         if (imageUrl.equals(lastUrl)) {return;}
@@ -199,7 +199,7 @@ public class PlayersViewCellController {
             addPlayerButton.setDisable(true);
             return;
         }
-        addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getName()));
+        addPlayerButton.setDisable(team.getPlayerNameList().contains(currentPlayer.getNonScoringStats().get("name")));
     }
 
     public void viewPlayerStats() {

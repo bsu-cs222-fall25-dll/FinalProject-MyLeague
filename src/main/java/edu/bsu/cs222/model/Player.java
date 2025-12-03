@@ -5,7 +5,6 @@ import io.github.cdimascio.dotenv.DotenvException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,18 +27,9 @@ public class Player {
             System.out.println("Add your API key to .env.example, and rename file to .env");
         }
     }
-
-    private final String name;
     private Position position;
-    private String team;
-    private String jerseyNumber;
-    private String height;
-    private String weight;
-    private String age;
-    private String headshot;
-    private String school;
     private final String playerID;
-    private String experience;
+    private final HashMap <String, String> nonScoringStats = new HashMap<>();
     //Above are stats shown from player list, below are stats which require a deeper API call.
     private HashMap <String, Integer> playerStats = new HashMap<>();
     private String lastGame;
@@ -47,17 +37,17 @@ public class Player {
 
 
     public Player(HashMap<String, String> playerInfo) {
-        this.name = playerInfo.get("playerName");
+        nonScoringStats.put("name", playerInfo.get("playerName"));
         this.position = Position.valueOf(playerInfo.get("position"));
-        this.team = playerInfo.get("team");
-        this.jerseyNumber = playerInfo.get("jerseyNumber");
-        this.height = playerInfo.get("height");
-        this.weight = playerInfo.get("weight");
-        this.age = playerInfo.get("age");
-        this.headshot = playerInfo.get("headshot");
-        this.school = playerInfo.get("school");
+        nonScoringStats.put("team", playerInfo.get("team"));
+        nonScoringStats.put("jerseyNumber", playerInfo.get("jerseyNumber"));
+        nonScoringStats.put("height", playerInfo.get("height"));
+        nonScoringStats.put("weight", playerInfo.get("weight"));
+        nonScoringStats.put("age", playerInfo.get("age"));
+        nonScoringStats.put("headshot", playerInfo.get("headshot"));
+        nonScoringStats.put("school", playerInfo.get("school"));
         this.playerID = playerInfo.get("playerID");
-        this.experience = playerInfo.get("experience");
+        nonScoringStats.put("experience", playerInfo.get("experience"));
     }
 
     //Scoring methods
@@ -89,6 +79,7 @@ public class Player {
                 playerStats.get("seasonFgAttempts") + playerStats.get("seasonFgMade") * coefficientMap.get("fgMade"));
     }
 
+
     public void setStatsWithAPI() throws Exception {
         if (!lastScoreDateIsToday()){
             String response = getStatsFromAPI();
@@ -97,6 +88,7 @@ public class Player {
             }
         }
     }
+
 
     public void setPlayerStats(String jsonData){
         JSONArray playerGames = new JSONObject(jsonData).getJSONArray("body");
@@ -249,63 +241,29 @@ public class Player {
         return lastStatDate != null && lastStatDate.equals(LocalDate.now());
     }
 
-
     // Getters
     public HashMap<String, Integer> getPlayerStats() {
         return playerStats;
+    }
+
+    public HashMap<String, String> getNonScoringStats(){
+        return nonScoringStats;
     }
 
     public String getLastGame() {
         return lastGame;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Position getPosition() {
         return position;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public String getJerseyNumber() {
-        return jerseyNumber;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public String getHeadshot() {
-        return headshot;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public String getExperience() {
-        return experience;
     }
 
     public String getPlayerID() {
         return playerID;
     }
-
     //Constructors and Setters for tests
     public Player (String name, String playerID) {
-        this.name = name;
+        nonScoringStats.put("name", name);
         this.playerID = playerID;
     }
 

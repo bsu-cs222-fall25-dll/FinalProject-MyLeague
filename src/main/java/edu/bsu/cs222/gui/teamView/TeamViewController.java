@@ -156,7 +156,7 @@ public class TeamViewController {
         if (player == null) {return false;}
         boolean match = true;
         for (String query : queries){
-            if (!player.getName().toLowerCase().contains(query)) {
+            if (!player.getNonScoringStats().get("name").toLowerCase().contains(query)) {
                 match = false;
                 break;
             }

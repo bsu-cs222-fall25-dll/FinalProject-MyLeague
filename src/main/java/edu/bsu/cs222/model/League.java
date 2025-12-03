@@ -117,15 +117,15 @@ public class League {
                 JSONObject playerObject = new JSONObject();
 
                 playerObject.put("playerID", player.getPlayerID());
-                playerObject.put("playerName", player.getName());
+                playerObject.put("playerName", player.getNonScoringStats().get("name"));
                 playerObject.put("position", team.getPlayerMap().get(player).toString());
-                playerObject.put("team", player.getTeam());
-                playerObject.put("school", player.getSchool());
-                playerObject.put("jerseyNumber", player.getJerseyNumber());
-                playerObject.put("experience", player.getExperience());
-                playerObject.put("weight", player.getWeight());
-                playerObject.put("height", player.getHeight());
-                playerObject.put("headshot", player.getHeadshot());
+                playerObject.put("team", player.getNonScoringStats().get("team"));
+                playerObject.put("school", player.getNonScoringStats().get("school"));
+                playerObject.put("jerseyNumber", player.getNonScoringStats().get("jerseyNumber"));
+                playerObject.put("experience", player.getNonScoringStats().get("experience"));
+                playerObject.put("weight", player.getNonScoringStats().get("weight"));
+                playerObject.put("height", player.getNonScoringStats().get("height"));
+                playerObject.put("headshot", player.getNonScoringStats().get("headshot"));
 
                 playersArray.put(playerObject);
             }
@@ -272,13 +272,13 @@ public class League {
         public void addPlayer(Player player, Position position){
             playerMap.put(player, position);
             freePositions.remove(position);
-            playerNameList.add(player.getName());
+            playerNameList.add(player.getNonScoringStats().get("name"));
         }
 
         public void removePlayer(Player player){
             freePositions.add(playerMap.get(player));
             playerMap.remove(player);
-            playerNameList.remove(player.getName());
+            playerNameList.remove(player.getNonScoringStats().get("name"));
         }
 
         private void removeExtraPlayers(ArrayList<Position> freePositions){

@@ -43,12 +43,12 @@ public class TeamViewCellController {
     public void setData(Player player, boolean networkError) {
         currentPlayer = player;
         if (player == null) {return;}
-        String playerTeam = (player.getTeam() == null ? "NA" : player.getTeam());
-        String playerNumber = (player.getJerseyNumber() == null ? "NA" : player.getJerseyNumber());
-        String playerExp = (player.getExperience() == null ? "NA" : player.getExperience());
-        String playerHeight = (player.getHeight() == null ? "NA" : player.getHeight());
-        String playerWeight = (player.getWeight() == null ? "NA" : player.getWeight());
-        String playerSchool = (player.getSchool() == null ? "NA" : player.getSchool());
+        String playerTeam = (player.getNonScoringStats().get("team") == null ? "NA" : player.getNonScoringStats().get("team"));
+        String playerNumber = (player.getNonScoringStats().get("jerseyNumber") == null ? "NA" : player.getNonScoringStats().get("jerseyNumber"));
+        String playerExp = (player.getNonScoringStats().get("experience") == null ? "NA" : player.getNonScoringStats().get("experience"));
+        String playerHeight = (player.getNonScoringStats().get("getHeight") == null ? "NA" : player.getNonScoringStats().get("height"));
+        String playerWeight = (player.getNonScoringStats().get("weight") == null ? "NA" : player.getNonScoringStats().get("weight"));
+        String playerSchool = (player.getNonScoringStats().get("school") == null ? "NA" : player.getNonScoringStats().get("school"));
 
         StringBuilder lastWeekSoreBuilder = new StringBuilder("Last Week: ");
         StringBuilder seasonScoreBuilder = new StringBuilder("Season: ");
@@ -65,13 +65,13 @@ public class TeamViewCellController {
             lastMatchLbl.setText(player.getLastGame());
         }
 
-        nameLbl.setText(String.format("%s #%s", player.getName(), playerNumber));
+        nameLbl.setText(String.format("%s #%s", player.getNonScoringStats().get("name"), playerNumber));
         detailsLbl.setText(String.format("%s | %s | %s", playerTeam, parent.getCurrentTeam().getPlayerMap().get(player).toString(), playerSchool));
         statsLbl.setText(String.format("Exp: %syr | %s %slbs", playerExp, playerHeight, playerWeight));
         lastWeekLbl.setText(lastWeekSoreBuilder.toString());
         seasonLbl.setText(seasonScoreBuilder.toString());
 
-        String imageUrl = (player.getHeadshot() == null ? "" : player.getHeadshot());
+        String imageUrl = (player.getNonScoringStats().get("headshot") == null ? "" : player.getNonScoringStats().get("headshot"));
 
         if (imageUrl.equals(lastUrl)) {return;}
 
