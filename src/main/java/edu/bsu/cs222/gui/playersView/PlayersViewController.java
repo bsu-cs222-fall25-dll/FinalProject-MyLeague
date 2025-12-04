@@ -296,18 +296,32 @@ public class PlayersViewController {
             if (event.getCode() == KeyCode.ENTER){
                 event.consume();
                 createOrEditLeague(name, teamPositions, stage, finalRoot);
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                event.consume();
+                if (name != null){
+                    teamSelector.setValue(previousTeamString);
+                    leagueSelector.setValue(previousLeagueString);
+                }
+                setDisable(false);
+                stage.close();
             }
         });
 
         createButton.setOnAction(_ -> createOrEditLeague(name, teamPositions, stage, finalRoot));
 
         stage.setOnCloseRequest(_ ->{
+            if (name != null){
+                leagueSelector.setValue(previousLeagueString);
+            }
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             stage.close();
         });
 
         cancelButton.setOnAction(_ ->{
+            if (name != null){
+                leagueSelector.setValue(previousLeagueString);
+            }
             teamSelector.setValue(previousTeamString);
             setDisable(false);
             stage.close();
@@ -371,7 +385,7 @@ public class PlayersViewController {
                 league.setTeamPositions(teamPositions, lessPositions);
             }
             league.setCoefficientMap(coefficientMap);
-
+            teamSelector.setValue(previousTeamString);
         }
         setDisable(false);
         stage.close();
@@ -394,6 +408,7 @@ public class PlayersViewController {
             System.exit(1);
         }
 
+        teamSelector.getSelectionModel().clearSelection();
         Label leagueLabel = (Label) root.lookup("#leagueLbl");
         leagueLabel.setText(String.format("Editing League: %s", leagueSelector.getValue()));
 
@@ -427,11 +442,13 @@ public class PlayersViewController {
         });
 
         cancelButton.setOnAction(_ ->{
+            teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
         });
 
         creator.setOnCloseRequest(_ ->{
+            teamSelector.setValue(previousTeamString);
             setDisable(false);
             creator.close();
         });
