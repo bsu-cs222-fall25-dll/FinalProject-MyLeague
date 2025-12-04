@@ -19,10 +19,10 @@ public class League {
     private final String name;
     private ArrayList<Position> teamPositions;
     private HashMap<String, Double> coefficientMap;
+    private final ArrayList<Team> teams = new ArrayList<>();
 
     private boolean saved = false;
 
-    private final ArrayList<Team> teams = new ArrayList<>();
 
     public League(String name, ArrayList<Position> teamPositions, HashMap<String, Double> coefficientMap){
         this.name = name;
@@ -169,6 +169,7 @@ public class League {
         try {
             Files.delete(Path.of(filePath));
         } catch (IOException e) {
+            //Can't be tested
             throw new RuntimeException(e);
         }
     }
