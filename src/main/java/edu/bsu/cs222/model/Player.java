@@ -228,7 +228,7 @@ public class Player {
 
     private String getStatsFromAPI() throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID="+playerID+"&itemFormat=list&numberOfGames=20"))
+                .uri(URI.create(String.format("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=%s&itemFormat=list&numberOfGames=20", playerID)))
                 .header("x-rapidapi-key", API_KEY)
                 .header("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
