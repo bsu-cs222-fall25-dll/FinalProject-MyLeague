@@ -113,16 +113,22 @@ public class PlayerTest {
         Assertions.assertTrue(map.containsKey(player1));
     }
 
-    private String readSampleFileAsString() throws NullPointerException, IOException {
+    private String readSampleFileAsString(String fileName) throws NullPointerException, IOException {
         InputStream sampleFile = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("BrandonAubrey" + ".json");
+                .getResourceAsStream(fileName + ".json");
         return new String(Objects.requireNonNull(sampleFile).readAllBytes(), Charset.defaultCharset());
     }
 
     @Test
     void testSetPlayerStatsBrandonAubreyKicking() throws IOException {
         Player brandon = new Player("Brandon", null);
-        brandon.setPlayerStats(readSampleFileAsString());
+        brandon.setPlayerStats(readSampleFileAsString("BrandonAubrey"));
         Assertions.assertEquals(17, brandon.getPlayerStats().get("seasonFgMade"));
+    }
+    @Test
+    void testTaysomHillSeasonScore() throws IOException {
+        Player taysom = new Player("Taysom", null);
+        taysom.setPlayerStats(readSampleFileAsString("TaysomHill"));
+        Assertions.assertEquals(17.76, Math.round(taysom.getSeasonScore(getDefaultCoefficientMap()) *100.0) / 100.0);
     }
 }
