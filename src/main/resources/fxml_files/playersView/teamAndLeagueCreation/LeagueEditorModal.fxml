@@ -5,72 +5,69 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="180" prefWidth="360" style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="350" prefWidth="550"
+            style="-fx-background-color: #2b2b2b; -fx-border-color: #3c3c3c; -fx-border-radius: 10; -fx-background-radius: 10;"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <Label fx:id="leagueLbl" text="Editing League: " BorderPane.alignment="CENTER_LEFT">
+        <Label fx:id="leagueLbl" text="Editing League:" BorderPane.alignment="CENTER_LEFT">
             <font>
-                <Font name="System Bold" size="16" />
+                <Font name="System Bold" size="20" />
             </font>
             <padding>
-                <Insets bottom="5" left="20" top="15" />
+                <Insets top="20" left="20" bottom="10" />
             </padding>
             <textFill>#e0e0e0</textFill>
         </Label>
     </top>
-
     <center>
-        <VBox alignment="CENTER" spacing="10">
+        <VBox alignment="TOP_CENTER" spacing="15">
             <padding>
-                <Insets top="10" />
+                <Insets top="15" left="20" right="20" bottom="10"/>
             </padding>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                <padding>
-                    <Insets left="10.0" right="10.0" />
-                </padding>
-                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="QB" textFill="WHITE" />
-                    <TextField fx:id="qbField" text="1" />
+            <GridPane hgap="50" vgap="20" alignment="CENTER">
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="QB" textFill="WHITE"/>
+                    <TextField fx:id="qbField" text="1" prefWidth="80"/>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="RB" textFill="WHITE" />
-                    <TextField fx:id="rbField" promptText="2" text="2" />
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="RB" textFill="WHITE"/>
+                    <TextField fx:id="rbField" text="2" prefWidth="80"/>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="WR" textFill="WHITE" />
-                    <TextField fx:id="wrField" text="2" />
+                <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Label text="WR" textFill="WHITE"/>
+                    <TextField fx:id="wrField" text="2" prefWidth="80"/>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="TE" textFill="WHITE" />
-                    <TextField fx:id="teField" text="1" />
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="TE" textFill="WHITE"/>
+                    <TextField fx:id="teField" text="1" prefWidth="80"/>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="279.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="K" textFill="WHITE" />
-                    <TextField fx:id="kField" text="1" />
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="K" textFill="WHITE"/>
+                    <TextField fx:id="kField" text="1" prefWidth="80"/>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="297.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                    <Label text="FLEX" textFill="WHITE" />
-                    <TextField fx:id="flexField" text="1" />
+                <VBox spacing="6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Label text="FLEX" textFill="WHITE"/>
+                    <TextField fx:id="flexField" text="1" prefWidth="80"/>
                 </VBox>
-            </HBox>
+            </GridPane>
         </VBox>
     </center>
-
     <bottom>
-        <HBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="15" top="10" />
+                <Insets bottom="25" top="20"/>
             </padding>
-            <Button fx:id="createButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Edit">
-            <tooltip>
-                <Tooltip text="Create your fantasy league" />
-            </tooltip>
+            <Button fx:id="createButton" prefWidth="120"
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px;"
+                    text="Edit">
+                <tooltip><Tooltip text="Edit your fantasy league"/></tooltip>
             </Button>
-
-            <Button fx:id="cancelButton" prefWidth="100" style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 13px;" text="Cancel">
-            <tooltip>
-                <Tooltip text="Close popup" />
-            </tooltip>
+            <Button fx:id="cancelButton" prefWidth="120"
+                    style="-fx-background-color: #4a4a4a; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px;"
+                    text="Cancel">
+                <tooltip><Tooltip text="Close window"/></tooltip>
             </Button>
         </HBox>
     </bottom>
+
 </BorderPane>
