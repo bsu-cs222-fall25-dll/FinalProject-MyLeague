@@ -170,8 +170,8 @@ Each league is saved as a JSON file containing:
 - Player data is cached locally to reduce API calls
 
 ## Technology Stack
-- **Language:** Java 21
-- **UI Framework:** JavaFX 17
+- **Language:** Java 22
+- **UI Framework:** JavaFX 22
 - **API:** Tank01 NFL Live Statistics API (RapidAPI)
 - **Environment Management:** dotenv-java
 - **Data Format:** JSON
