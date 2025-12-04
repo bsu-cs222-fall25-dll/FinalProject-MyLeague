@@ -90,6 +90,7 @@ public class Player {
     }
 
     public void setStatsWithAPI() throws IOException, InterruptedException {
+        //Method cannot be tested due to API call
         if (!lastScoreDateIsToday()){
             String response = getStatsFromAPI();
             if (response != null && !response.isBlank()){
@@ -155,6 +156,7 @@ public class Player {
     }
 
     private String getStatsFromAPI() throws IOException, InterruptedException {
+        //Method cannot be tested due to API call
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(String.format("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLGamesForPlayer?playerID=%s&itemFormat=list&numberOfGames=20", playerID)))
                 .header("x-rapidapi-key", API_KEY)
