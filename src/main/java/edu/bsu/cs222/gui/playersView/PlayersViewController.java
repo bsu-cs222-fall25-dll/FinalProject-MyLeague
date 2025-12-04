@@ -104,7 +104,7 @@ public class PlayersViewController {
 
         setTeamItems(Objects.requireNonNull(getLeagueByName(leagueSelector.getValue())));
         teamSelector.setValue(teamSelector.getItems().getFirst());
-        previousTeamString = leagueSelector.getValue();
+        previousTeamString = teamSelector.getValue();
 
         if (Objects.equals(teamSelector.getValue(), "None") || teamSelector.getValue() == null){
             deleteTeamButton.setDisable(true);
