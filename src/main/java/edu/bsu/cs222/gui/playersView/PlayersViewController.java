@@ -150,6 +150,8 @@ public class PlayersViewController {
     // League creation and editing
     private void leagueCreator() {
         Stage creator = new Stage();
+        creator.setWidth(500);
+        creator.setHeight(400);
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Creator");
         Parent root = null;
@@ -256,6 +258,8 @@ public class PlayersViewController {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml_files/playersView/teamAndLeagueCreation/SetScoringModal.fxml")));
             stage.getScene().setRoot(root);
+            stage.setWidth(500);
+            stage.setHeight(400);
         } catch (IOException _){
             System.err.println("SetScoringModal.fxml not found");
             System.exit(1);
@@ -375,6 +379,8 @@ public class PlayersViewController {
 
     @FXML private void editLeague(){
         Stage creator = new Stage();
+        creator.setWidth(500);
+        creator.setHeight(400);
         creator.initModality(Modality.APPLICATION_MODAL);
         creator.setTitle("League Editor");
         Parent root = null;
