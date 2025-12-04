@@ -145,7 +145,6 @@ public class Player {
                 int totalStatValue = playerStats.get(String.format("season%s", statKey)) + statValue;
 
                 playerStats.put(String.format("season%s", statKey), totalStatValue);
-                System.out.println(playerStats.get(String.format("season%s", statKey)));
 
                 if (thisWeek) {
                     playerStats.put(String.format("week%s", statKey), statValue);
