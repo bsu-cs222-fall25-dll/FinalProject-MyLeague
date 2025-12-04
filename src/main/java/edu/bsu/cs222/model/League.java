@@ -281,8 +281,8 @@ public class League {
             playerNameList.remove(player.getNonScoringStats().get("name"));
         }
 
-        private void removeExtraPlayers(ArrayList<Position> freePositions){
-            this.freePositions = freePositions;
+        private void removeExtraPlayers(ArrayList<Position> positions){
+            freePositions = new ArrayList<>(positions);
             ArrayList<Player> playersToRemove = new ArrayList<>();
             for(Player key: playerMap.keySet()){
                 if(!freePositions.remove(playerMap.get(key))){
@@ -297,8 +297,8 @@ public class League {
 
 
         //Setters
-        private void setFreePositions(ArrayList<Position> freePositions){
-            this.freePositions = freePositions;
+        private void setFreePositions(ArrayList<Position> positions){
+            freePositions = new ArrayList<>(positions);
 
             for (Player key: playerMap.keySet()){
                 freePositions.remove(playerMap.get(key));

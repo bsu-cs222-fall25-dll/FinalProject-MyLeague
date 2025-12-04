@@ -1,0 +1,168 @@
+{
+    "leagueName": "TestLeague",
+    "scoring": {
+        "receptions": 1,
+        "recTds": 7,
+        "recYards": 0.1,
+        "fumbles": -2,
+        "passYards": 0.04,
+        "passTds": 4,
+        "fgMade": 4,
+        "rushTds": 7,
+        "xpMade": 2,
+        "rushYards": 0.1,
+        "interceptions": -2
+    },
+    "teams": [
+        {
+            "teamName": "TestTeamOne",
+            "players": [
+                {
+                    "playerName": "Justin Fields",
+                    "school": "Ohio State",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/4362887.png",
+                    "jerseyNumber": "7",
+                    "weight": "227",
+                    "position": "QB",
+                    "team": "NYJ",
+                    "experience": "5",
+                    "playerID": "4362887",
+                    "height": "6'3\""
+                },
+                {
+                    "playerName": "Robbie Gould",
+                    "school": "Penn State",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/9354.png",
+                    "jerseyNumber": "9",
+                    "weight": "190",
+                    "position": "K",
+                    "team": "SF",
+                    "experience": "18",
+                    "playerID": "9354",
+                    "height": "6'0\""
+                },
+                {
+                    "playerName": "Kyric McGowan",
+                    "school": "Georgia Tech",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/4242270.png",
+                    "jerseyNumber": "87",
+                    "weight": "198",
+                    "position": "FLEX",
+                    "team": "MIA",
+                    "experience": "1",
+                    "playerID": "4242270",
+                    "height": "5'11\""
+                },
+                {
+                    "playerName": "Jashaun Corbin",
+                    "school": "Florida State",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/4372519.png",
+                    "jerseyNumber": "",
+                    "weight": "200",
+                    "position": "RB",
+                    "team": "NE",
+                    "experience": "2",
+                    "playerID": "4372519",
+                    "height": "5'11\""
+                },
+                {
+                    "playerName": "Kylen Granson",
+                    "school": "SMU",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/4039160.png",
+                    "jerseyNumber": "83",
+                    "weight": "242",
+                    "position": "TE",
+                    "team": "PHI",
+                    "experience": "5",
+                    "playerID": "4039160",
+                    "height": "6'3\""
+                }
+            ]
+        },
+        {
+            "teamName": "TestTeamTwo",
+            "players": [
+                {
+                    "playerName": "MyCole Pruitt",
+                    "school": "Southern Illinois",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/2508256.png",
+                    "jerseyNumber": "81",
+                    "weight": "258",
+                    "position": "TE",
+                    "team": "PIT",
+                    "experience": "9",
+                    "playerID": "2508256",
+                    "height": "6'2\""
+                },
+                {
+                    "playerName": "Ty'Son Williams",
+                    "school": "BYU",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/3895827.png",
+                    "jerseyNumber": "22",
+                    "weight": "220",
+                    "position": "FLEX",
+                    "team": "ARI",
+                    "experience": "2",
+                    "playerID": "3895827",
+                    "height": "6'0\""
+                },
+                {
+                    "playerName": "Marquise Goodwin",
+                    "school": "Texas",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/15839.png",
+                    "jerseyNumber": "3",
+                    "weight": "185",
+                    "position": "WR",
+                    "team": "CLE",
+                    "experience": "10",
+                    "playerID": "15839",
+                    "height": "5'9\""
+                },
+                {
+                    "playerName": "Robbie Gould",
+                    "school": "Penn State",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/9354.png",
+                    "jerseyNumber": "9",
+                    "weight": "190",
+                    "position": "K",
+                    "team": "SF",
+                    "experience": "18",
+                    "playerID": "9354",
+                    "height": "6'0\""
+                },
+                {
+                    "playerName": "Daniel Jones",
+                    "school": "Duke",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/3917792.png",
+                    "jerseyNumber": "17",
+                    "weight": "230",
+                    "position": "QB",
+                    "team": "IND",
+                    "experience": "7",
+                    "playerID": "3917792",
+                    "height": "6'5\""
+                },
+                {
+                    "playerName": "Jaxon Smith-Njigba",
+                    "school": "Ohio State",
+                    "headshot": "https://a.espncdn.com/i/headshots/nfl/players/full/4430878.png",
+                    "jerseyNumber": "11",
+                    "weight": "197",
+                    "position": "WR",
+                    "team": "SEA",
+                    "experience": "3",
+                    "playerID": "4430878",
+                    "height": "6'0\""
+                }
+            ]
+        }
+    ],
+    "positions": {
+        "RB": 2,
+        "QB": 1,
+        "TE": 1,
+        "FLEX": 1,
+        "WR": 2,
+        "K": 1
+    }
+}
