@@ -291,6 +291,7 @@ public class League {
             }
             for(Player player: playersToRemove){
                 playerMap.remove(player);
+                playerNameList.remove(player.getNonScoringStats().get("name"));
             }
         }
 
