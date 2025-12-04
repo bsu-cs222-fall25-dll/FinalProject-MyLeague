@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PlayerStatsModalController {
@@ -76,8 +77,13 @@ public class PlayerStatsModalController {
 
         try {
             player.setStatsWithAPI();
-        } catch (Exception _) {
+        }
+        catch (IOException _){
             ErrorModal.throwErrorModal("Network Error", null);
+        }
+        catch (InterruptedException _) {
+            System.err.println("Program Interrupted");
+            System.exit(1);
         }
 
         Map<String, Integer> stats = player.getPlayerStats();
